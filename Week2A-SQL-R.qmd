@@ -1,0 +1,38 @@
+---
+title: "Wee2A: SQL and R"
+author: "Tenzin Thakuri"
+format: html
+editor: visual
+---
+
+## Introduction
+
+For this assignment, I will create three related tables using PostgreSQL. The first table will contain six television episodes
+
+|                |                  |     |
+|----------------|------------------|-----|
+| tv_episodes_id | tv_episodes_name |     |
+
+the second will contain five users,
+
+|         |      |     |
+|---------|------|-----|
+| user_id | name |     |
+
+and the third will contain user_id tv_episodes_id, and rating as a variables name.
+
+|         |          |        |
+|---------|----------|--------|
+| user_id | movie_id | rating |
+
+I will create a database named tv_episodes_rating and use SQL queries to create and populate the tables. Since this is a many-to-many relationship, I will use primary and foreign keys to connect the tables. Finally, I will export SQL data to a .csv file and load it into the R.Then I will use R to analyze the ratings and identify the highest-rated episodes.
+
+### Anticipated Data Challenges
+
+1.  Correctly using foreign keys to connect the tables.
+
+2.  missing ratings because users may not watch or rate every episode. I will need to handle these missing values carefully when calculating average ratings.
+
+3.  Finding highest rated tv_episodes.
+
+\
