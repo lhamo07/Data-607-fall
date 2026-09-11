@@ -1,0 +1,15 @@
+---
+title: "Week2B Classification Metrics: Requirements"
+format: html
+editor: visual
+---
+
+## Introduction
+
+For this assignment, I will use the [`penguin_predictions.csv`](https://raw.githubusercontent.com/acatlin/data/refs/heads/master/penguin_predictions.csv) dataset to understand how well a classification model predicts whether a penguin is female or male. First, I will look at how many penguins are in each class and calculate the null error rate. This will give me a simple baseline to compare with the model.
+
+Next, I will use the .pred_female column to make predictions using three different thresholds: 0.2, 0.5, and 0.8. I will create a confusion matrix for each threshold and calculate accuracy, precision, recall, and F1 score. Then, I will compare the results to see how changing the threshold affects the model.
+
+### Data Challenges
+
+Understanding how the different thresholds change the predictions. I also need to correctly identify true positives, false positives, true negatives, and false negatives.
