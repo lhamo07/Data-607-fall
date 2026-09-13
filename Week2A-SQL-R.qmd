@@ -9,9 +9,9 @@ editor: visual
 
 For this assignment, I will create three related tables using PostgreSQL. The first table will contain six television episodes
 
-|                |                  |     |
-|----------------|------------------|-----|
-| tv_episodes_id | tv_episodes_name |     |
+|             |               |     |
+|-------------|---------------|-----|
+| episodes_id | episodes_name |     |
 
 the second will contain five users,
 
@@ -35,4 +35,120 @@ I will create a database named tv_episodes_rating and use SQL queries to create 
 
 3.  Finding highest rated tv_episodes.
 
-\
+## Implementation Detail
+
+### Step 1: Create tables using SQL
+
+CREATE TABLE tv_episodes( episode_id INT PRIMARY KEY, episode_name VARCHAR(50) NOT NULL);
+
+CREATE TABLE users( user_id INT PRIMARY KEY, name VARCHAR(50) NOT NULL);
+
+CREATE TABLE ratings ( rating_id INT PRIMARY KEY, episode_id INT, user_id INT, rating INT CHECK (rating \>= 1 AND rating \<= 5), FOREIGN KEY (episode_id) REFERENCES tv_episodes(episode_id), FOREIGN KEY (user_id) REFERENCES users(user_id) );
+
+### STEP 2:Insert data into tables
+
+INSERT INTO tv_episodes(episode_id,episode_name)VALUES (100,'Squid Game'), (101,'Emily in Paris'), (102,'Ginny&Georgia'), (103,'Brigerton'), (104,'Wednesday'), (105,'Stranger Things');
+
+INSERT INTO users(user_id,name)VALUES (1,'Tenzin'), (2,'Laura'), (3,'Zara'), (4,'Dolma'), (5,'Jose')
+
+INSERT INTO ratings(user_id,episode_id,rating) VALUES (1,100,5),(1,101,4),(1,102,3),(1,103,4),(1,104,5), (2,100,4),(2,101,5),(2,102,4),(2,103,5),(2,104,4), (3,100,5),(3,104,5), (4,100,5),(4,101,5),(4,102,4),(4,103,3), (5,101,5),(5,102,4),(5,103,4),(5,104,4);
+
+### STEP 3: Get tables
+
+SELECT \* FROM tv_episodes; SELECT \* FROM users; SELECT \* FROM ratings;
+
+### STEP 4: Join the tables
+
+SELECT u.name, e.episode_name, r.rating FROM users u CROSS JOIN tv_episodes e LEFT JOIN ratings r ON u.user_id = r.user_id AND e.episode_id = r.episode_id;
+
+### STEP 5:Export SQL data to .csv file
+
+#### 5.1: Load TV_episodes_ratings.csv into R
+
+```{r}
+url<-"C:/Users/tenlh/tv_episodes_rating.csv"
+tv_episode_rating<-read.csv(file=url)
+
+```
+
+### STEP 6: Data Analysis in R
+
+```{r}
+library(tidyverse)
+```
+
+#### Check NUll data
+
+```{r}
+anyNA(tv_episode_rating)
+```
+
+```{r}
+glimpse(tv_episode_rating)
+
+```
+
+There are 30 rows and 3 columns
+
+```{r}
+head(tv_episode_rating)
+
+```
+
+#### Count rating per user
+
+```{r}
+library(dplyr)
+```
+
+Removing missing rating
+
+```{r}
+filtered_rating_df <- tv_episode_rating %>%
+  filter(!is.na(rating))
+```
+
+```{r}
+filtered_user_rating_df <- filtered_rating_df %>%
+  group_by(name) %>%
+  summarise(number_of_ratings = n())
+
+filtered_user_rating_df
+```
+
+#### Count rating per tv_episodes
+
+```{r}
+filtered_episode_rating_df <- filtered_rating_df %>%
+  group_by(episode_name) %>%
+  summarise(number_of_ratings = n())
+
+filtered_episode_rating_df
+```
+
+#### Compute average ratings
+
+```{r}
+average_episode_rating_df <- filtered_rating_df %>%
+  group_by(episode_name) %>%
+  summarise(average_rating = mean(rating)) %>%
+  arrange(desc(average_rating))
+
+average_episode_rating_df  
+
+```
+
+```{r}
+ggplot(average_episode_rating_df,
+       aes(x = episode_name, y = average_rating)) +
+  geom_col() +
+  labs(
+    x = "TV Episode",
+    y = "Average Rating",
+    title = "Average Rating by TV Episode"
+  )
+```
+
+## Conclusions
+
+From my TV episode rating analysis, I found that Emily in Paris and Squid Game had the highest average ratings, with an average rating of 4.75. The other TV episodes had slightly lower average ratings based on the data I collected.

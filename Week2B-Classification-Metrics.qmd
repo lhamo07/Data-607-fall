@@ -13,3 +13,10 @@ Next, I will use the .pred_female column to make predictions using three differe
 ### Data Challenges
 
 Understanding how the different thresholds change the predictions. I also need to correctly identify true positives, false positives, true negatives, and false negatives.
+
+### Implementation
+```{r}
+url<-"C:/Users/tenlh/Downloads/penguin_predictions.csv"
+penguin_prediction<-read.csv(file=url)
+
+```
