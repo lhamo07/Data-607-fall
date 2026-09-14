@@ -20,3 +20,154 @@ url<-"C:/Users/tenlh/Downloads/penguin_predictions.csv"
 penguin_prediction<-read.csv(file=url)
 
 ```
+
+```{r}
+table(penguin_prediction$sex)
+
+sum(table(penguin_prediction$sex))
+```
+
+## Task 1: Null error rate
+
+```{r}
+null_error_rate<-table(penguin_prediction$sex)["female"]/sum(table(penguin_prediction$sex))
+null_error_rate
+```
+Null error rate is 41%
+
+```{r}
+ggplot(penguin_prediction,aes(x=sex))+
+  geom_bar()
+```
+
+Null error rate is the error rate a classification model gets when it always predicts the single most common class in a data set.
+It is important to know null error rate when evaluating model because, it acts as a baseline or benchmark. A good machine learning model must score an error rate lower than this null rate
+
+## Task 2:Confusion Matrices at Multiple Thresholds
+### Threshold =0.2
+If .pred_female>0.2 "female","male"
+
+Compute True Positives (TP)
+```{r}
+table(penguin_prediction$sex, ifelse(penguin_prediction$.pred_female>=0.2,1,0))
+
+```
+True Positive (TP) = 37
+True Negative (TN) = 48
+False Positive (FP) = 6
+False Negative (FN) = 2
+### Threshold =0.5
+```{r}
+table(penguin_prediction$sex, ifelse(penguin_prediction$.pred_female>=0.5,1,0))
+```
+True Positive (TP) = 36
+True Negative (TN) = 51
+False Positive (FP) = 3
+False Negative (FN) = 3
+
+### Threshold =0.8
+```{r}
+table(penguin_prediction$sex, ifelse(penguin_prediction$.pred_female>=0.8,1,0))
+```
+True Positive (TP) = 36
+True Negative (TN) = 52
+False Positive (FP) = 2
+False Negative (FN) = 3
+
+## Task 3: Performance Matrics
+### Threshold=0.2
+Accuracy = (TP + TN) / total
+```{r}
+accuracy<-(37+48)/(37+48+6+2)
+accuracy
+```
+Accuracy is 91.39%
+Precision = TP / (TP + FP)
+```{r}
+precision <- 37 / (37 + 6)
+precision
+```
+precision is 86%
+
+Recall = TP / (TP + FN)
+```{r}
+recall<-37/(37+2)
+recall
+
+```
+recall is 94.87%
+F1 = harmonic mean of precision and recall
+
+F1 <- 2 * (precision * recall) / (precision + recall)
+
+```{r}
+F1 <- 2 * (0.8604651 *0.9487179 ) / (0.8604651 + 0.9487179)
+F1
+
+```
+F1 score is 90.2%
+### Threshold=0.5
+```{r}
+accuracy<-(36+51)/(36+51+3+3)
+accuracy
+```
+Accuracy = (TP + TN) / total
+
+Accuracy is 93.54%
+
+```{r}
+precision <- 36 / (36 + 3)
+precision
+```
+precision is 92.3%
+
+Recall = TP / (TP + FN)
+```{r}
+recall<-36/(36+3)
+recall
+```
+recall is 92.3%
+
+
+F1 <- 2 * (precision * recall) / (precision + recall)
+
+```{r}
+F1 <- 2 * (0.9230769 *0.9230769 ) / (0.9230769 + 0.9230769)
+F1
+```
+F1 score is 92.3%
+### Threshold=0.8
+Accuracy = (TP + TN) / total
+```{r}
+accuracy<-(36+52)/(36+52+2+3)
+accuracy
+```
+Accuracy is 94.62%
+Precision = TP / (TP + FP)
+```{r}
+precision <- 36/ (36 + 2)
+precision
+```
+precision is 94.73%
+
+Recall = TP / (TP + FN)
+```{r}
+recall<-36/(36+2)
+recall
+
+```
+recall is 94.73%
+F1 = harmonic mean of precision and recall
+
+F1 <- 2 * (precision * recall) / (precision + recall)
+
+```{r}
+F1 <- 2 * (0.9473684 *0.9473684 ) / (0.9473684 + 0.9473684)
+F1
+
+```
+F1 score is 94.73%
+
+## Threshold Use Cases
+0.2 threshold is preferable when we need to identify as many people who have COVID-19.
+0.8 is preferable when it is more important to make sure accuracy is high.Health care provider is more confident that a person is likely to have Covid-19
