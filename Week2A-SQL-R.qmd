@@ -144,7 +144,7 @@ ggplot(average_episode_rating_df,
   geom_col() +
   labs(
     x = "TV Episode",
-    y = "Average Rating",
+    # y = "Average Rating",
     title = "Average Rating by TV Episode"
   )
 ```
