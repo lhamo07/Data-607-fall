@@ -1,0 +1,25 @@
+## Introduction
+
+In this assignment, I will implement window functions in dplyr to calculate the year-to-date average and six-day moving average for each item. I will use temperature time-series data for New York City and Los Angeles to demonstrate how window functions can be applied to time-series data.
+
+A **window function** performs a calculation across a set of related rows while keeping every original row in the dataset. Window functions allow you to calculate:
+
+-   **Running totals** — such as the sum of values from the beginning up to the current row.
+
+-   **Moving averages** — such as the average of the current row and the previous five rows.
+
+-   **Rankings** — such as ranking values within a group.
+
+Similar to an aggregate function using GROUP BY a window function performs calculations across multiple rows. However, unlike an aggregate function, a window function does not combine multiple rows into a single row. Instead, it keeps the original rows and adds the calculated result to each row.
+
+## Approach
+
+I will use window functions in dplyr to calculate the **year-to-date temperature average** for New York City and Los Angeles. I will also calculate the **six-day moving average** for both cities and compare the results.
+
+First, I will import my 2025 temperature time-series data into RStudio. Then, I will use dplyr window functions to calculate the year-to-date temperature averages and six-day moving averages for New York City and Los Angeles. Finally, I will compare the averages between the two cities to examine how their temperatures change over time.
+
+## Anticipated Challenges
+
+One anticipated challenge is making sure the temperature data is correctly ordered by date before applying the window functions. If the dates are not in the correct order, the year-to-date and six-day moving averages may be calculated incorrectly.
+
+Another challenge is handling missing temperature values. Missing data could affect the accuracy of the averages, especially for the six-day moving average
