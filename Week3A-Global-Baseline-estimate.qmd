@@ -1,0 +1,38 @@
+---
+title: "3A Global Baseline Estimate"
+author: "Tenzin Thakuri"
+format: html
+editor: visual
+---
+
+## Introduction
+
+The objective of this assignment is to implement a Global Baseline Estimate recommendation system in R using the last assignment's movie rating data that I'd collected and provided spreadsheet [Movie Ratings XLSX](https://brightspace.cuny.edu/content/enforced/1344367-SPS01_DATA_607_1269_1_34036/MovieRatings.xlsx?ou=1344367) . There are two types of recommendation system algorithm, personalized and non personalized.
+
+In this assignment, we are going to use "Global Baseline Estimate".
+
+**Baseline Estimate=Global Mean+User Bias+Item Bias**
+
+**Global Mean**: The overall average rating across all items and all users in the dataset.
+
+**User Bias**: How much a specific user's rating tend to deviate from the global average.
+
+**Item Bias**: How much a specific item's rating deviate from the global average.
+
+Global Baseline Estimate (often called a baseline predictor) is a non-personalized algorithm used in recommender system to predict how a user would rate a specific item.
+
+## Approach
+
+First, I will reformat the TV episode ratings data to a format similar to the provided movie ratings spreadsheet.
+
+Then, I will calculate each user's average TV episode rating in R and store the results in a user_avg column. I will also calculate the sum of the user averages.
+
+Next, I will calculate the average rating for each TV episode in R and store the results in a movie_avg column at the end of the records.
+
+Then, I will identify any TV episode that is missing a rating for a particular user. For each missing rating, I will use the Global Baseline Estimate formula to calculate a predicted rating based on the available user ratings, episode ratings, and overall average rating. Then I'll make sure the calculations are valid and reproducible.\
+
+## Anticipated Challenges
+
+Since I only have five users rating six TV episodes, there is a chance that some episodes will not be rated by certain users. This may result in missing ratings and could potentially introduce bias into the analysis. The small number of users may also make the average ratings less representative.
+
+## 
