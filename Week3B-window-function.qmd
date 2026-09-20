@@ -1,3 +1,10 @@
+---
+title: "3B Window Functions"
+author: "Tenzin Thakuri"
+format: html
+editor: visual
+---
+
 ## Introduction
 
 In this assignment, I will implement window functions in dplyr to calculate the year-to-date average and six-day moving average for each item. I will use temperature time-series data for New York City and Los Angeles to demonstrate how window functions can be applied to time-series data.
@@ -22,4 +29,107 @@ First, I will import my 2025 temperature time-series data into RStudio. Then, I 
 
 One anticipated challenge is making sure the temperature data is correctly ordered by date before applying the window functions. If the dates are not in the correct order, the year-to-date and six-day moving averages may be calculated incorrectly.
 
-Another challenge is handling missing temperature values. Missing data could affect the accuracy of the averages, especially for the six-day moving average
+Another challenge is handling missing temperature values. Missing data could affect the accuracy of the averages, especially for the six-day moving average \## Code
+
+```{r}
+library(dplyr)
+library(lubridate)
+library(slider)
+library(ggplot2)
+```
+
+```{r}
+url<-"https://raw.githubusercontent.com/lhamo07/Data-607-Assignment/refs/heads/week3-Assignment/temperature_time_series.csv"
+
+temperature_df_df<-read.csv(file = url)
+```
+
+### check null value
+
+```{r}
+sum(is.na(temperature_df_df))
+```
+
+### Filter dataset by New York and Los Angeles cities
+
+```{r}
+
+ny_temperature_df<-temperature_df_df%>%
+    mutate(Date=mdy(Date))%>%
+  filter(City=="New York")
+ head(ny_temperature_df)
+  
+```
+
+```{r}
+
+la_temperature_df<-temperature_df_df%>%
+  filter(City=="Los Angeles")%>%
+  mutate(Date=mdy(Date))
+ head(la_temperature_df)
+  
+```
+
+```{r}
+glimpse(ny_temperature_df)
+```
+
+since Date is of chr type so I have converted it into Date using lubridate library \### Calculate year to date average temperature of New York
+
+```{r}
+ny_temperature_ytd_avg<-ny_temperature_df%>%
+  arrange(Date)%>%
+  group_by(year=year(Date))%>%
+  mutate(ytd_avg=cummean(Temperature_F))%>%
+  ungroup()
+head(ny_temperature_ytd_avg)
+```
+
+### Calculate year to date average temperature of Los Angeles
+
+```{r}
+la_temperature_ytd_avg<-la_temperature_df%>%
+  arrange(Date)%>%
+  group_by(year=year(Date))%>%
+  mutate(ytd_avg=cummean(Temperature_F))%>%
+  ungroup()
+head(la_temperature_ytd_avg)
+```
+
+### Calculate six days moving average for NY
+
+```{r}
+six_day_ma_ny <- ny_temperature_df%>%
+  arrange(Date) %>%
+  mutate(
+    moving_avg_6day = slide_dbl(Temperature_F, mean, .before = 5, .complete = TRUE)
+  )
+head(six_day_ma_ny)
+
+```
+
+### Calculate six days moving average for LA
+
+```{r}
+six_day_ma_la <- la_temperature_df%>%
+  arrange(Date) %>%
+  mutate(
+    moving_avg_6day = slide_dbl(Temperature_F, mean, .before = 5, .complete = TRUE)
+  )
+head(six_day_ma_la)
+
+```
+
+```{r}
+combine_df<-bind_rows(six_day_ma_ny %>% mutate(City = "New York"),
+                      six_day_ma_la %>% mutate(City = "Los Angeles"),)
+ggplot(combine_df,aes(x=Date,y=moving_avg_6day,color=City
+))+geom_line()
+head(combine_df)
+```
+
+## Conclusion
+
+By using window functions such as cummean(), slide_dbl(), group_by(), and mutate(), I was able to calculate the year-to-date average temperature and six-day moving average temperature for New York City and Los Angeles.
+
+From the analysis, Los Angeles was generally warmer than New York City during most of 2025. However, around July, New York City experienced higher temperatures than Los Angeles.
