@@ -1,0 +1,44 @@
+---
+title: "Project1"
+author: "Tenzin Lhamo Thakuri"
+date: "2026-09-22"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: sentence
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Introduction
+
+The objective of Project1 is to to extract data from the given text file <https://brightspace.cuny.edu/content/enforced/1344367-SPS01_DATA_607_1269_1_34036/tournamentinfo.txt?ou=1344367> and generates a .csv file.
+The required information includes the Player's Name, Player's State, Total Number of Points, Player's Pre-Rating, and the Average Pre-Chess Rating of Opponents.
+
+**Following is my approach to accomplish the above objective.**
+
+**Step 1:** First, I will read the given text file into R.
+
+**Step 2**: I will examine the structure of the text file and determine which regular expressions (regex) are needed to extract the required information.
+
+**Step 3**: I will use str_extract() and regular expressions to extract information such as Player's Name, Player's State, Total Number of Points, and Player's Pre-Rating.
+I will then create appropriate variable/column names for the extracted data.
+
+**Step 4**: Calculate Average Pre-Chess Rating of Opponents.
+
+**Step4.1:** I will identify each player's opponents using the opponent numbers provided for each round and match those opponents with their Pre-Ratings.
+
+**Step 4.2**: I will calculate each player's Average Pre-Chess Rating of Opponents by dividing the total Pre-Rating of the opponents by the number of games played.
+
+**Step 5**: There may be NA values in the dataset.
+I will identify and handle the missing values appropriately during the data-cleaning and calculation process.
+
+**Step 6:** Finally, I will generate the .csv file using the write_csv() function in R.
+
+**Anticipated Data challenges**
+
+-   Extracting and organizing data from an unstructured text file.
+
+-   Matching each opponent to the correct player in order to calculate the Average Pre-Chess Rating of Opponents.
