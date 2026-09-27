@@ -42,3 +42,116 @@ I will identify and handle the missing values appropriately during the data-clea
 -   Extracting and organizing data from an unstructured text file.
 
 -   Matching each opponent to the correct player in order to calculate the Average Pre-Chess Rating of Opponents.
+
+## Code Base
+
+### Reading tournamentinfo.txt and Extracting Player Information
+
+I converted text into a tibble with one column called text.
+I remove separator lines containing dashes and remove the first two rows because they contain information that is not needed for the analysis.
+I grouped the data by player and combined the two rows for each player into one row.
+
+```{r}
+library(tidyverse)
+text<-read_lines("https://raw.githubusercontent.com/lhamo07/Data-607-Assignment/refs/heads/Project1/tournamentinfo.txt")
+  tournamentInfo_df <- tibble(text = text)%>%
+    filter(!str_detect(text, "^\\s*-+\\s*$")) %>%
+    slice(-(1:2))%>%
+     mutate(
+    person = ceiling(row_number() / 2)
+  ) %>%
+  group_by(person) %>%
+  summarise(
+    text = paste(text, collapse = " "),
+    .groups = "drop"
+  ) %>%
+    
+# I use regular expressions with str_extract() to extract the player number, player name, state, total points, and pre-tournament rating from the combined text. I use as.numeric() to convert the player number, total points, and pre-rating from character values to numeric values. After extracting the required information, I remove the temporary text and person columns because they are no longer needed.
+    
+    mutate(
+   Player_num=as.numeric(str_extract(text,"^\\s*(\\d+)")),
+  Player_name=str_extract(text,  "(?<=\\|\\s)[A-Z]+(?:[-\\s]+[A-Z]+)+(?=\\s*\\|)"
+),
+  Player_state = str_extract(text, "[A-Z]{2}(?=\\s*\\|\\s*\\d{8})"),
+Total_Points=as.numeric(str_extract(text,"(?<=\\|)\\s*\\d+\\.\\d+")),
+
+  Player_pre_Rating=as.numeric(str_extract(text,"(?<=R:)\\s*\\d+")))%>%
+
+      select(-text)%>%
+
+  select(-person)
+
+    tournamentInfo_df
+    
+```
+
+```{r}
+glimpse(tournamentInfo_df)
+```
+
+### Extracting Opponent Data and Calculating the Average
+
+Extracting Players opponent number was quite challenging so to make it simple, I created another data frame called opponents_df to extract Opponent_Player_num along with their game results.
+The str_extract_all() function is used because each player can have multiple opponents.
+unnest_longer() takes those multiple values and puts each opponent on its own row.
+
+```{r}
+opponents_df <- tibble(text = text) %>%
+  filter(str_detect(text, "^\\s*\\d+\\s*\\|")) %>%
+  mutate(
+    Player_num = str_extract(text, "^\\s*\\d+"),
+    Opponent_Player_num = str_extract_all(text, "[WDL]\\s+\\d+")
+  ) %>%
+  unnest_longer(Opponent_Player_num) %>%
+  mutate(
+    Player_num = as.numeric(Player_num),
+    Opponent_Player_num = as.numeric(
+      str_extract(Opponent_Player_num, "\\d+")
+    )
+  )
+
+opponents_df <- opponents_df %>%
+  left_join(
+    tournamentInfo_df %>%
+      select(Player_num, Player_pre_Rating),
+    by = c("Opponent_Player_num" = "Player_num")
+  )
+# I calculated the average pre-rating of each player's opponents and then joined the opponent_mean data frame to tournamentInfo_df using Player_num. The final result was stored in the result data frame.
+
+opponent_mean <- opponents_df %>%
+  group_by(Player_num) %>%
+  summarise(
+    Avg_Opponent_Pre_Rating = round(mean(Player_pre_Rating, na.rm = TRUE),digit=0)
+  )
+opponent_mean
+
+result <- tournamentInfo_df %>%
+  left_join(opponent_mean %>% select(Player_num,Avg_Opponent_Pre_Rating), by = "Player_num")
+result
+
+
+```
+
+### Generate result data frame to chess_tournament.csv
+
+```{r}
+write_csv(result, "chess_tournament.csv")
+```
+
+## Conclusion
+
+In this project, I successfully extracted and organized the required chess tournament data, calculated the average pre-rating of each player's opponents, and exported the results as chess_tournament.csv.
+This project helped me practice regular expressions, data cleaning, and joining data frames in R.
+The code could be improved by using functions to make it more organized, reusable, and efficient.
+
+### Reference
+
+I used ChatGPT to help with this project, particularly with understanding and developing R code for extracting and organizing data from the chess tournament text file.
+I reviewed, tested, and modified the suggested code to complete the analysis and meet the project requirements.
+OpenAI.
+(2026).
+ChatGPT [Large language model].
+<https://chatgpt.com>.
+Accessed September 27, 2026.
+
+Chat conversation: <https://chatgpt.com/share/6ab99ab2-fc58-83ea-8d69-0e254d8e6227>
