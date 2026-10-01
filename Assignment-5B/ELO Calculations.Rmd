@@ -1,0 +1,26 @@
+---
+title: "Assignment:5B ELO Calculations"
+author: "Tenzin Lhamo Thakuri"
+date: "2026-10-01"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+## Task
+
+Chess ELO calculations
+
+Based on difference in ratings between the chess players and each of their opponents in our Project 1 tournament, calculate each player’s expected score (e.g. 4.3) and the difference from their actual score (e.g 4.0).  List the five players who most overperformed relative to their expected score, and the five players that most underperformed relative to their expected score.
+
+## Approach
+Step 1: Calculate the expected score of each player using the ELO formula mentioned here
+https://www.youtube.com/watch?v=AsYfbmp0To0
+Step 2: calculate difference of players expected score from their actual score, in my data "Total_Points".
+Step 3: Sort result data in descending order to find five most overperformed players relative to their actual score.
+step 4: Sort result data in ascending order to find five most underperformed players relative to their actual score.
+
+## Anticipated Challenges
+-Find expected score of all the palyers, sort them to analyse it.
+
