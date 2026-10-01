@@ -1,0 +1,71 @@
+---
+title: 'Assignment 5A: Airline Delays'
+author: "Tenzin Lhamo Thakuri"
+date: "2026-09-30"
+output: html_document
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Task
+
+Submitted data file with at least some count analysis (+45)
+
+Recreated File in Same Format as given, including missing data where
+there were empty cells in source data. (+5)
+
+Placed file in Internet-accessible location, such as a
+publicly-accessible GitHub repo. Also OK (if less scaleable) to
+generated and populated dataframe from code. (+5)
+
+Provided code to populate missing data. (+5)
+
+Transformed data from wide to long format. (+10)
+
+Compared percentage (not just counts) of either delays or arrival rates
+for two airlines overall. [Either with a chart, or a table; both would
+be exemplary]. Include text summarizes findings from this comparison.
+(+10)
+
+Compared percentage (not just counts) of either delays or arrival rates
+for two airlines across five cities. [Either with a chart, or a table;
+both would be exemplary]. Include text summarizes findings from this
+comparison. (+10)
+
+Describe discrepancy between comparing two airlines’ flight performances
+city-by-city and overall. (+5)
+
+Assignment Tidying and Transforming Data
+
+Explain discrepancy between comparing two airlines’ flight performances
+city-by-city and overall.(+5)
+
+The chart above describes arrival delays for two airlines across five
+destinations. Your task is to: (1) Create a .CSV file (or optionally, a
+MySQL database!) that includes all of the information above. You’re
+encouraged to use a “wide” structure similar to how the information
+appears above, so that you can practice tidying and transformations as
+described below. (2) Read the information from your .CSV file into R,
+and use tidyr and dplyr as needed to tidy and transform your data. (3)
+Perform analysis to compare the arrival delays for the two airlines.
+
+## Approach
+
+Step 1: Create database and table to insert given two airlines delay
+data (wide structure data) in postgreSQL. Step 2: Connect R to
+PostgreSQL Step 3: Read a SQL table into R Step 4: Save the SQL table as
+CSV Step 5: Read wide structure data from github into R. Step 6:
+Transform wide data to long structure data. Step 7: Compare two airlines
+arrival delays across five cities using plot percentage
+
+## Anticipated Challenges
+
+converting wide structure data to long structure. Making comparison
+between two airlines across all cities.
+
+
