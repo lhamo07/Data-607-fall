@@ -20,8 +20,8 @@ Recreated File in Same Format as given, including missing data where
 there were empty cells in source data. (+5)
 
 Placed file in Internet-accessible location, such as a
-publicly-accessible GitHub repo. Also OK (if less scaleable) to
-generated and populated dataframe from code. (+5)
+publicly-accessible GitHub repo. Also OK (if less scalable) to
+generated and populated data frame from code. (+5)
 
 Provided code to populate missing data. (+5)
 
@@ -68,4 +68,165 @@ arrival delays across five cities using plot percentage
 converting wide structure data to long structure. Making comparison
 between two airlines across all cities.
 
+## Code Base
+### Load necessary libraries
+```{r}
+library(DBI)
+library(RPostgres)
+library(tidyverse)
+```
+### Create Database, Table, and Insert Data
 
+The following SQL code creates the airlines_arrival_delay table, inserts the data provided in the assignment, and displays all the records in the table.
+
+CREATE TABLE airlines_arrival_delay("airline" VARCHAR(50), status VARCHAR(50), los_angeles Int,phoenix Int, san_diego Int,san_francisco Int,seattle Int);
+INSERT INTO airlines_arrival_delay(airline,status,los_angeles,phoenix,san_diego,san_francisco,seattle)VALUES
+('ALASKA','on time',497,221,212,503,1841),
+(NULL,'delayed',62,12,20,102,305),
+(NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+('AMWEST','on time',694,4840,383,320,201),
+(NULL,'delayed',117,415,65,129,61);
+SELECT * FROM airlines_arrival_delay;
+
+### Connect R to PostgreSQL
+```{r}
+con <- dbConnect(
+  RPostgres::Postgres(),
+  dbname = "Airlines_delay",
+  host = "localhost",
+  port = 5432,
+  user = "postgres",
+  password = Sys.getenv("DB_PASSWORD")
+)
+```
+
+```{r}
+dbListTables(con)
+```
+
+```{r}
+airlines_df <- dbReadTable(con, "airlines_arrival_delay")
+head(airlines_df)
+```
+```{r}
+#set first and second columns name empty.
+names(airlines_df)[1:2] <- c(" ", " ")
+write.csv(airlines_df, file="airlines_arrival_delay.csv", row.names = FALSE)
+```
+### Load airline arrival delay dataset
+```{r}
+url<-"https://raw.githubusercontent.com/lhamo07/Data-607-Assignment/refs/heads/main/Assignment-5A/airlines_arrival_delay.csv"
+airlines_arrival_delay_df<-read.csv(file=url)
+airlines_arrival_delay_df
+```
+Rename the first two un-labelled columns as "airline" and "status"
+
+```{r}
+colnames(airlines_arrival_delay_df)[1:2] <- c("airline", "status")
+airlines_arrival_delay_df
+```
+
+```{r}
+airline_long_structure<-airlines_arrival_delay_df%>%
+  fill(airline)%>%
+  pivot_longer(cols=!(airline:status),
+               names_to="city",
+               values_to="flight_count",
+                   values_drop_na = TRUE
+
+               )
+airline_long_structure
+```
+First, I used fill(airline) to fill in the missing airline names with the corresponding airline name above. Then, I used pivot_longer() to convert the data from a wide structure to a long structure. In cols = !(airline:status), all columns except the columns from airline through status are selected for transformation. The selected column names are stored in the new city column using names_to = "city", and their corresponding values are stored in the flight_count column using values_to = "flight_count". Finally, values_drop_na = TRUE removes rows where the flight count value is missing NA
+### Percentage of delays rates for ALASKA airlines
+```{r}
+alaska_summary<-airline_long_structure%>%
+filter(airline=="ALASKA")%>%
+  summarize(
+    airline="ALASKA",
+    total_delayed=sum(flight_count[status=='delayed']),
+    total_on_time = sum(flight_count[status == "on time"]),
+    grand_total   = total_delayed + total_on_time,
+    delay_percent = round((total_delayed / grand_total) * 100,digits=2)
+    )
+alaska_summary
+
+
+```
+###  Percentage of delays rates for AMWEST airlines
+
+```{r}
+amwest_summary<-airline_long_structure%>%
+filter(airline=="AMWEST")%>%
+  summarize(
+    airline="AMWEST",
+    total_delayed=sum(flight_count[status=='delayed']),
+    total_on_time = sum(flight_count[status == "on time"]),
+    grand_total   = total_delayed + total_on_time,
+    delay_percent = round((total_delayed / grand_total) * 100,digits=2)
+    )
+amwest_summary
+
+
+```
+
+```{r}
+percentage_summary<-bind_rows(alaska_summary,amwest_summary)
+percentage_summary
+```
+### Compared percentage of delays  rates for two airlines overall.
+
+```{r}
+ggplot(percentage_summary,aes(x=airline,y=delay_percent,fill=airline))+
+  geom_col(width=0.5)+
+   geom_text(
+    aes(label = paste0(delay_percent, "%")),
+    vjust = -0.5)+
+    labs(
+      title = "Overall Arrival Delay Percentage by Airline",
+    x = "Airline",
+    y = "Overall Delay Percentage (%)"
+    )+
+    theme_minimal()
+```
+
+From the above plot, I found that the overall delay percentage for ALASKA Airline is 13.27%, while AMWEST Airline is 10.83%. Based on this comparison, I would say that AMWEST Airlines appears to be more reliable for passengers who are concerned about flight delays.
+
+### Compared percentage of delays rates for two airlines across five cities.
+```{r}
+city_summary<-airline_long_structure%>%
+group_by(airline,city)%>%
+    mutate(city_total=sum(flight_count),
+           delay_percentage=round((flight_count/city_total)*100,digits=2))%>%
+  
+
+  filter(status=="delayed")
+  
+ 
+city_summary
+```
+
+```{r}
+ggplot(city_summary,aes(x=city,y=delay_percentage,fill=airline))+
+  geom_col(width=0.5,position="dodge")+
+  geom_text(
+    aes(label = paste0(delay_percentage, "%")),
+    vjust = -0.5)+
+    labs(
+      title = "Overall Arrival Delay Percentage by Airline",
+    x = "Airline",
+    y = "Overall Delay Percentage (%)"
+    )+
+
+    theme_minimal()
+```
+
+From the above plot, I can conclude that Phoenix has the lowest flight delay percentage for both airlines. San Francisco has the highest delay percentage for AMWEST Airlines. The remaining cities have relatively similar flight delay percentages for both airlines.
+
+## Conclusion
+Although the overall percentage of delays for ALASKA Airlines is higher than AMWEST Airlines, the city level comparison shows that AMWEST has a higher delay percentage in some cities. Therefore, if I were planning a trip, I would compare the delay percentages by city rather than relying only on the overall delay percentage.
+
+### citation
+https://chatgpt.com/share/6abc7bac-d99c-83e9-a515-e584ba7ef430
+https://chatgpt.com/share/6ac2d87e-7cb8-83ea-899e-9e8371c0fbb0
+OpenAI. (2026). ChatGPT [Large language model]. https://chatgpt.com. Accessed October 4, 2026.
