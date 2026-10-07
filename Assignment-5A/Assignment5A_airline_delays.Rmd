@@ -2,9 +2,11 @@
 title: 'Assignment 5A: Airline Delays'
 author: "Tenzin Lhamo Thakuri"
 date: "2026-09-30"
-output: html_document
-editor_options: 
-  markdown: 
+output:
+  pdf_document: default
+  html_document: default
+editor_options:
+  markdown:
     wrap: 72
 ---
 

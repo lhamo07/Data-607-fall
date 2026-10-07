@@ -381,6 +381,206 @@ underperformed players relative to their actual score.</p>
 <h2>Anticipated Challenges</h2>
 <p>-Find expected score of all the palyers, sort them to analyse it.</p>
 </div>
+<div id="code-base" class="section level2">
+<h2>Code Base</h2>
+<pre class="r"><code>library(tidyverse)</code></pre>
+<pre><code>## ── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+## ✔ dplyr     1.2.0     ✔ readr     2.2.0
+## ✔ forcats   1.0.1     ✔ stringr   1.6.0
+## ✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+## ✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+## ✔ purrr     1.2.1     
+## ── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+## ✖ dplyr::filter() masks stats::filter()
+## ✖ dplyr::lag()    masks stats::lag()
+## ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+<pre class="r"><code># 1. Read and clean text
+text &lt;- read_lines(&quot;https://raw.githubusercontent.com/lhamo07/Data-607-Assignment/refs/heads/Project1/tournamentinfo.txt&quot;)
+
+tournamentInfo_df &lt;- tibble(text = text) %&gt;%
+  filter(!str_detect(text, &quot;^\\s*-+\\s*$&quot;)) %&gt;%
+  slice(-(1:2)) %&gt;%
+  mutate(person = ceiling(row_number() / 2)) %&gt;%
+  group_by(person) %&gt;%
+  summarise(text = paste(text, collapse = &quot; &quot;), .groups = &quot;drop&quot;) %&gt;%
+  mutate(
+    Pair_Num = as.numeric(str_extract(text, &quot;^\\s*(\\d+)&quot;)),
+    Player_name = str_trim(str_extract(text, &quot;(?&lt;=\\|\\s)[A-Z]+(?:[-\\s]+[A-Z]+)+(?=\\s*\\|)&quot;)),
+    Total_Points = as.numeric(str_extract(text, &quot;(?&lt;=\\|)\\s*\\d+\\.\\d+&quot;)),
+    Player_pre_Rating = as.numeric(str_extract(text, &quot;(?&lt;=R:)\\s*\\d+&quot;))
+  )
+
+# 2. Extract raw round text blocks and parse opponent ID numbers
+rounds_df &lt;- tournamentInfo_df %&gt;%
+  mutate(rounds_text = str_extract(text, &quot;(\\|\\s*[WLDXHP\\s]\\s*\\d*\\s*){7}(?=\\|)&quot;)) %&gt;%
+  separate(rounds_text, into = c(&quot;drop&quot;, &quot;R1&quot;, &quot;R2&quot;, &quot;R3&quot;, &quot;R4&quot;, &quot;R5&quot;, &quot;R6&quot;, &quot;R7&quot;), sep = &quot;\\|&quot;) %&gt;%
+  mutate(across(R1:R7, ~ as.numeric(str_extract(.x, &quot;\\d+&quot;)))) %&gt;%
+  select(Pair_Num, Player_name, Total_Points, Player_pre_Rating, R1:R7)
+
+# 3. Create a clean lookup table for player ratings
+rating_lookup &lt;- rounds_df %&gt;% 
+  select(Pair_Num, Player_pre_Rating)
+
+# 4. Map opponent IDs to their respective pre-tournament ratings
+opponent_info_df &lt;- rounds_df %&gt;%
+  pivot_longer(cols = R1:R7, names_to = &quot;Round&quot;, values_to = &quot;Opponent_Num&quot;) %&gt;%
+  left_join(rating_lookup, by = c(&quot;Opponent_Num&quot; = &quot;Pair_Num&quot;)) %&gt;%
+  rename(Opponent_Pre_Rating = Player_pre_Rating.y, Player_pre_Rating = Player_pre_Rating.x) %&gt;%
+  
+  # Pivot back into a wide format showing Opponent ID and Opponent Rating side-by-side per round
+  pivot_wider(
+    names_from = Round, 
+    values_from = c(Opponent_Num, Opponent_Pre_Rating),
+    names_glue = &quot;{Round}_{.value}&quot;
+  ) %&gt;%
+  # Reorder columns chronologically (R1 info, R2 info, etc.)
+  select(
+    Pair_Num, Player_name, Total_Points, Player_pre_Rating,
+     R1_Opponent_Pre_Rating,
+   R2_Opponent_Pre_Rating,
+   R3_Opponent_Pre_Rating,
+   R4_Opponent_Pre_Rating,
+     R5_Opponent_Pre_Rating,
+     R6_Opponent_Pre_Rating,
+     R7_Opponent_Pre_Rating
+  )
+
+opponent_info_df</code></pre>
+<pre><code>## # A tibble: 64 × 11
+##    Pair_Num Player_name    Total_Points Player_pre_Rating R1_Opponent_Pre_Rating
+##       &lt;dbl&gt; &lt;chr&gt;                 &lt;dbl&gt;             &lt;dbl&gt;                  &lt;dbl&gt;
+##  1        1 GARY HUA                6                1794                   1436
+##  2        2 DAKSHESH DARU…          6                1553                   1175
+##  3        3 ADITYA BAJAJ            6                1384                   1641
+##  4        4 PATRICK H SCH…          5.5              1716                   1363
+##  5        5 HANSHI ZUO              5.5              1655                   1242
+##  6        6 HANSEN SONG             5                1686                   1399
+##  7        7 GARY DEE SWAT…          5                1649                   1092
+##  8        8 EZEKIEL HOUGH…          5                1641                   1384
+##  9        9 STEFANO LEE             5                1411                   1745
+## 10       10 ANVIT RAO               5                1365                   1604
+## # ℹ 54 more rows
+## # ℹ 6 more variables: R2_Opponent_Pre_Rating &lt;dbl&gt;,
+## #   R3_Opponent_Pre_Rating &lt;dbl&gt;, R4_Opponent_Pre_Rating &lt;dbl&gt;,
+## #   R5_Opponent_Pre_Rating &lt;dbl&gt;, R6_Opponent_Pre_Rating &lt;dbl&gt;,
+## #   R7_Opponent_Pre_Rating &lt;dbl&gt;</code></pre>
+<div id="calculate-elo" class="section level3">
+<h3>Calculate ELO</h3>
+<p>The standard Elo expected score formula is <span class="math display">\[E_A = \frac{1}{1 + 10^{(R_B - R_A) /
+400}}\]</span></p>
+<p>Where: * <span class="math inline">\(R_A\)</span> is Player A’s
+current rating. * <span class="math inline">\(R_B\)</span> is Player B’s
+current rating.</p>
+<pre class="r"><code>elo_df&lt;-opponent_info_df%&gt;%
+# Drops any row where Rating_A or Rating_B is missing
+
+drop_na(R1_Opponent_Pre_Rating, R2_Opponent_Pre_Rating, R3_Opponent_Pre_Rating,
+          R4_Opponent_Pre_Rating, R5_Opponent_Pre_Rating, R6_Opponent_Pre_Rating, 
+          R7_Opponent_Pre_Rating)%&gt;%  mutate(ELO_R1=1/(1+10^((R1_Opponent_Pre_Rating-Player_pre_Rating)/400)),
+         ELO_R2=1/(1+10^((R2_Opponent_Pre_Rating-Player_pre_Rating)/400)),
+         ELO_R3=1/(1+10^((R3_Opponent_Pre_Rating-Player_pre_Rating)/400)),
+         ELO_R4=1/(1+10^((R4_Opponent_Pre_Rating-Player_pre_Rating)/400)),
+         ELO_R5=1/(1+10^((R5_Opponent_Pre_Rating-Player_pre_Rating)/400)),
+         ELO_R6=1/(1+10^((R6_Opponent_Pre_Rating-Player_pre_Rating)/400)),
+         ELO_R7=1/(1+10^((R7_Opponent_Pre_Rating-Player_pre_Rating)/400)),
+         ELO_total=ELO_R1+ELO_R2+ELO_R3+ELO_R4+ELO_R5+ELO_R6+ELO_R7
+         
+         
+         )
+elo_df</code></pre>
+<pre><code>## # A tibble: 41 × 19
+##    Pair_Num Player_name    Total_Points Player_pre_Rating R1_Opponent_Pre_Rating
+##       &lt;dbl&gt; &lt;chr&gt;                 &lt;dbl&gt;             &lt;dbl&gt;                  &lt;dbl&gt;
+##  1        1 GARY HUA                6                1794                   1436
+##  2        2 DAKSHESH DARU…          6                1553                   1175
+##  3        3 ADITYA BAJAJ            6                1384                   1641
+##  4        4 PATRICK H SCH…          5.5              1716                   1363
+##  5        5 HANSHI ZUO              5.5              1655                   1242
+##  6        6 HANSEN SONG             5                1686                   1399
+##  7        7 GARY DEE SWAT…          5                1649                   1092
+##  8        8 EZEKIEL HOUGH…          5                1641                   1384
+##  9        9 STEFANO LEE             5                1411                   1745
+## 10       10 ANVIT RAO               5                1365                   1604
+## # ℹ 31 more rows
+## # ℹ 14 more variables: R2_Opponent_Pre_Rating &lt;dbl&gt;,
+## #   R3_Opponent_Pre_Rating &lt;dbl&gt;, R4_Opponent_Pre_Rating &lt;dbl&gt;,
+## #   R5_Opponent_Pre_Rating &lt;dbl&gt;, R6_Opponent_Pre_Rating &lt;dbl&gt;,
+## #   R7_Opponent_Pre_Rating &lt;dbl&gt;, ELO_R1 &lt;dbl&gt;, ELO_R2 &lt;dbl&gt;, ELO_R3 &lt;dbl&gt;,
+## #   ELO_R4 &lt;dbl&gt;, ELO_R5 &lt;dbl&gt;, ELO_R6 &lt;dbl&gt;, ELO_R7 &lt;dbl&gt;, ELO_total &lt;dbl&gt;</code></pre>
+</div>
+<div id="calculate-difference-from-actual-score" class="section level3">
+<h3>Calculate difference from actual score</h3>
+<pre class="r"><code>final_df&lt;-elo_df%&gt;%
+  mutate(Score_minus_Expected=Total_Points-ELO_total)%&gt;%
+  select(Pair_Num,Player_name,Total_Points,Player_pre_Rating,ELO_total,Score_minus_Expected)
+
+final_df</code></pre>
+<pre><code>## # A tibble: 41 × 6
+##    Pair_Num Player_name         Total_Points Player_pre_Rating ELO_total
+##       &lt;dbl&gt; &lt;chr&gt;                      &lt;dbl&gt;             &lt;dbl&gt;     &lt;dbl&gt;
+##  1        1 GARY HUA                     6                1794      5.16
+##  2        2 DAKSHESH DARURI              6                1553      3.78
+##  3        3 ADITYA BAJAJ                 6                1384      1.95
+##  4        4 PATRICK H SCHILLING          5.5              1716      4.74
+##  5        5 HANSHI ZUO                   5.5              1655      4.38
+##  6        6 HANSEN SONG                  5                1686      4.94
+##  7        7 GARY DEE SWATHELL            5                1649      4.58
+##  8        8 EZEKIEL HOUGHTON             5                1641      5.03
+##  9        9 STEFANO LEE                  5                1411      2.29
+## 10       10 ANVIT RAO                    5                1365      1.94
+## # ℹ 31 more rows
+## # ℹ 1 more variable: Score_minus_Expected &lt;dbl&gt;</code></pre>
+</div>
+<div id="calculate-five-most-overperformed-relative-to-their-expected-score" class="section level3">
+<h3>Calculate five most overperformed relative to their expected
+score</h3>
+<pre class="r"><code>overperform_df&lt;-final_df%&gt;%
+  arrange(desc(Score_minus_Expected))
+head(overperform_df,n=5)</code></pre>
+<pre><code>## # A tibble: 5 × 6
+##   Pair_Num Player_name              Total_Points Player_pre_Rating ELO_total
+##      &lt;dbl&gt; &lt;chr&gt;                           &lt;dbl&gt;             &lt;dbl&gt;     &lt;dbl&gt;
+## 1        3 ADITYA BAJAJ                      6                1384    1.95  
+## 2       15 ZACHARY JAMES HOUGHTON            4.5              1220    1.37  
+## 3       10 ANVIT RAO                         5                1365    1.94  
+## 4       46 JACOB ALEXANDER LAVALLEY          3                 377    0.0432
+## 5        9 STEFANO LEE                       5                1411    2.29  
+## # ℹ 1 more variable: Score_minus_Expected &lt;dbl&gt;</code></pre>
+</div>
+<div id="calculate-five-most-underperformed-relative-to-their-expected-score" class="section level3">
+<h3>Calculate five most underperformed relative to their expected
+score</h3>
+<pre class="r"><code>underperform_df&lt;-final_df%&gt;%
+  arrange(Score_minus_Expected)
+head(underperform_df,n=5)</code></pre>
+<pre><code>## # A tibble: 5 × 6
+##   Pair_Num Player_name        Total_Points Player_pre_Rating ELO_total
+##      &lt;dbl&gt; &lt;chr&gt;                     &lt;dbl&gt;             &lt;dbl&gt;     &lt;dbl&gt;
+## 1       25 LOREN SCHWIEBERT            3.5              1745      6.28
+## 2       30 GEORGE AVERY JONES          3.5              1522      6.02
+## 3       42 JARED GE                    3                1332      5.01
+## 4       31 RISHI SHETTY                3.5              1494      5.09
+## 5       35 JOSHUA DAVID LEE            3.5              1438      4.96
+## # ℹ 1 more variable: Score_minus_Expected &lt;dbl&gt;</code></pre>
+</div>
+</div>
+<div id="conclusion" class="section level2">
+<h2>Conclusion</h2>
+<p>Based on the overperformed relative to their expected score data,
+Aditya Bajaj scored 6.0 total points even though his predicted score was
+only 1.95 points. This means Aditya performed much better than expected.
+Similarly, Zachary James Houghton and Anvit Rao also performed
+significantly better than the model predicted. Based on the
+underperformed relative to their expected score data, Loren Schwiebert
+scored only 3.5 total points even though his predicted score was 6.28
+points. This means he performed much worse than expected. Similarly,
+George Avery Jones, Jared Ge, Rishi Shetty, and Joshua David Lee also
+scored fewer points than the model predicted.</p>
+</div>
+<div id="citation" class="section level2">
+<h2>Citation</h2>
+<p>[Large language model]. google.com. Accessed October 4, 2026. <a href="https://share.google/aimode/j7NEiRnQ1M8CZXzpC" class="uri">https://share.google/aimode/j7NEiRnQ1M8CZXzpC</a></p>
+</div>
 
 
 

@@ -2,7 +2,9 @@
 title: "Assignment:5B ELO Calculations"
 author: "Tenzin Lhamo Thakuri"
 date: "2026-10-01"
-output: html_document
+output:
+  html_document: default
+  pdf_document: default
 ---
 
 ```{r setup, include=FALSE}
@@ -135,8 +137,8 @@ head(underperform_df,n=5)
 ```
 
 ## Conclusion
-Based on the overperformed relative to their expected score data, Aditya Bajaj scored 6.0 total points even though his predicted score was only 1.95 points. This means Aditya performed much better than expected. Similarly, Zachary James Houghton and Anvit Rao also performed significantly better than the model predicted.
-Based on the underperformed relative to their expected score data, Loren Schwiebert scored only 3.5 total points even though his predicted score was 6.28 points. This means he performed much worse than expected. Similarly, George Avery Jones, Jared Ge, Rishi Shetty, and Joshua David Lee also scored fewer points than the model predicted.
+
+Based on the overperformed relative to their expected score data, Aditya Bajaj scored 6.0 total points even though his predicted score was only 1.95 points. This means Aditya performed much better than expected. Similarly, Zachary James Houghton and Anvit Rao also performed significantly better than the model predicted. Based on the underperformed relative to their expected score data, Loren Schwiebert scored only 3.5 total points even though his predicted score was 6.28 points. This means he performed much worse than expected. Similarly, George Avery Jones, Jared Ge, Rishi Shetty, and Joshua David Lee also scored fewer points than the model predicted.
 
 ## Citation
 
