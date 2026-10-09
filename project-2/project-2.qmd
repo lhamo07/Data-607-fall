@@ -1,7 +1,35 @@
 ---
-title: "Project-2"
+title: "Project-2-Data Transforamtions"
 format: html
 editor: visual
 ---
 
-## 
+## Approach
+
+For this project, I plan to work with three datasets shared in Discussion 5A. The first dataset is a medical dataset that I selected, the second dataset was posted by Aniss Sahraoui, and the third dataset was posted by Zaina Hassan.
+
+Medical dataset: Raw Medical Dataset for Cleaning Practice
+Baby names dataset: Social Security Administration – Top Five Names
+Labor market dataset: Bureau of Labor Statistics – Local Area Unemployment Statistics
+
+### Tidying and analysis strategy 
+
+Step 1: Explore the dataset and identify missing values.
+
+I will begin by examining the medical dataset's structure, column names, data types, and missing values. I will use the naniar package to identify and count missing values in each column.
+
+Step 2: Assess and handle missing values.
+
+I will investigate the patterns of missing data and determine an appropriate strategy for handling them. Depending on the type and amount of missing data, I will consider removing incomplete observations or imputing missing values. I will also consider how these decisions could introduce bias into the analysis.
+Step 3: Transform the data from wide to long format.
+
+After examining the dataset's structure, I will use the pivot_longer() function from the tidyr package to reshape the data if necessary. For example, I can combine the Age, Blood_Pressure, Cholesterol, and BMI columns into a measurement variable and a corresponding value column,
+Step 4: Analyze relationships between variables.
+
+After cleaning and transforming the data, I will explore how variables such as age, BMI, blood pressure, and cholesterol are associated with different medical diagnoses. I will use appropriate summaries and visualizations to identify patterns
+
+## Anticipated Challenges
+
+Since the dataset contains many missing values, deciding which columns to impute and which method to use will be challenging. For medical data, imputation must be handled carefully because filling in missing values incorrectly could introduce bias and lead to misleading conclusions about patients health conditions.
+
+
