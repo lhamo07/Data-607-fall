@@ -5,3 +5,147 @@ format: html
 editor: visual
 ---
 
+## 1.Objective
+
+This project develops practical competency in transforming wide-format datasets into tidy formats suitable for downstream analysis. All transformations are performed using the tidyr and dplyr packages in R.
+
+## 2.Dataset Selection
+
+Baby names dataset:<https://www.ssa.gov/oact/babynames/top5names.html> Obtained from 5A discussion post contributed by Aniss Sahraoui.
+
+## Data structure before tidying
+
+This dataset is in wide structure format.Each row contains a year followed by ten names, with separate “Girls” and “Boys” sections that each repeat the headings “Rank 1” through “Rank 5.” Sex and rank are represented in the column headers, and multiple name-ranking observations appear in a single row.
+
+## 3.Data Preparation
+
+### 3.1 Raw Data Construction
+
+```{r}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(naniar)
+library(ggplot2)
+
+baby_names_df<-read_csv("https://raw.githubusercontent.com/lhamo07/Data-607-Assignment/refs/heads/main/project-2.1/top5_baby_names.csv")
+baby_names_df
+miss_var_summary(baby_names_df)
+
+```
+
+```{r}
+glimpse(baby_names_df)
+
+```
+
+Rank are in char datatype, need to convert it to numeric datatype.
+
+### 3.2 Data Import and Tidying
+
+```{r}
+# Reshape to long format
+baby_names_df_long <- baby_names_df %>%
+# Rename variables to follow a consistent naming convention
+  rename_with(tolower)%>%
+  pivot_longer(
+    cols = c(starts_with("girl_rank"), starts_with("boy_rank")),
+    names_to = c("gender", "rank"),
+    names_pattern = "(girl|boy)_rank(\\d)",
+    values_to = "name"
+  )%>%
+# swap column rank and name
+  relocate(name,.before=rank)%>%
+  rename(birth_year=year)%>%
+  # convert rank char to numeric
+  mutate(rank=as.numeric(rank))
+baby_names_df_long
+
+
+
+
+```
+
+```{r}
+# Summarize missing data for all columns 
+miss_var_summary(baby_names_df_long)
+```
+
+There is no any missing value in the dataset.
+
+## 3.3 Analysis
+
+```{r}
+# Average rank of each name
+name_avg_rank <- baby_names_df_long %>%
+  group_by(gender, name) %>%
+  summarise(
+    average_rank = mean(rank, na.rm = TRUE),
+    years_in_top5 = n_distinct(birth_year),
+  ) %>%
+  arrange(average_rank)%>%
+  ungroup()
+
+name_avg_rank
+```
+
+Mary was one of the most popular girls' names, with an average rank of 1.36 over 42 years Liam had a slightly better average rank than Michael, but Michael stayed in the top five for much longer—62 years compared with Liam's 13 years.
+
+```{r}
+name_avg_rank %>%
+  filter(gender == "girl", years_in_top5 >= 10) %>%
+  slice_min(average_rank, n = 10, with_ties = FALSE) %>%
+  ggplot(aes(
+    x = reorder(name, average_rank),
+    y = average_rank,
+    fill=average_rank
+  )) +
+  geom_col() +
+  labs(
+    title = "Girls' Names with the Best Average Rankings",
+    x = "Baby Name",
+    y = "Average Rank",
+  fill = "Average Rank"
+
+  ) +
+  theme_minimal()
+
+
+```
+
+Marry is the Top-ranked name and Barbara is the lowest-ranked name.
+
+```{r}
+name_avg_rank %>%
+  filter(gender == "boy", years_in_top5 >= 10) %>%
+  slice_min(average_rank, n = 10, with_ties = FALSE) %>%
+  ggplot(aes(
+    x = reorder(name, average_rank),
+    y = average_rank,
+    fill=average_rank
+    
+  )) +
+  geom_col() +
+  labs(
+    title = "Boys' Names with the Best Average Rankings",
+    x = "Baby Name",
+    y = "Average Rank",
+    fill = "Average Rank"
+
+    
+    
+  ) +
+  theme_minimal()
+```
+
+Liam is the Top-ranked name and John is the lowest-ranked name.
+
+## 4.Conclusion
+
+This dataset helped me transform the baby names dataset from wide format to tidy long format using dplyr. By analyzing average rankings and the number of years names appeared in the top five, Iwas able to identified popular boy and girl names in the year 1926-2025.
+
+## 5.Citation
+
+Anthropic. (2026). Claude Sonnet 5.5 \[Large language model\]. https://claude.ai. Accessed October 11, https://claude.ai/share/0b74850c-e792-459a-899a-89eeb306cae7
+
+
