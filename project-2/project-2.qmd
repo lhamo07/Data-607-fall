@@ -1,35 +1,147 @@
 ---
 title: "Project-2-Data Transforamtions"
+author: "Tenzin Thakuri"
 format: html
 editor: visual
 ---
 
-## Approach
+## Objective
 
-For this project, I plan to work with three datasets shared in Discussion 5A. The first dataset is a medical dataset that I selected, the second dataset was posted by Aniss Sahraoui, and the third dataset was posted by Zaina Hassan.
+This project develops practical competency in transforming wide-format datasets into tidy formats suitable for downstream analysis. All transformations are performed using the tidyr and dplyr packages in R.
 
-Medical dataset: Raw Medical Dataset for Cleaning Practice
-Baby names dataset: Social Security Administration – Top Five Names
-Labor market dataset: Bureau of Labor Statistics – Local Area Unemployment Statistics
 
-### Tidying and analysis strategy 
+## Dataset Selection
+Medical dataset: https://www.kaggle.com/datasets/aamir5659/raw-medical-dataset-for-cleaning-practice?resource=download I obtained this dataset from kaggle while searching for practical examples dataset to learn data tidying using dplyr and tidy.
 
-Step 1: Explore the dataset and identify missing values.
+### 2.1 Data structure before tidyng
 
-I will begin by examining the medical dataset's structure, column names, data types, and missing values. I will use the naniar package to identify and count missing values in each column.
+Column names: All column names are written in uppercase snake case.
 
-Step 2: Assess and handle missing values.
+Inconsistent gender values: The gender column contains inconsistent capitalization, such as FEMALE, MALE, Male, and Female.
 
-I will investigate the patterns of missing data and determine an appropriate strategy for handling them. Depending on the type and amount of missing data, I will consider removing incomplete observations or imputing missing values. I will also consider how these decisions could introduce bias into the analysis.
-Step 3: Transform the data from wide to long format.
+Inconsistent smoker values: The smoker column contains different representations, including Yes, No, Y, and N.
 
-After examining the dataset's structure, I will use the pivot_longer() function from the tidyr package to reshape the data if necessary. For example, I can combine the Age, Blood_Pressure, Cholesterol, and BMI columns into a measurement variable and a corresponding value column,
-Step 4: Analyze relationships between variables.
+Inconsistent missing values: Missing values in the gender, smoker, diagnosis, and notes columns are represented using different formats, such as nan and N/A.
 
-After cleaning and transforming the data, I will explore how variables such as age, BMI, blood pressure, and cholesterol are associated with different medical diagnoses. I will use appropriate summaries and visualizations to identify patterns
+Missing values across columns: Missing data are present in the following columns: notes, diagnosis, cholesterol, bmi, smoker, age, gender, and blood_pressure.
 
-## Anticipated Challenges
+## 3. Data Preparation
 
-Since the dataset contains many missing values, deciding which columns to impute and which method to use will be challenging. For medical data, imputation must be handled carefully because filling in missing values incorrectly could introduce bias and lead to misleading conclusions about patients health conditions.
+### 3.1 Raw Data Construction
 
+```{r}
+library(readr)
+library(dplyr)
+library(stringr)
+library(tidyr) 
+library(naniar)
+library(ggplot2)
+# Import raw data
+medical_df<-read_csv("https://raw.githubusercontent.com/lhamo07/Data-607-Assignment/refs/heads/main/project-2/realworld_medical_dirty.csv")
+medical_df
+
+```
+### 3.2 Data Import and Tidying
+
+```{r}
+medical_clean_df<-medical_df%>%
+# Rename variables to follow a consistent naming convention
+  rename_with(tolower)%>%
+# Data cleaning and recoding
+  mutate(gender=str_to_title(gender),
+         smoker=recode(smoker,"Y"="Yes",
+                      
+                    "N"="No"))%>%
+  # Convert NA, nan,N/A and Nan text into real NA  variables.
+
+  
+  mutate(
+    across(
+      where(is.character),
+      ~ ifelse(
+        .x %in% c("NA", "N/A", "nan", "Nan"),
+        NA,
+        .x
+      )
+    )
+     
+  )
+
+medical_clean_df
+```
+
+```{r}
+glimpse(medical_clean_df)
+
+```
+
+```{r}
+# Summarize missing data for all columns 
+miss_var_summary(medical_clean_df)
+```
+Before imputing any variable, I checked the percentage of miss by summarizing missing data, then I found cholesterol, bmi, blood_pressure and age variables are skewed from follwing visualization. So I choose median imputaion on than mean, since median is resistance to outliers.
+
+```{r}
+ggplot(medical_clean_df, aes(cholesterol)) + geom_histogram(bins = 20)
+ggplot(medical_clean_df, aes(bmi)) + geom_histogram(bins = 20) 
+ggplot(medical_clean_df, aes(blood_pressure)) + geom_histogram(bins = 20) 
+ggplot(medical_clean_df, aes(age)) + geom_histogram(bins = 20) 
+
+```
+```{r}
+vars <- c("age", "bmi", "cholesterol", "blood_pressure")
+
+medical_imputed_df <- medical_clean_df %>%
+ 
+# Handle missing numeric data by conditional median imputation 
+  group_by(diagnosis)%>%
+  mutate(across(all_of(vars),
+                ~ ifelse(is.na(.x), median(.x, na.rm = TRUE), .x)))%>%
+  ungroup()%>%
+# Handle categorical data by descriptive categories
+   mutate(gender = replace_na(gender, "Unknown"),
+    smoker=replace_na(smoker,"Unknown"),
+    diagnosis = replace_na(diagnosis, "Unknown"),
+    notes=replace_na(notes,"No notes"))
+    
+  
+medical_imputed_df
+```
+I chose to impute missing values specifically for Cholesterol, BMI, blood pressure, and age because they are numeric clinical variables that correlate with each other and with diagnosis, so the other columns carry real information about the missing ones. Since gender is a demographic identity, guessing it adds noise. smoker is self-reported and sensitive data, keeping Unkown is safer. notes is free text, Imputing has no meaning.
+
+Using overall median imputation created a major statistical issue: every single diagnosis group ended up with the exact same median value. Switching to conditional median imputation calculates a separate median for each category. This ensures missing patient measurements are replaced using data from patients with the same medical condition, preserving real clinical differences.
+
+```{r}
+# Reshape from wide to long format
+medical_df_long <- medical_imputed_df %>%
+  pivot_longer(
+    cols = c(age, blood_pressure, cholesterol, bmi),
+    names_to = "measurement",
+    values_to = "value"
+  )
+ 
+```
+
+### 3.3 Analysis
+```{r}
+medical_df_long %>%
+  filter(measurement == "age") %>%
+  ggplot(aes(x = diagnosis, y = value)) +
+  geom_boxplot() +
+  labs(
+    title = "Age Distribution by Diagnosis",
+    x = "Diagnosis",
+    y = "Age (years)"
+  ) +
+  theme_minimal()
+```
+This box-plot shows the ages of patients in different diagnosis groups. Patients in the Diabetes group have a median age of around 55 years, while patients in the Heart Disease group have a median age of around 45 years.Patients with no diagnosis also have a median age of around 45 years. This suggests that patients in the Diabetes group tend to be older than those in the Heart Disease group in this dataset.
+
+## 4. Conclusion and future enhancement
+
+In this project, I learned to clean and transform data using tidyr and dplyr. I also learned the importance of understanding missing data before choosing an imputation method. I used conditional median imputation, but in future projects, I would consider MICE to account for relationships between variables.
+
+##  Citation
+
+Anthropic. (2026). Claude Sonnet 5.5 [Large language model]. https://claude.ai. Accessed October 11, 2026. https://claude.ai/share/19de782d-5da9-486c-ad03-17ed79f38705
 

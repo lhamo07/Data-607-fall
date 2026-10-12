@@ -1,0 +1,401 @@
+patient_id,gender,smoker,diagnosis,admission_date,notes,measurement,value
+P1000,Female,Yes,Heart Disease,2023-12-27,NA,Age,55
+P1000,Female,Yes,Heart Disease,2023-12-27,NA,Blood_Pressure,120
+P1000,Female,Yes,Heart Disease,2023-12-27,NA,Cholesterol,NA
+P1000,Female,Yes,Heart Disease,2023-12-27,NA,BMI,35.4
+P1001,Male,nan,None,2023-01-01,NA,Age,65
+P1001,Male,nan,None,2023-01-01,NA,Blood_Pressure,150
+P1001,Male,nan,None,2023-01-01,NA,Cholesterol,180
+P1001,Male,nan,None,2023-01-01,NA,BMI,27.8
+P1002,Male,No,nan,2023-12-14,NA,Age,45
+P1002,Male,No,nan,2023-12-14,NA,Blood_Pressure,120
+P1002,Male,No,nan,2023-12-14,NA,Cholesterol,220
+P1002,Male,No,nan,2023-12-14,NA,BMI,22.5
+P1003,Male,No,nan,2023-07-09,NA,Age,65
+P1003,Male,No,nan,2023-07-09,NA,Blood_Pressure,NA
+P1003,Male,No,nan,2023-07-09,NA,Cholesterol,180
+P1003,Male,No,nan,2023-07-09,NA,BMI,35.4
+P1004,Male,nan,None,2023-07-10,Follow-up required,Age,65
+P1004,Male,nan,None,2023-07-10,Follow-up required,Blood_Pressure,120
+P1004,Male,nan,None,2023-07-10,Follow-up required,Cholesterol,300
+P1004,Male,nan,None,2023-07-10,Follow-up required,BMI,40.1
+P1005,Female,No,Heart Disease,2023-11-08,Follow-up required,Age,35
+P1005,Female,No,Heart Disease,2023-11-08,Follow-up required,Blood_Pressure,130
+P1005,Female,No,Heart Disease,2023-11-08,Follow-up required,Cholesterol,200
+P1005,Female,No,Heart Disease,2023-11-08,Follow-up required,BMI,35.4
+P1006,Male,No,None,2023-04-27,N/A,Age,45
+P1006,Male,No,None,2023-04-27,N/A,Blood_Pressure,150
+P1006,Male,No,None,2023-04-27,N/A,Cholesterol,NA
+P1006,Male,No,None,2023-04-27,N/A,BMI,22.5
+P1007,Male,No,nan,2023-05-14,Checkup due,Age,45
+P1007,Male,No,nan,2023-05-14,Checkup due,Blood_Pressure,150
+P1007,Male,No,nan,2023-05-14,Checkup due,Cholesterol,200
+P1007,Male,No,nan,2023-05-14,Checkup due,BMI,NA
+P1008,Male,No,Diabetes,2023-02-27,NA,Age,45
+P1008,Male,No,Diabetes,2023-02-27,NA,Blood_Pressure,NA
+P1008,Male,No,Diabetes,2023-02-27,NA,Cholesterol,200
+P1008,Male,No,Diabetes,2023-02-27,NA,BMI,NA
+P1009,Male,No,Diabetes,2023-02-13,Checkup due,Age,65
+P1009,Male,No,Diabetes,2023-02-13,Checkup due,Blood_Pressure,130
+P1009,Male,No,Diabetes,2023-02-13,Checkup due,Cholesterol,NA
+P1009,Male,No,Diabetes,2023-02-13,Checkup due,BMI,35.4
+P1010,Male,Yes,None,2023-06-22,Checkup due,Age,55
+P1010,Male,Yes,None,2023-06-22,Checkup due,Blood_Pressure,140
+P1010,Male,Yes,None,2023-06-22,Checkup due,Cholesterol,220
+P1010,Male,Yes,None,2023-06-22,Checkup due,BMI,30
+P1011,Male,No,nan,2023-06-09,N/A,Age,45
+P1011,Male,No,nan,2023-06-09,N/A,Blood_Pressure,120
+P1011,Male,No,nan,2023-06-09,N/A,Cholesterol,300
+P1011,Male,No,nan,2023-06-09,N/A,BMI,35.4
+P1012,Male,Yes,Diabetes,2023-06-22,NA,Age,NA
+P1012,Male,Yes,Diabetes,2023-06-22,NA,Blood_Pressure,160
+P1012,Male,Yes,Diabetes,2023-06-22,NA,Cholesterol,180
+P1012,Male,Yes,Diabetes,2023-06-22,NA,BMI,27.8
+P1013,Female,nan,nan,2023-11-13,NA,Age,65
+P1013,Female,nan,nan,2023-11-13,NA,Blood_Pressure,120
+P1013,Female,nan,nan,2023-11-13,NA,Cholesterol,250
+P1013,Female,nan,nan,2023-11-13,NA,BMI,27.8
+P1014,Male,nan,None,2023-10-30,Pending,Age,35
+P1014,Male,nan,None,2023-10-30,Pending,Blood_Pressure,120
+P1014,Male,nan,None,2023-10-30,Pending,Cholesterol,180
+P1014,Male,nan,None,2023-10-30,Pending,BMI,NA
+P1015,Male,No,Diabetes,2023-05-29,Checkup due,Age,55
+P1015,Male,No,Diabetes,2023-05-29,Checkup due,Blood_Pressure,140
+P1015,Male,No,Diabetes,2023-05-29,Checkup due,Cholesterol,250
+P1015,Male,No,Diabetes,2023-05-29,Checkup due,BMI,30
+P1016,Male,No,nan,2023-03-21,Checkup due,Age,NA
+P1016,Male,No,nan,2023-03-21,Checkup due,Blood_Pressure,120
+P1016,Male,No,nan,2023-03-21,Checkup due,Cholesterol,180
+P1016,Male,No,nan,2023-03-21,Checkup due,BMI,22.5
+P1017,Female,Yes,Diabetes,2023-08-01,Follow-up required,Age,NA
+P1017,Female,Yes,Diabetes,2023-08-01,Follow-up required,Blood_Pressure,130
+P1017,Female,Yes,Diabetes,2023-08-01,Follow-up required,Cholesterol,NA
+P1017,Female,Yes,Diabetes,2023-08-01,Follow-up required,BMI,27.8
+P1018,Male,No,None,2023-07-22,Pending,Age,35
+P1018,Male,No,None,2023-07-22,Pending,Blood_Pressure,130
+P1018,Male,No,None,2023-07-22,Pending,Cholesterol,300
+P1018,Male,No,None,2023-07-22,Pending,BMI,NA
+P1019,Female,Yes,nan,2023-09-09,Follow-up required,Age,55
+P1019,Female,Yes,nan,2023-09-09,Follow-up required,Blood_Pressure,150
+P1019,Female,Yes,nan,2023-09-09,Follow-up required,Cholesterol,250
+P1019,Female,Yes,nan,2023-09-09,Follow-up required,BMI,40.1
+P1020,Male,No,Diabetes,2023-08-17,Follow-up required,Age,65
+P1020,Male,No,Diabetes,2023-08-17,Follow-up required,Blood_Pressure,NA
+P1020,Male,No,Diabetes,2023-08-17,Follow-up required,Cholesterol,220
+P1020,Male,No,Diabetes,2023-08-17,Follow-up required,BMI,NA
+P1021,Male,No,None,2023-06-13,Follow-up required,Age,25
+P1021,Male,No,None,2023-06-13,Follow-up required,Blood_Pressure,160
+P1021,Male,No,None,2023-06-13,Follow-up required,Cholesterol,180
+P1021,Male,No,None,2023-06-13,Follow-up required,BMI,27.8
+P1022,Nan,No,Diabetes,2023-08-15,N/A,Age,55
+P1022,Nan,No,Diabetes,2023-08-15,N/A,Blood_Pressure,120
+P1022,Nan,No,Diabetes,2023-08-15,N/A,Cholesterol,180
+P1022,Nan,No,Diabetes,2023-08-15,N/A,BMI,27.8
+P1023,Female,Yes,Diabetes,2023-05-27,N/A,Age,35
+P1023,Female,Yes,Diabetes,2023-05-27,N/A,Blood_Pressure,120
+P1023,Female,Yes,Diabetes,2023-05-27,N/A,Cholesterol,250
+P1023,Female,Yes,Diabetes,2023-05-27,N/A,BMI,NA
+P1024,Male,No,Heart Disease,2023-01-20,Follow-up required,Age,NA
+P1024,Male,No,Heart Disease,2023-01-20,Follow-up required,Blood_Pressure,140
+P1024,Male,No,Heart Disease,2023-01-20,Follow-up required,Cholesterol,220
+P1024,Male,No,Heart Disease,2023-01-20,Follow-up required,BMI,22.5
+P1025,Female,Yes,Heart Disease,2023-02-16,Pending,Age,65
+P1025,Female,Yes,Heart Disease,2023-02-16,Pending,Blood_Pressure,NA
+P1025,Female,Yes,Heart Disease,2023-02-16,Pending,Cholesterol,220
+P1025,Female,Yes,Heart Disease,2023-02-16,Pending,BMI,35.4
+P1026,Nan,Yes,None,2023-08-21,Checkup due,Age,55
+P1026,Nan,Yes,None,2023-08-21,Checkup due,Blood_Pressure,130
+P1026,Nan,Yes,None,2023-08-21,Checkup due,Cholesterol,NA
+P1026,Nan,Yes,None,2023-08-21,Checkup due,BMI,27.8
+P1027,Male,nan,Heart Disease,2023-11-01,Pending,Age,25
+P1027,Male,nan,Heart Disease,2023-11-01,Pending,Blood_Pressure,160
+P1027,Male,nan,Heart Disease,2023-11-01,Pending,Cholesterol,NA
+P1027,Male,nan,Heart Disease,2023-11-01,Pending,BMI,NA
+P1028,Male,Yes,None,2023-01-14,NA,Age,25
+P1028,Male,Yes,None,2023-01-14,NA,Blood_Pressure,150
+P1028,Male,Yes,None,2023-01-14,NA,Cholesterol,NA
+P1028,Male,Yes,None,2023-01-14,NA,BMI,NA
+P1029,Male,Yes,Heart Disease,2023-05-23,N/A,Age,45
+P1029,Male,Yes,Heart Disease,2023-05-23,N/A,Blood_Pressure,130
+P1029,Male,Yes,Heart Disease,2023-05-23,N/A,Cholesterol,NA
+P1029,Male,Yes,Heart Disease,2023-05-23,N/A,BMI,30
+P1030,Male,nan,Diabetes,2023-01-01,Checkup due,Age,45
+P1030,Male,nan,Diabetes,2023-01-01,Checkup due,Blood_Pressure,NA
+P1030,Male,nan,Diabetes,2023-01-01,Checkup due,Cholesterol,NA
+P1030,Male,nan,Diabetes,2023-01-01,Checkup due,BMI,35.4
+P1031,Female,No,None,2023-02-23,Checkup due,Age,35
+P1031,Female,No,None,2023-02-23,Checkup due,Blood_Pressure,150
+P1031,Female,No,None,2023-02-23,Checkup due,Cholesterol,NA
+P1031,Female,No,None,2023-02-23,Checkup due,BMI,40.1
+P1032,Nan,Yes,None,2023-09-16,NA,Age,55
+P1032,Nan,Yes,None,2023-09-16,NA,Blood_Pressure,140
+P1032,Nan,Yes,None,2023-09-16,NA,Cholesterol,300
+P1032,Nan,Yes,None,2023-09-16,NA,BMI,22.5
+P1033,Male,Yes,Diabetes,2023-05-24,NA,Age,55
+P1033,Male,Yes,Diabetes,2023-05-24,NA,Blood_Pressure,140
+P1033,Male,Yes,Diabetes,2023-05-24,NA,Cholesterol,220
+P1033,Male,Yes,Diabetes,2023-05-24,NA,BMI,40.1
+P1034,Male,Yes,None,2023-01-12,Follow-up required,Age,NA
+P1034,Male,Yes,None,2023-01-12,Follow-up required,Blood_Pressure,120
+P1034,Male,Yes,None,2023-01-12,Follow-up required,Cholesterol,NA
+P1034,Male,Yes,None,2023-01-12,Follow-up required,BMI,35.4
+P1035,Female,No,None,2023-11-26,N/A,Age,NA
+P1035,Female,No,None,2023-11-26,N/A,Blood_Pressure,NA
+P1035,Female,No,None,2023-11-26,N/A,Cholesterol,220
+P1035,Female,No,None,2023-11-26,N/A,BMI,35.4
+P1036,Male,Yes,Heart Disease,2023-08-12,N/A,Age,NA
+P1036,Male,Yes,Heart Disease,2023-08-12,N/A,Blood_Pressure,160
+P1036,Male,Yes,Heart Disease,2023-08-12,N/A,Cholesterol,220
+P1036,Male,Yes,Heart Disease,2023-08-12,N/A,BMI,35.4
+P1037,Nan,No,None,2023-09-29,Pending,Age,45
+P1037,Nan,No,None,2023-09-29,Pending,Blood_Pressure,150
+P1037,Nan,No,None,2023-09-29,Pending,Cholesterol,200
+P1037,Nan,No,None,2023-09-29,Pending,BMI,40.1
+P1038,Male,nan,nan,2023-12-24,Follow-up required,Age,55
+P1038,Male,nan,nan,2023-12-24,Follow-up required,Blood_Pressure,130
+P1038,Male,nan,nan,2023-12-24,Follow-up required,Cholesterol,300
+P1038,Male,nan,nan,2023-12-24,Follow-up required,BMI,35.4
+P1039,Male,nan,Diabetes,2023-06-05,Follow-up required,Age,55
+P1039,Male,nan,Diabetes,2023-06-05,Follow-up required,Blood_Pressure,NA
+P1039,Male,nan,Diabetes,2023-06-05,Follow-up required,Cholesterol,NA
+P1039,Male,nan,Diabetes,2023-06-05,Follow-up required,BMI,NA
+P1040,Male,No,Heart Disease,2023-01-08,Follow-up required,Age,25
+P1040,Male,No,Heart Disease,2023-01-08,Follow-up required,Blood_Pressure,NA
+P1040,Male,No,Heart Disease,2023-01-08,Follow-up required,Cholesterol,180
+P1040,Male,No,Heart Disease,2023-01-08,Follow-up required,BMI,40.1
+P1041,Male,No,Heart Disease,2023-05-02,Follow-up required,Age,45
+P1041,Male,No,Heart Disease,2023-05-02,Follow-up required,Blood_Pressure,140
+P1041,Male,No,Heart Disease,2023-05-02,Follow-up required,Cholesterol,250
+P1041,Male,No,Heart Disease,2023-05-02,Follow-up required,BMI,35.4
+P1042,Female,nan,nan,2023-12-14,N/A,Age,65
+P1042,Female,nan,nan,2023-12-14,N/A,Blood_Pressure,120
+P1042,Female,nan,nan,2023-12-14,N/A,Cholesterol,180
+P1042,Female,nan,nan,2023-12-14,N/A,BMI,NA
+P1043,Female,Yes,Diabetes,2023-06-13,N/A,Age,45
+P1043,Female,Yes,Diabetes,2023-06-13,N/A,Blood_Pressure,120
+P1043,Female,Yes,Diabetes,2023-06-13,N/A,Cholesterol,300
+P1043,Female,Yes,Diabetes,2023-06-13,N/A,BMI,30
+P1044,Male,No,Diabetes,2023-03-31,Follow-up required,Age,65
+P1044,Male,No,Diabetes,2023-03-31,Follow-up required,Blood_Pressure,150
+P1044,Male,No,Diabetes,2023-03-31,Follow-up required,Cholesterol,250
+P1044,Male,No,Diabetes,2023-03-31,Follow-up required,BMI,35.4
+P1045,Male,Yes,Heart Disease,2023-05-16,Pending,Age,25
+P1045,Male,Yes,Heart Disease,2023-05-16,Pending,Blood_Pressure,140
+P1045,Male,Yes,Heart Disease,2023-05-16,Pending,Cholesterol,300
+P1045,Male,Yes,Heart Disease,2023-05-16,Pending,BMI,40.1
+P1046,Female,Yes,None,2023-07-05,Checkup due,Age,35
+P1046,Female,Yes,None,2023-07-05,Checkup due,Blood_Pressure,NA
+P1046,Female,Yes,None,2023-07-05,Checkup due,Cholesterol,220
+P1046,Female,Yes,None,2023-07-05,Checkup due,BMI,27.8
+P1047,Female,No,Heart Disease,2023-11-12,Checkup due,Age,55
+P1047,Female,No,Heart Disease,2023-11-12,Checkup due,Blood_Pressure,160
+P1047,Female,No,Heart Disease,2023-11-12,Checkup due,Cholesterol,250
+P1047,Female,No,Heart Disease,2023-11-12,Checkup due,BMI,35.4
+P1048,Female,nan,Diabetes,2023-06-27,Pending,Age,25
+P1048,Female,nan,Diabetes,2023-06-27,Pending,Blood_Pressure,140
+P1048,Female,nan,Diabetes,2023-06-27,Pending,Cholesterol,220
+P1048,Female,nan,Diabetes,2023-06-27,Pending,BMI,27.8
+P1049,Nan,No,nan,2023-01-28,Follow-up required,Age,55
+P1049,Nan,No,nan,2023-01-28,Follow-up required,Blood_Pressure,150
+P1049,Nan,No,nan,2023-01-28,Follow-up required,Cholesterol,180
+P1049,Nan,No,nan,2023-01-28,Follow-up required,BMI,NA
+P1050,Female,No,Heart Disease,2023-08-08,N/A,Age,NA
+P1050,Female,No,Heart Disease,2023-08-08,N/A,Blood_Pressure,150
+P1050,Female,No,Heart Disease,2023-08-08,N/A,Cholesterol,180
+P1050,Female,No,Heart Disease,2023-08-08,N/A,BMI,30
+P1051,Female,No,Diabetes,2023-12-23,Checkup due,Age,35
+P1051,Female,No,Diabetes,2023-12-23,Checkup due,Blood_Pressure,140
+P1051,Female,No,Diabetes,2023-12-23,Checkup due,Cholesterol,250
+P1051,Female,No,Diabetes,2023-12-23,Checkup due,BMI,22.5
+P1052,Male,No,Heart Disease,2023-02-10,NA,Age,35
+P1052,Male,No,Heart Disease,2023-02-10,NA,Blood_Pressure,150
+P1052,Male,No,Heart Disease,2023-02-10,NA,Cholesterol,250
+P1052,Male,No,Heart Disease,2023-02-10,NA,BMI,30
+P1053,Female,Yes,None,2023-08-16,NA,Age,25
+P1053,Female,Yes,None,2023-08-16,NA,Blood_Pressure,140
+P1053,Female,Yes,None,2023-08-16,NA,Cholesterol,NA
+P1053,Female,Yes,None,2023-08-16,NA,BMI,35.4
+P1054,Female,Yes,Heart Disease,2023-07-11,Pending,Age,35
+P1054,Female,Yes,Heart Disease,2023-07-11,Pending,Blood_Pressure,130
+P1054,Female,Yes,Heart Disease,2023-07-11,Pending,Cholesterol,300
+P1054,Female,Yes,Heart Disease,2023-07-11,Pending,BMI,27.8
+P1055,Female,No,Heart Disease,2023-05-25,Follow-up required,Age,65
+P1055,Female,No,Heart Disease,2023-05-25,Follow-up required,Blood_Pressure,140
+P1055,Female,No,Heart Disease,2023-05-25,Follow-up required,Cholesterol,NA
+P1055,Female,No,Heart Disease,2023-05-25,Follow-up required,BMI,27.8
+P1056,Male,No,Diabetes,2023-07-20,Checkup due,Age,35
+P1056,Male,No,Diabetes,2023-07-20,Checkup due,Blood_Pressure,140
+P1056,Male,No,Diabetes,2023-07-20,Checkup due,Cholesterol,300
+P1056,Male,No,Diabetes,2023-07-20,Checkup due,BMI,40.1
+P1057,Male,nan,Diabetes,2023-07-31,Follow-up required,Age,55
+P1057,Male,nan,Diabetes,2023-07-31,Follow-up required,Blood_Pressure,150
+P1057,Male,nan,Diabetes,2023-07-31,Follow-up required,Cholesterol,NA
+P1057,Male,nan,Diabetes,2023-07-31,Follow-up required,BMI,27.8
+P1058,Nan,No,Diabetes,2023-08-08,Checkup due,Age,55
+P1058,Nan,No,Diabetes,2023-08-08,Checkup due,Blood_Pressure,150
+P1058,Nan,No,Diabetes,2023-08-08,Checkup due,Cholesterol,220
+P1058,Nan,No,Diabetes,2023-08-08,Checkup due,BMI,40.1
+P1059,Female,nan,Heart Disease,2023-08-28,Pending,Age,55
+P1059,Female,nan,Heart Disease,2023-08-28,Pending,Blood_Pressure,120
+P1059,Female,nan,Heart Disease,2023-08-28,Pending,Cholesterol,250
+P1059,Female,nan,Heart Disease,2023-08-28,Pending,BMI,NA
+P1060,Male,Yes,None,2023-02-15,Pending,Age,55
+P1060,Male,Yes,None,2023-02-15,Pending,Blood_Pressure,120
+P1060,Male,Yes,None,2023-02-15,Pending,Cholesterol,180
+P1060,Male,Yes,None,2023-02-15,Pending,BMI,22.5
+P1061,Male,nan,nan,2023-02-04,NA,Age,65
+P1061,Male,nan,nan,2023-02-04,NA,Blood_Pressure,130
+P1061,Male,nan,nan,2023-02-04,NA,Cholesterol,300
+P1061,Male,nan,nan,2023-02-04,NA,BMI,35.4
+P1062,Female,No,nan,2023-09-10,Follow-up required,Age,45
+P1062,Female,No,nan,2023-09-10,Follow-up required,Blood_Pressure,120
+P1062,Female,No,nan,2023-09-10,Follow-up required,Cholesterol,300
+P1062,Female,No,nan,2023-09-10,Follow-up required,BMI,40.1
+P1063,Nan,Yes,Diabetes,2023-03-23,NA,Age,NA
+P1063,Nan,Yes,Diabetes,2023-03-23,NA,Blood_Pressure,140
+P1063,Nan,Yes,Diabetes,2023-03-23,NA,Cholesterol,180
+P1063,Nan,Yes,Diabetes,2023-03-23,NA,BMI,22.5
+P1064,Male,nan,Diabetes,2023-09-13,Follow-up required,Age,25
+P1064,Male,nan,Diabetes,2023-09-13,Follow-up required,Blood_Pressure,150
+P1064,Male,nan,Diabetes,2023-09-13,Follow-up required,Cholesterol,NA
+P1064,Male,nan,Diabetes,2023-09-13,Follow-up required,BMI,27.8
+P1065,Female,nan,Heart Disease,2023-07-16,NA,Age,55
+P1065,Female,nan,Heart Disease,2023-07-16,NA,Blood_Pressure,120
+P1065,Female,nan,Heart Disease,2023-07-16,NA,Cholesterol,300
+P1065,Female,nan,Heart Disease,2023-07-16,NA,BMI,27.8
+P1066,Nan,Yes,nan,2023-10-30,N/A,Age,35
+P1066,Nan,Yes,nan,2023-10-30,N/A,Blood_Pressure,120
+P1066,Nan,Yes,nan,2023-10-30,N/A,Cholesterol,220
+P1066,Nan,Yes,nan,2023-10-30,N/A,BMI,22.5
+P1067,Female,No,Diabetes,2023-01-10,N/A,Age,55
+P1067,Female,No,Diabetes,2023-01-10,N/A,Blood_Pressure,130
+P1067,Female,No,Diabetes,2023-01-10,N/A,Cholesterol,250
+P1067,Female,No,Diabetes,2023-01-10,N/A,BMI,27.8
+P1068,Female,No,None,2023-11-08,N/A,Age,35
+P1068,Female,No,None,2023-11-08,N/A,Blood_Pressure,NA
+P1068,Female,No,None,2023-11-08,N/A,Cholesterol,180
+P1068,Female,No,None,2023-11-08,N/A,BMI,NA
+P1069,Female,nan,None,2023-10-13,N/A,Age,NA
+P1069,Female,nan,None,2023-10-13,N/A,Blood_Pressure,130
+P1069,Female,nan,None,2023-10-13,N/A,Cholesterol,250
+P1069,Female,nan,None,2023-10-13,N/A,BMI,NA
+P1070,Female,Yes,Diabetes,2023-08-30,Checkup due,Age,NA
+P1070,Female,Yes,Diabetes,2023-08-30,Checkup due,Blood_Pressure,140
+P1070,Female,Yes,Diabetes,2023-08-30,Checkup due,Cholesterol,300
+P1070,Female,Yes,Diabetes,2023-08-30,Checkup due,BMI,22.5
+P1071,Female,Yes,Diabetes,2023-09-08,N/A,Age,NA
+P1071,Female,Yes,Diabetes,2023-09-08,N/A,Blood_Pressure,150
+P1071,Female,Yes,Diabetes,2023-09-08,N/A,Cholesterol,300
+P1071,Female,Yes,Diabetes,2023-09-08,N/A,BMI,40.1
+P1072,Nan,Yes,nan,2023-12-31,Pending,Age,35
+P1072,Nan,Yes,nan,2023-12-31,Pending,Blood_Pressure,130
+P1072,Nan,Yes,nan,2023-12-31,Pending,Cholesterol,180
+P1072,Nan,Yes,nan,2023-12-31,Pending,BMI,40.1
+P1073,Nan,Yes,nan,2023-01-05,Pending,Age,55
+P1073,Nan,Yes,nan,2023-01-05,Pending,Blood_Pressure,120
+P1073,Nan,Yes,nan,2023-01-05,Pending,Cholesterol,220
+P1073,Nan,Yes,nan,2023-01-05,Pending,BMI,22.5
+P1074,Male,No,Heart Disease,2023-04-29,Checkup due,Age,NA
+P1074,Male,No,Heart Disease,2023-04-29,Checkup due,Blood_Pressure,150
+P1074,Male,No,Heart Disease,2023-04-29,Checkup due,Cholesterol,200
+P1074,Male,No,Heart Disease,2023-04-29,Checkup due,BMI,40.1
+P1075,Male,No,nan,2023-10-16,N/A,Age,65
+P1075,Male,No,nan,2023-10-16,N/A,Blood_Pressure,150
+P1075,Male,No,nan,2023-10-16,N/A,Cholesterol,180
+P1075,Male,No,nan,2023-10-16,N/A,BMI,40.1
+P1076,Female,Yes,None,2023-03-06,N/A,Age,35
+P1076,Female,Yes,None,2023-03-06,N/A,Blood_Pressure,120
+P1076,Female,Yes,None,2023-03-06,N/A,Cholesterol,200
+P1076,Female,Yes,None,2023-03-06,N/A,BMI,NA
+P1077,Male,nan,None,2023-05-26,N/A,Age,35
+P1077,Male,nan,None,2023-05-26,N/A,Blood_Pressure,130
+P1077,Male,nan,None,2023-05-26,N/A,Cholesterol,NA
+P1077,Male,nan,None,2023-05-26,N/A,BMI,40.1
+P1078,Nan,No,Diabetes,2023-08-12,NA,Age,55
+P1078,Nan,No,Diabetes,2023-08-12,NA,Blood_Pressure,120
+P1078,Nan,No,Diabetes,2023-08-12,NA,Cholesterol,200
+P1078,Nan,No,Diabetes,2023-08-12,NA,BMI,30
+P1079,Male,Yes,nan,2023-08-27,Follow-up required,Age,35
+P1079,Male,Yes,nan,2023-08-27,Follow-up required,Blood_Pressure,NA
+P1079,Male,Yes,nan,2023-08-27,Follow-up required,Cholesterol,220
+P1079,Male,Yes,nan,2023-08-27,Follow-up required,BMI,35.4
+P1080,Male,nan,Heart Disease,2023-06-26,NA,Age,35
+P1080,Male,nan,Heart Disease,2023-06-26,NA,Blood_Pressure,150
+P1080,Male,nan,Heart Disease,2023-06-26,NA,Cholesterol,NA
+P1080,Male,nan,Heart Disease,2023-06-26,NA,BMI,27.8
+P1081,Male,Yes,None,2023-09-24,Follow-up required,Age,NA
+P1081,Male,Yes,None,2023-09-24,Follow-up required,Blood_Pressure,160
+P1081,Male,Yes,None,2023-09-24,Follow-up required,Cholesterol,200
+P1081,Male,Yes,None,2023-09-24,Follow-up required,BMI,30
+P1082,Male,Yes,None,2023-12-07,N/A,Age,55
+P1082,Male,Yes,None,2023-12-07,N/A,Blood_Pressure,160
+P1082,Male,Yes,None,2023-12-07,N/A,Cholesterol,NA
+P1082,Male,Yes,None,2023-12-07,N/A,BMI,40.1
+P1083,Nan,Yes,Heart Disease,2023-10-09,N/A,Age,NA
+P1083,Nan,Yes,Heart Disease,2023-10-09,N/A,Blood_Pressure,140
+P1083,Nan,Yes,Heart Disease,2023-10-09,N/A,Cholesterol,200
+P1083,Nan,Yes,Heart Disease,2023-10-09,N/A,BMI,NA
+P1084,Male,Yes,Heart Disease,2023-03-04,NA,Age,NA
+P1084,Male,Yes,Heart Disease,2023-03-04,NA,Blood_Pressure,120
+P1084,Male,Yes,Heart Disease,2023-03-04,NA,Cholesterol,220
+P1084,Male,Yes,Heart Disease,2023-03-04,NA,BMI,22.5
+P1085,Female,Yes,None,2023-08-05,NA,Age,55
+P1085,Female,Yes,None,2023-08-05,NA,Blood_Pressure,120
+P1085,Female,Yes,None,2023-08-05,NA,Cholesterol,200
+P1085,Female,Yes,None,2023-08-05,NA,BMI,40.1
+P1086,Female,No,None,2023-12-08,Follow-up required,Age,25
+P1086,Female,No,None,2023-12-08,Follow-up required,Blood_Pressure,140
+P1086,Female,No,None,2023-12-08,Follow-up required,Cholesterol,200
+P1086,Female,No,None,2023-12-08,Follow-up required,BMI,NA
+P1087,Male,Yes,Heart Disease,2023-11-11,Pending,Age,NA
+P1087,Male,Yes,Heart Disease,2023-11-11,Pending,Blood_Pressure,140
+P1087,Male,Yes,Heart Disease,2023-11-11,Pending,Cholesterol,200
+P1087,Male,Yes,Heart Disease,2023-11-11,Pending,BMI,35.4
+P1088,Male,nan,None,2023-10-10,Follow-up required,Age,65
+P1088,Male,nan,None,2023-10-10,Follow-up required,Blood_Pressure,140
+P1088,Male,nan,None,2023-10-10,Follow-up required,Cholesterol,180
+P1088,Male,nan,None,2023-10-10,Follow-up required,BMI,40.1
+P1089,Nan,Yes,Diabetes,2023-06-26,NA,Age,65
+P1089,Nan,Yes,Diabetes,2023-06-26,NA,Blood_Pressure,150
+P1089,Nan,Yes,Diabetes,2023-06-26,NA,Cholesterol,180
+P1089,Nan,Yes,Diabetes,2023-06-26,NA,BMI,22.5
+P1090,Male,Yes,Diabetes,2023-04-08,NA,Age,35
+P1090,Male,Yes,Diabetes,2023-04-08,NA,Blood_Pressure,NA
+P1090,Male,Yes,Diabetes,2023-04-08,NA,Cholesterol,180
+P1090,Male,Yes,Diabetes,2023-04-08,NA,BMI,NA
+P1091,Male,Yes,Heart Disease,2023-04-15,Checkup due,Age,65
+P1091,Male,Yes,Heart Disease,2023-04-15,Checkup due,Blood_Pressure,120
+P1091,Male,Yes,Heart Disease,2023-04-15,Checkup due,Cholesterol,220
+P1091,Male,Yes,Heart Disease,2023-04-15,Checkup due,BMI,NA
+P1092,Nan,No,nan,2023-04-09,NA,Age,35
+P1092,Nan,No,nan,2023-04-09,NA,Blood_Pressure,150
+P1092,Nan,No,nan,2023-04-09,NA,Cholesterol,NA
+P1092,Nan,No,nan,2023-04-09,NA,BMI,NA
+P1093,Female,No,Heart Disease,2023-11-07,Checkup due,Age,25
+P1093,Female,No,Heart Disease,2023-11-07,Checkup due,Blood_Pressure,140
+P1093,Female,No,Heart Disease,2023-11-07,Checkup due,Cholesterol,300
+P1093,Female,No,Heart Disease,2023-11-07,Checkup due,BMI,35.4
+P1094,Male,nan,Heart Disease,2023-01-06,Pending,Age,55
+P1094,Male,nan,Heart Disease,2023-01-06,Pending,Blood_Pressure,120
+P1094,Male,nan,Heart Disease,2023-01-06,Pending,Cholesterol,200
+P1094,Male,nan,Heart Disease,2023-01-06,Pending,BMI,40.1
+P1095,Male,Yes,nan,2023-07-16,Follow-up required,Age,55
+P1095,Male,Yes,nan,2023-07-16,Follow-up required,Blood_Pressure,150
+P1095,Male,Yes,nan,2023-07-16,Follow-up required,Cholesterol,200
+P1095,Male,Yes,nan,2023-07-16,Follow-up required,BMI,35.4
+P1096,Male,Yes,nan,2023-12-17,Follow-up required,Age,55
+P1096,Male,Yes,nan,2023-12-17,Follow-up required,Blood_Pressure,NA
+P1096,Male,Yes,nan,2023-12-17,Follow-up required,Cholesterol,220
+P1096,Male,Yes,nan,2023-12-17,Follow-up required,BMI,27.8
+P1097,Female,No,nan,2023-05-13,Checkup due,Age,65
+P1097,Female,No,nan,2023-05-13,Checkup due,Blood_Pressure,150
+P1097,Female,No,nan,2023-05-13,Checkup due,Cholesterol,200
+P1097,Female,No,nan,2023-05-13,Checkup due,BMI,27.8
+P1098,Male,Yes,Diabetes,2023-12-24,Follow-up required,Age,25
+P1098,Male,Yes,Diabetes,2023-12-24,Follow-up required,Blood_Pressure,NA
+P1098,Male,Yes,Diabetes,2023-12-24,Follow-up required,Cholesterol,180
+P1098,Male,Yes,Diabetes,2023-12-24,Follow-up required,BMI,40.1
+P1099,Nan,No,None,2023-09-16,NA,Age,65
+P1099,Nan,No,None,2023-09-16,NA,Blood_Pressure,140
+P1099,Nan,No,None,2023-09-16,NA,Cholesterol,300
+P1099,Nan,No,None,2023-09-16,NA,BMI,35.4

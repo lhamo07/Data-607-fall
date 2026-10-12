@@ -1,0 +1,401 @@
+"","patient_id","gender","smoker","diagnosis","admission_date","notes","measurement","value"
+"1","P1000","Female","Yes","Heart Disease",2023-12-27,"No notes","age",55
+"2","P1000","Female","Yes","Heart Disease",2023-12-27,"No notes","blood_pressure",120
+"3","P1000","Female","Yes","Heart Disease",2023-12-27,"No notes","cholesterol",220
+"4","P1000","Female","Yes","Heart Disease",2023-12-27,"No notes","bmi",35.4
+"5","P1001","Male","Unknown","None",2023-01-01,"No notes","age",65
+"6","P1001","Male","Unknown","None",2023-01-01,"No notes","blood_pressure",150
+"7","P1001","Male","Unknown","None",2023-01-01,"No notes","cholesterol",180
+"8","P1001","Male","Unknown","None",2023-01-01,"No notes","bmi",27.8
+"9","P1002","Male","No","Unknown",2023-12-14,"No notes","age",45
+"10","P1002","Male","No","Unknown",2023-12-14,"No notes","blood_pressure",120
+"11","P1002","Male","No","Unknown",2023-12-14,"No notes","cholesterol",220
+"12","P1002","Male","No","Unknown",2023-12-14,"No notes","bmi",22.5
+"13","P1003","Male","No","Unknown",2023-07-09,"No notes","age",65
+"14","P1003","Male","No","Unknown",2023-07-09,"No notes","blood_pressure",130
+"15","P1003","Male","No","Unknown",2023-07-09,"No notes","cholesterol",180
+"16","P1003","Male","No","Unknown",2023-07-09,"No notes","bmi",35.4
+"17","P1004","Male","Unknown","None",2023-07-10,"Follow-up required","age",65
+"18","P1004","Male","Unknown","None",2023-07-10,"Follow-up required","blood_pressure",120
+"19","P1004","Male","Unknown","None",2023-07-10,"Follow-up required","cholesterol",300
+"20","P1004","Male","Unknown","None",2023-07-10,"Follow-up required","bmi",40.1
+"21","P1005","Female","No","Heart Disease",2023-11-08,"Follow-up required","age",35
+"22","P1005","Female","No","Heart Disease",2023-11-08,"Follow-up required","blood_pressure",130
+"23","P1005","Female","No","Heart Disease",2023-11-08,"Follow-up required","cholesterol",200
+"24","P1005","Female","No","Heart Disease",2023-11-08,"Follow-up required","bmi",35.4
+"25","P1006","Male","No","None",2023-04-27,"No notes","age",45
+"26","P1006","Male","No","None",2023-04-27,"No notes","blood_pressure",150
+"27","P1006","Male","No","None",2023-04-27,"No notes","cholesterol",200
+"28","P1006","Male","No","None",2023-04-27,"No notes","bmi",22.5
+"29","P1007","Male","No","Unknown",2023-05-14,"Checkup due","age",45
+"30","P1007","Male","No","Unknown",2023-05-14,"Checkup due","blood_pressure",150
+"31","P1007","Male","No","Unknown",2023-05-14,"Checkup due","cholesterol",200
+"32","P1007","Male","No","Unknown",2023-05-14,"Checkup due","bmi",35.4
+"33","P1008","Male","No","Diabetes",2023-02-27,"No notes","age",45
+"34","P1008","Male","No","Diabetes",2023-02-27,"No notes","blood_pressure",140
+"35","P1008","Male","No","Diabetes",2023-02-27,"No notes","cholesterol",200
+"36","P1008","Male","No","Diabetes",2023-02-27,"No notes","bmi",28.9
+"37","P1009","Male","No","Diabetes",2023-02-13,"Checkup due","age",65
+"38","P1009","Male","No","Diabetes",2023-02-13,"Checkup due","blood_pressure",130
+"39","P1009","Male","No","Diabetes",2023-02-13,"Checkup due","cholesterol",220
+"40","P1009","Male","No","Diabetes",2023-02-13,"Checkup due","bmi",35.4
+"41","P1010","Male","Yes","None",2023-06-22,"Checkup due","age",55
+"42","P1010","Male","Yes","None",2023-06-22,"Checkup due","blood_pressure",140
+"43","P1010","Male","Yes","None",2023-06-22,"Checkup due","cholesterol",220
+"44","P1010","Male","Yes","None",2023-06-22,"Checkup due","bmi",30
+"45","P1011","Male","No","Unknown",2023-06-09,"No notes","age",45
+"46","P1011","Male","No","Unknown",2023-06-09,"No notes","blood_pressure",120
+"47","P1011","Male","No","Unknown",2023-06-09,"No notes","cholesterol",300
+"48","P1011","Male","No","Unknown",2023-06-09,"No notes","bmi",35.4
+"49","P1012","Male","Yes","Diabetes",2023-06-22,"No notes","age",55
+"50","P1012","Male","Yes","Diabetes",2023-06-22,"No notes","blood_pressure",160
+"51","P1012","Male","Yes","Diabetes",2023-06-22,"No notes","cholesterol",180
+"52","P1012","Male","Yes","Diabetes",2023-06-22,"No notes","bmi",27.8
+"53","P1013","Female","Unknown","Unknown",2023-11-13,"No notes","age",65
+"54","P1013","Female","Unknown","Unknown",2023-11-13,"No notes","blood_pressure",120
+"55","P1013","Female","Unknown","Unknown",2023-11-13,"No notes","cholesterol",250
+"56","P1013","Female","Unknown","Unknown",2023-11-13,"No notes","bmi",27.8
+"57","P1014","Male","Unknown","None",2023-10-30,"Pending","age",35
+"58","P1014","Male","Unknown","None",2023-10-30,"Pending","blood_pressure",120
+"59","P1014","Male","Unknown","None",2023-10-30,"Pending","cholesterol",180
+"60","P1014","Male","Unknown","None",2023-10-30,"Pending","bmi",35.4
+"61","P1015","Male","No","Diabetes",2023-05-29,"Checkup due","age",55
+"62","P1015","Male","No","Diabetes",2023-05-29,"Checkup due","blood_pressure",140
+"63","P1015","Male","No","Diabetes",2023-05-29,"Checkup due","cholesterol",250
+"64","P1015","Male","No","Diabetes",2023-05-29,"Checkup due","bmi",30
+"65","P1016","Male","No","Unknown",2023-03-21,"Checkup due","age",55
+"66","P1016","Male","No","Unknown",2023-03-21,"Checkup due","blood_pressure",120
+"67","P1016","Male","No","Unknown",2023-03-21,"Checkup due","cholesterol",180
+"68","P1016","Male","No","Unknown",2023-03-21,"Checkup due","bmi",22.5
+"69","P1017","Female","Yes","Diabetes",2023-08-01,"Follow-up required","age",55
+"70","P1017","Female","Yes","Diabetes",2023-08-01,"Follow-up required","blood_pressure",130
+"71","P1017","Female","Yes","Diabetes",2023-08-01,"Follow-up required","cholesterol",220
+"72","P1017","Female","Yes","Diabetes",2023-08-01,"Follow-up required","bmi",27.8
+"73","P1018","Male","No","None",2023-07-22,"Pending","age",35
+"74","P1018","Male","No","None",2023-07-22,"Pending","blood_pressure",130
+"75","P1018","Male","No","None",2023-07-22,"Pending","cholesterol",300
+"76","P1018","Male","No","None",2023-07-22,"Pending","bmi",35.4
+"77","P1019","Female","Yes","Unknown",2023-09-09,"Follow-up required","age",55
+"78","P1019","Female","Yes","Unknown",2023-09-09,"Follow-up required","blood_pressure",150
+"79","P1019","Female","Yes","Unknown",2023-09-09,"Follow-up required","cholesterol",250
+"80","P1019","Female","Yes","Unknown",2023-09-09,"Follow-up required","bmi",40.1
+"81","P1020","Male","No","Diabetes",2023-08-17,"Follow-up required","age",65
+"82","P1020","Male","No","Diabetes",2023-08-17,"Follow-up required","blood_pressure",140
+"83","P1020","Male","No","Diabetes",2023-08-17,"Follow-up required","cholesterol",220
+"84","P1020","Male","No","Diabetes",2023-08-17,"Follow-up required","bmi",28.9
+"85","P1021","Male","No","None",2023-06-13,"Follow-up required","age",25
+"86","P1021","Male","No","None",2023-06-13,"Follow-up required","blood_pressure",160
+"87","P1021","Male","No","None",2023-06-13,"Follow-up required","cholesterol",180
+"88","P1021","Male","No","None",2023-06-13,"Follow-up required","bmi",27.8
+"89","P1022","Unknown","No","Diabetes",2023-08-15,"No notes","age",55
+"90","P1022","Unknown","No","Diabetes",2023-08-15,"No notes","blood_pressure",120
+"91","P1022","Unknown","No","Diabetes",2023-08-15,"No notes","cholesterol",180
+"92","P1022","Unknown","No","Diabetes",2023-08-15,"No notes","bmi",27.8
+"93","P1023","Female","Yes","Diabetes",2023-05-27,"No notes","age",35
+"94","P1023","Female","Yes","Diabetes",2023-05-27,"No notes","blood_pressure",120
+"95","P1023","Female","Yes","Diabetes",2023-05-27,"No notes","cholesterol",250
+"96","P1023","Female","Yes","Diabetes",2023-05-27,"No notes","bmi",28.9
+"97","P1024","Male","No","Heart Disease",2023-01-20,"Follow-up required","age",45
+"98","P1024","Male","No","Heart Disease",2023-01-20,"Follow-up required","blood_pressure",140
+"99","P1024","Male","No","Heart Disease",2023-01-20,"Follow-up required","cholesterol",220
+"100","P1024","Male","No","Heart Disease",2023-01-20,"Follow-up required","bmi",22.5
+"101","P1025","Female","Yes","Heart Disease",2023-02-16,"Pending","age",65
+"102","P1025","Female","Yes","Heart Disease",2023-02-16,"Pending","blood_pressure",140
+"103","P1025","Female","Yes","Heart Disease",2023-02-16,"Pending","cholesterol",220
+"104","P1025","Female","Yes","Heart Disease",2023-02-16,"Pending","bmi",35.4
+"105","P1026","Unknown","Yes","None",2023-08-21,"Checkup due","age",55
+"106","P1026","Unknown","Yes","None",2023-08-21,"Checkup due","blood_pressure",130
+"107","P1026","Unknown","Yes","None",2023-08-21,"Checkup due","cholesterol",200
+"108","P1026","Unknown","Yes","None",2023-08-21,"Checkup due","bmi",27.8
+"109","P1027","Male","Unknown","Heart Disease",2023-11-01,"Pending","age",25
+"110","P1027","Male","Unknown","Heart Disease",2023-11-01,"Pending","blood_pressure",160
+"111","P1027","Male","Unknown","Heart Disease",2023-11-01,"Pending","cholesterol",220
+"112","P1027","Male","Unknown","Heart Disease",2023-11-01,"Pending","bmi",35.4
+"113","P1028","Male","Yes","None",2023-01-14,"No notes","age",25
+"114","P1028","Male","Yes","None",2023-01-14,"No notes","blood_pressure",150
+"115","P1028","Male","Yes","None",2023-01-14,"No notes","cholesterol",200
+"116","P1028","Male","Yes","None",2023-01-14,"No notes","bmi",35.4
+"117","P1029","Male","Yes","Heart Disease",2023-05-23,"No notes","age",45
+"118","P1029","Male","Yes","Heart Disease",2023-05-23,"No notes","blood_pressure",130
+"119","P1029","Male","Yes","Heart Disease",2023-05-23,"No notes","cholesterol",220
+"120","P1029","Male","Yes","Heart Disease",2023-05-23,"No notes","bmi",30
+"121","P1030","Male","Unknown","Diabetes",2023-01-01,"Checkup due","age",45
+"122","P1030","Male","Unknown","Diabetes",2023-01-01,"Checkup due","blood_pressure",140
+"123","P1030","Male","Unknown","Diabetes",2023-01-01,"Checkup due","cholesterol",220
+"124","P1030","Male","Unknown","Diabetes",2023-01-01,"Checkup due","bmi",35.4
+"125","P1031","Female","No","None",2023-02-23,"Checkup due","age",35
+"126","P1031","Female","No","None",2023-02-23,"Checkup due","blood_pressure",150
+"127","P1031","Female","No","None",2023-02-23,"Checkup due","cholesterol",200
+"128","P1031","Female","No","None",2023-02-23,"Checkup due","bmi",40.1
+"129","P1032","Unknown","Yes","None",2023-09-16,"No notes","age",55
+"130","P1032","Unknown","Yes","None",2023-09-16,"No notes","blood_pressure",140
+"131","P1032","Unknown","Yes","None",2023-09-16,"No notes","cholesterol",300
+"132","P1032","Unknown","Yes","None",2023-09-16,"No notes","bmi",22.5
+"133","P1033","Male","Yes","Diabetes",2023-05-24,"No notes","age",55
+"134","P1033","Male","Yes","Diabetes",2023-05-24,"No notes","blood_pressure",140
+"135","P1033","Male","Yes","Diabetes",2023-05-24,"No notes","cholesterol",220
+"136","P1033","Male","Yes","Diabetes",2023-05-24,"No notes","bmi",40.1
+"137","P1034","Male","Yes","None",2023-01-12,"Follow-up required","age",45
+"138","P1034","Male","Yes","None",2023-01-12,"Follow-up required","blood_pressure",120
+"139","P1034","Male","Yes","None",2023-01-12,"Follow-up required","cholesterol",200
+"140","P1034","Male","Yes","None",2023-01-12,"Follow-up required","bmi",35.4
+"141","P1035","Female","No","None",2023-11-26,"No notes","age",45
+"142","P1035","Female","No","None",2023-11-26,"No notes","blood_pressure",140
+"143","P1035","Female","No","None",2023-11-26,"No notes","cholesterol",220
+"144","P1035","Female","No","None",2023-11-26,"No notes","bmi",35.4
+"145","P1036","Male","Yes","Heart Disease",2023-08-12,"No notes","age",45
+"146","P1036","Male","Yes","Heart Disease",2023-08-12,"No notes","blood_pressure",160
+"147","P1036","Male","Yes","Heart Disease",2023-08-12,"No notes","cholesterol",220
+"148","P1036","Male","Yes","Heart Disease",2023-08-12,"No notes","bmi",35.4
+"149","P1037","Unknown","No","None",2023-09-29,"Pending","age",45
+"150","P1037","Unknown","No","None",2023-09-29,"Pending","blood_pressure",150
+"151","P1037","Unknown","No","None",2023-09-29,"Pending","cholesterol",200
+"152","P1037","Unknown","No","None",2023-09-29,"Pending","bmi",40.1
+"153","P1038","Male","Unknown","Unknown",2023-12-24,"Follow-up required","age",55
+"154","P1038","Male","Unknown","Unknown",2023-12-24,"Follow-up required","blood_pressure",130
+"155","P1038","Male","Unknown","Unknown",2023-12-24,"Follow-up required","cholesterol",300
+"156","P1038","Male","Unknown","Unknown",2023-12-24,"Follow-up required","bmi",35.4
+"157","P1039","Male","Unknown","Diabetes",2023-06-05,"Follow-up required","age",55
+"158","P1039","Male","Unknown","Diabetes",2023-06-05,"Follow-up required","blood_pressure",140
+"159","P1039","Male","Unknown","Diabetes",2023-06-05,"Follow-up required","cholesterol",220
+"160","P1039","Male","Unknown","Diabetes",2023-06-05,"Follow-up required","bmi",28.9
+"161","P1040","Male","No","Heart Disease",2023-01-08,"Follow-up required","age",25
+"162","P1040","Male","No","Heart Disease",2023-01-08,"Follow-up required","blood_pressure",140
+"163","P1040","Male","No","Heart Disease",2023-01-08,"Follow-up required","cholesterol",180
+"164","P1040","Male","No","Heart Disease",2023-01-08,"Follow-up required","bmi",40.1
+"165","P1041","Male","No","Heart Disease",2023-05-02,"Follow-up required","age",45
+"166","P1041","Male","No","Heart Disease",2023-05-02,"Follow-up required","blood_pressure",140
+"167","P1041","Male","No","Heart Disease",2023-05-02,"Follow-up required","cholesterol",250
+"168","P1041","Male","No","Heart Disease",2023-05-02,"Follow-up required","bmi",35.4
+"169","P1042","Female","Unknown","Unknown",2023-12-14,"No notes","age",65
+"170","P1042","Female","Unknown","Unknown",2023-12-14,"No notes","blood_pressure",120
+"171","P1042","Female","Unknown","Unknown",2023-12-14,"No notes","cholesterol",180
+"172","P1042","Female","Unknown","Unknown",2023-12-14,"No notes","bmi",35.4
+"173","P1043","Female","Yes","Diabetes",2023-06-13,"No notes","age",45
+"174","P1043","Female","Yes","Diabetes",2023-06-13,"No notes","blood_pressure",120
+"175","P1043","Female","Yes","Diabetes",2023-06-13,"No notes","cholesterol",300
+"176","P1043","Female","Yes","Diabetes",2023-06-13,"No notes","bmi",30
+"177","P1044","Male","No","Diabetes",2023-03-31,"Follow-up required","age",65
+"178","P1044","Male","No","Diabetes",2023-03-31,"Follow-up required","blood_pressure",150
+"179","P1044","Male","No","Diabetes",2023-03-31,"Follow-up required","cholesterol",250
+"180","P1044","Male","No","Diabetes",2023-03-31,"Follow-up required","bmi",35.4
+"181","P1045","Male","Yes","Heart Disease",2023-05-16,"Pending","age",25
+"182","P1045","Male","Yes","Heart Disease",2023-05-16,"Pending","blood_pressure",140
+"183","P1045","Male","Yes","Heart Disease",2023-05-16,"Pending","cholesterol",300
+"184","P1045","Male","Yes","Heart Disease",2023-05-16,"Pending","bmi",40.1
+"185","P1046","Female","Yes","None",2023-07-05,"Checkup due","age",35
+"186","P1046","Female","Yes","None",2023-07-05,"Checkup due","blood_pressure",140
+"187","P1046","Female","Yes","None",2023-07-05,"Checkup due","cholesterol",220
+"188","P1046","Female","Yes","None",2023-07-05,"Checkup due","bmi",27.8
+"189","P1047","Female","No","Heart Disease",2023-11-12,"Checkup due","age",55
+"190","P1047","Female","No","Heart Disease",2023-11-12,"Checkup due","blood_pressure",160
+"191","P1047","Female","No","Heart Disease",2023-11-12,"Checkup due","cholesterol",250
+"192","P1047","Female","No","Heart Disease",2023-11-12,"Checkup due","bmi",35.4
+"193","P1048","Female","Unknown","Diabetes",2023-06-27,"Pending","age",25
+"194","P1048","Female","Unknown","Diabetes",2023-06-27,"Pending","blood_pressure",140
+"195","P1048","Female","Unknown","Diabetes",2023-06-27,"Pending","cholesterol",220
+"196","P1048","Female","Unknown","Diabetes",2023-06-27,"Pending","bmi",27.8
+"197","P1049","Unknown","No","Unknown",2023-01-28,"Follow-up required","age",55
+"198","P1049","Unknown","No","Unknown",2023-01-28,"Follow-up required","blood_pressure",150
+"199","P1049","Unknown","No","Unknown",2023-01-28,"Follow-up required","cholesterol",180
+"200","P1049","Unknown","No","Unknown",2023-01-28,"Follow-up required","bmi",35.4
+"201","P1050","Female","No","Heart Disease",2023-08-08,"No notes","age",45
+"202","P1050","Female","No","Heart Disease",2023-08-08,"No notes","blood_pressure",150
+"203","P1050","Female","No","Heart Disease",2023-08-08,"No notes","cholesterol",180
+"204","P1050","Female","No","Heart Disease",2023-08-08,"No notes","bmi",30
+"205","P1051","Female","No","Diabetes",2023-12-23,"Checkup due","age",35
+"206","P1051","Female","No","Diabetes",2023-12-23,"Checkup due","blood_pressure",140
+"207","P1051","Female","No","Diabetes",2023-12-23,"Checkup due","cholesterol",250
+"208","P1051","Female","No","Diabetes",2023-12-23,"Checkup due","bmi",22.5
+"209","P1052","Male","No","Heart Disease",2023-02-10,"No notes","age",35
+"210","P1052","Male","No","Heart Disease",2023-02-10,"No notes","blood_pressure",150
+"211","P1052","Male","No","Heart Disease",2023-02-10,"No notes","cholesterol",250
+"212","P1052","Male","No","Heart Disease",2023-02-10,"No notes","bmi",30
+"213","P1053","Female","Yes","None",2023-08-16,"No notes","age",25
+"214","P1053","Female","Yes","None",2023-08-16,"No notes","blood_pressure",140
+"215","P1053","Female","Yes","None",2023-08-16,"No notes","cholesterol",200
+"216","P1053","Female","Yes","None",2023-08-16,"No notes","bmi",35.4
+"217","P1054","Female","Yes","Heart Disease",2023-07-11,"Pending","age",35
+"218","P1054","Female","Yes","Heart Disease",2023-07-11,"Pending","blood_pressure",130
+"219","P1054","Female","Yes","Heart Disease",2023-07-11,"Pending","cholesterol",300
+"220","P1054","Female","Yes","Heart Disease",2023-07-11,"Pending","bmi",27.8
+"221","P1055","Female","No","Heart Disease",2023-05-25,"Follow-up required","age",65
+"222","P1055","Female","No","Heart Disease",2023-05-25,"Follow-up required","blood_pressure",140
+"223","P1055","Female","No","Heart Disease",2023-05-25,"Follow-up required","cholesterol",220
+"224","P1055","Female","No","Heart Disease",2023-05-25,"Follow-up required","bmi",27.8
+"225","P1056","Male","No","Diabetes",2023-07-20,"Checkup due","age",35
+"226","P1056","Male","No","Diabetes",2023-07-20,"Checkup due","blood_pressure",140
+"227","P1056","Male","No","Diabetes",2023-07-20,"Checkup due","cholesterol",300
+"228","P1056","Male","No","Diabetes",2023-07-20,"Checkup due","bmi",40.1
+"229","P1057","Male","Unknown","Diabetes",2023-07-31,"Follow-up required","age",55
+"230","P1057","Male","Unknown","Diabetes",2023-07-31,"Follow-up required","blood_pressure",150
+"231","P1057","Male","Unknown","Diabetes",2023-07-31,"Follow-up required","cholesterol",220
+"232","P1057","Male","Unknown","Diabetes",2023-07-31,"Follow-up required","bmi",27.8
+"233","P1058","Unknown","No","Diabetes",2023-08-08,"Checkup due","age",55
+"234","P1058","Unknown","No","Diabetes",2023-08-08,"Checkup due","blood_pressure",150
+"235","P1058","Unknown","No","Diabetes",2023-08-08,"Checkup due","cholesterol",220
+"236","P1058","Unknown","No","Diabetes",2023-08-08,"Checkup due","bmi",40.1
+"237","P1059","Female","Unknown","Heart Disease",2023-08-28,"Pending","age",55
+"238","P1059","Female","Unknown","Heart Disease",2023-08-28,"Pending","blood_pressure",120
+"239","P1059","Female","Unknown","Heart Disease",2023-08-28,"Pending","cholesterol",250
+"240","P1059","Female","Unknown","Heart Disease",2023-08-28,"Pending","bmi",35.4
+"241","P1060","Male","Yes","None",2023-02-15,"Pending","age",55
+"242","P1060","Male","Yes","None",2023-02-15,"Pending","blood_pressure",120
+"243","P1060","Male","Yes","None",2023-02-15,"Pending","cholesterol",180
+"244","P1060","Male","Yes","None",2023-02-15,"Pending","bmi",22.5
+"245","P1061","Male","Unknown","Unknown",2023-02-04,"No notes","age",65
+"246","P1061","Male","Unknown","Unknown",2023-02-04,"No notes","blood_pressure",130
+"247","P1061","Male","Unknown","Unknown",2023-02-04,"No notes","cholesterol",300
+"248","P1061","Male","Unknown","Unknown",2023-02-04,"No notes","bmi",35.4
+"249","P1062","Female","No","Unknown",2023-09-10,"Follow-up required","age",45
+"250","P1062","Female","No","Unknown",2023-09-10,"Follow-up required","blood_pressure",120
+"251","P1062","Female","No","Unknown",2023-09-10,"Follow-up required","cholesterol",300
+"252","P1062","Female","No","Unknown",2023-09-10,"Follow-up required","bmi",40.1
+"253","P1063","Unknown","Yes","Diabetes",2023-03-23,"No notes","age",55
+"254","P1063","Unknown","Yes","Diabetes",2023-03-23,"No notes","blood_pressure",140
+"255","P1063","Unknown","Yes","Diabetes",2023-03-23,"No notes","cholesterol",180
+"256","P1063","Unknown","Yes","Diabetes",2023-03-23,"No notes","bmi",22.5
+"257","P1064","Male","Unknown","Diabetes",2023-09-13,"Follow-up required","age",25
+"258","P1064","Male","Unknown","Diabetes",2023-09-13,"Follow-up required","blood_pressure",150
+"259","P1064","Male","Unknown","Diabetes",2023-09-13,"Follow-up required","cholesterol",220
+"260","P1064","Male","Unknown","Diabetes",2023-09-13,"Follow-up required","bmi",27.8
+"261","P1065","Female","Unknown","Heart Disease",2023-07-16,"No notes","age",55
+"262","P1065","Female","Unknown","Heart Disease",2023-07-16,"No notes","blood_pressure",120
+"263","P1065","Female","Unknown","Heart Disease",2023-07-16,"No notes","cholesterol",300
+"264","P1065","Female","Unknown","Heart Disease",2023-07-16,"No notes","bmi",27.8
+"265","P1066","Unknown","Yes","Unknown",2023-10-30,"No notes","age",35
+"266","P1066","Unknown","Yes","Unknown",2023-10-30,"No notes","blood_pressure",120
+"267","P1066","Unknown","Yes","Unknown",2023-10-30,"No notes","cholesterol",220
+"268","P1066","Unknown","Yes","Unknown",2023-10-30,"No notes","bmi",22.5
+"269","P1067","Female","No","Diabetes",2023-01-10,"No notes","age",55
+"270","P1067","Female","No","Diabetes",2023-01-10,"No notes","blood_pressure",130
+"271","P1067","Female","No","Diabetes",2023-01-10,"No notes","cholesterol",250
+"272","P1067","Female","No","Diabetes",2023-01-10,"No notes","bmi",27.8
+"273","P1068","Female","No","None",2023-11-08,"No notes","age",35
+"274","P1068","Female","No","None",2023-11-08,"No notes","blood_pressure",140
+"275","P1068","Female","No","None",2023-11-08,"No notes","cholesterol",180
+"276","P1068","Female","No","None",2023-11-08,"No notes","bmi",35.4
+"277","P1069","Female","Unknown","None",2023-10-13,"No notes","age",45
+"278","P1069","Female","Unknown","None",2023-10-13,"No notes","blood_pressure",130
+"279","P1069","Female","Unknown","None",2023-10-13,"No notes","cholesterol",250
+"280","P1069","Female","Unknown","None",2023-10-13,"No notes","bmi",35.4
+"281","P1070","Female","Yes","Diabetes",2023-08-30,"Checkup due","age",55
+"282","P1070","Female","Yes","Diabetes",2023-08-30,"Checkup due","blood_pressure",140
+"283","P1070","Female","Yes","Diabetes",2023-08-30,"Checkup due","cholesterol",300
+"284","P1070","Female","Yes","Diabetes",2023-08-30,"Checkup due","bmi",22.5
+"285","P1071","Female","Yes","Diabetes",2023-09-08,"No notes","age",55
+"286","P1071","Female","Yes","Diabetes",2023-09-08,"No notes","blood_pressure",150
+"287","P1071","Female","Yes","Diabetes",2023-09-08,"No notes","cholesterol",300
+"288","P1071","Female","Yes","Diabetes",2023-09-08,"No notes","bmi",40.1
+"289","P1072","Unknown","Yes","Unknown",2023-12-31,"Pending","age",35
+"290","P1072","Unknown","Yes","Unknown",2023-12-31,"Pending","blood_pressure",130
+"291","P1072","Unknown","Yes","Unknown",2023-12-31,"Pending","cholesterol",180
+"292","P1072","Unknown","Yes","Unknown",2023-12-31,"Pending","bmi",40.1
+"293","P1073","Unknown","Yes","Unknown",2023-01-05,"Pending","age",55
+"294","P1073","Unknown","Yes","Unknown",2023-01-05,"Pending","blood_pressure",120
+"295","P1073","Unknown","Yes","Unknown",2023-01-05,"Pending","cholesterol",220
+"296","P1073","Unknown","Yes","Unknown",2023-01-05,"Pending","bmi",22.5
+"297","P1074","Male","No","Heart Disease",2023-04-29,"Checkup due","age",45
+"298","P1074","Male","No","Heart Disease",2023-04-29,"Checkup due","blood_pressure",150
+"299","P1074","Male","No","Heart Disease",2023-04-29,"Checkup due","cholesterol",200
+"300","P1074","Male","No","Heart Disease",2023-04-29,"Checkup due","bmi",40.1
+"301","P1075","Male","No","Unknown",2023-10-16,"No notes","age",65
+"302","P1075","Male","No","Unknown",2023-10-16,"No notes","blood_pressure",150
+"303","P1075","Male","No","Unknown",2023-10-16,"No notes","cholesterol",180
+"304","P1075","Male","No","Unknown",2023-10-16,"No notes","bmi",40.1
+"305","P1076","Female","Yes","None",2023-03-06,"No notes","age",35
+"306","P1076","Female","Yes","None",2023-03-06,"No notes","blood_pressure",120
+"307","P1076","Female","Yes","None",2023-03-06,"No notes","cholesterol",200
+"308","P1076","Female","Yes","None",2023-03-06,"No notes","bmi",35.4
+"309","P1077","Male","Unknown","None",2023-05-26,"No notes","age",35
+"310","P1077","Male","Unknown","None",2023-05-26,"No notes","blood_pressure",130
+"311","P1077","Male","Unknown","None",2023-05-26,"No notes","cholesterol",200
+"312","P1077","Male","Unknown","None",2023-05-26,"No notes","bmi",40.1
+"313","P1078","Unknown","No","Diabetes",2023-08-12,"No notes","age",55
+"314","P1078","Unknown","No","Diabetes",2023-08-12,"No notes","blood_pressure",120
+"315","P1078","Unknown","No","Diabetes",2023-08-12,"No notes","cholesterol",200
+"316","P1078","Unknown","No","Diabetes",2023-08-12,"No notes","bmi",30
+"317","P1079","Male","Yes","Unknown",2023-08-27,"Follow-up required","age",35
+"318","P1079","Male","Yes","Unknown",2023-08-27,"Follow-up required","blood_pressure",130
+"319","P1079","Male","Yes","Unknown",2023-08-27,"Follow-up required","cholesterol",220
+"320","P1079","Male","Yes","Unknown",2023-08-27,"Follow-up required","bmi",35.4
+"321","P1080","Male","Unknown","Heart Disease",2023-06-26,"No notes","age",35
+"322","P1080","Male","Unknown","Heart Disease",2023-06-26,"No notes","blood_pressure",150
+"323","P1080","Male","Unknown","Heart Disease",2023-06-26,"No notes","cholesterol",220
+"324","P1080","Male","Unknown","Heart Disease",2023-06-26,"No notes","bmi",27.8
+"325","P1081","Male","Yes","None",2023-09-24,"Follow-up required","age",45
+"326","P1081","Male","Yes","None",2023-09-24,"Follow-up required","blood_pressure",160
+"327","P1081","Male","Yes","None",2023-09-24,"Follow-up required","cholesterol",200
+"328","P1081","Male","Yes","None",2023-09-24,"Follow-up required","bmi",30
+"329","P1082","Male","Yes","None",2023-12-07,"No notes","age",55
+"330","P1082","Male","Yes","None",2023-12-07,"No notes","blood_pressure",160
+"331","P1082","Male","Yes","None",2023-12-07,"No notes","cholesterol",200
+"332","P1082","Male","Yes","None",2023-12-07,"No notes","bmi",40.1
+"333","P1083","Unknown","Yes","Heart Disease",2023-10-09,"No notes","age",45
+"334","P1083","Unknown","Yes","Heart Disease",2023-10-09,"No notes","blood_pressure",140
+"335","P1083","Unknown","Yes","Heart Disease",2023-10-09,"No notes","cholesterol",200
+"336","P1083","Unknown","Yes","Heart Disease",2023-10-09,"No notes","bmi",35.4
+"337","P1084","Male","Yes","Heart Disease",2023-03-04,"No notes","age",45
+"338","P1084","Male","Yes","Heart Disease",2023-03-04,"No notes","blood_pressure",120
+"339","P1084","Male","Yes","Heart Disease",2023-03-04,"No notes","cholesterol",220
+"340","P1084","Male","Yes","Heart Disease",2023-03-04,"No notes","bmi",22.5
+"341","P1085","Female","Yes","None",2023-08-05,"No notes","age",55
+"342","P1085","Female","Yes","None",2023-08-05,"No notes","blood_pressure",120
+"343","P1085","Female","Yes","None",2023-08-05,"No notes","cholesterol",200
+"344","P1085","Female","Yes","None",2023-08-05,"No notes","bmi",40.1
+"345","P1086","Female","No","None",2023-12-08,"Follow-up required","age",25
+"346","P1086","Female","No","None",2023-12-08,"Follow-up required","blood_pressure",140
+"347","P1086","Female","No","None",2023-12-08,"Follow-up required","cholesterol",200
+"348","P1086","Female","No","None",2023-12-08,"Follow-up required","bmi",35.4
+"349","P1087","Male","Yes","Heart Disease",2023-11-11,"Pending","age",45
+"350","P1087","Male","Yes","Heart Disease",2023-11-11,"Pending","blood_pressure",140
+"351","P1087","Male","Yes","Heart Disease",2023-11-11,"Pending","cholesterol",200
+"352","P1087","Male","Yes","Heart Disease",2023-11-11,"Pending","bmi",35.4
+"353","P1088","Male","Unknown","None",2023-10-10,"Follow-up required","age",65
+"354","P1088","Male","Unknown","None",2023-10-10,"Follow-up required","blood_pressure",140
+"355","P1088","Male","Unknown","None",2023-10-10,"Follow-up required","cholesterol",180
+"356","P1088","Male","Unknown","None",2023-10-10,"Follow-up required","bmi",40.1
+"357","P1089","Unknown","Yes","Diabetes",2023-06-26,"No notes","age",65
+"358","P1089","Unknown","Yes","Diabetes",2023-06-26,"No notes","blood_pressure",150
+"359","P1089","Unknown","Yes","Diabetes",2023-06-26,"No notes","cholesterol",180
+"360","P1089","Unknown","Yes","Diabetes",2023-06-26,"No notes","bmi",22.5
+"361","P1090","Male","Yes","Diabetes",2023-04-08,"No notes","age",35
+"362","P1090","Male","Yes","Diabetes",2023-04-08,"No notes","blood_pressure",140
+"363","P1090","Male","Yes","Diabetes",2023-04-08,"No notes","cholesterol",180
+"364","P1090","Male","Yes","Diabetes",2023-04-08,"No notes","bmi",28.9
+"365","P1091","Male","Yes","Heart Disease",2023-04-15,"Checkup due","age",65
+"366","P1091","Male","Yes","Heart Disease",2023-04-15,"Checkup due","blood_pressure",120
+"367","P1091","Male","Yes","Heart Disease",2023-04-15,"Checkup due","cholesterol",220
+"368","P1091","Male","Yes","Heart Disease",2023-04-15,"Checkup due","bmi",35.4
+"369","P1092","Unknown","No","Unknown",2023-04-09,"No notes","age",35
+"370","P1092","Unknown","No","Unknown",2023-04-09,"No notes","blood_pressure",150
+"371","P1092","Unknown","No","Unknown",2023-04-09,"No notes","cholesterol",220
+"372","P1092","Unknown","No","Unknown",2023-04-09,"No notes","bmi",35.4
+"373","P1093","Female","No","Heart Disease",2023-11-07,"Checkup due","age",25
+"374","P1093","Female","No","Heart Disease",2023-11-07,"Checkup due","blood_pressure",140
+"375","P1093","Female","No","Heart Disease",2023-11-07,"Checkup due","cholesterol",300
+"376","P1093","Female","No","Heart Disease",2023-11-07,"Checkup due","bmi",35.4
+"377","P1094","Male","Unknown","Heart Disease",2023-01-06,"Pending","age",55
+"378","P1094","Male","Unknown","Heart Disease",2023-01-06,"Pending","blood_pressure",120
+"379","P1094","Male","Unknown","Heart Disease",2023-01-06,"Pending","cholesterol",200
+"380","P1094","Male","Unknown","Heart Disease",2023-01-06,"Pending","bmi",40.1
+"381","P1095","Male","Yes","Unknown",2023-07-16,"Follow-up required","age",55
+"382","P1095","Male","Yes","Unknown",2023-07-16,"Follow-up required","blood_pressure",150
+"383","P1095","Male","Yes","Unknown",2023-07-16,"Follow-up required","cholesterol",200
+"384","P1095","Male","Yes","Unknown",2023-07-16,"Follow-up required","bmi",35.4
+"385","P1096","Male","Yes","Unknown",2023-12-17,"Follow-up required","age",55
+"386","P1096","Male","Yes","Unknown",2023-12-17,"Follow-up required","blood_pressure",130
+"387","P1096","Male","Yes","Unknown",2023-12-17,"Follow-up required","cholesterol",220
+"388","P1096","Male","Yes","Unknown",2023-12-17,"Follow-up required","bmi",27.8
+"389","P1097","Female","No","Unknown",2023-05-13,"Checkup due","age",65
+"390","P1097","Female","No","Unknown",2023-05-13,"Checkup due","blood_pressure",150
+"391","P1097","Female","No","Unknown",2023-05-13,"Checkup due","cholesterol",200
+"392","P1097","Female","No","Unknown",2023-05-13,"Checkup due","bmi",27.8
+"393","P1098","Male","Yes","Diabetes",2023-12-24,"Follow-up required","age",25
+"394","P1098","Male","Yes","Diabetes",2023-12-24,"Follow-up required","blood_pressure",140
+"395","P1098","Male","Yes","Diabetes",2023-12-24,"Follow-up required","cholesterol",180
+"396","P1098","Male","Yes","Diabetes",2023-12-24,"Follow-up required","bmi",40.1
+"397","P1099","Unknown","No","None",2023-09-16,"No notes","age",65
+"398","P1099","Unknown","No","None",2023-09-16,"No notes","blood_pressure",140
+"399","P1099","Unknown","No","None",2023-09-16,"No notes","cholesterol",300
+"400","P1099","Unknown","No","None",2023-09-16,"No notes","bmi",35.4

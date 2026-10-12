@@ -1,0 +1,101 @@
+"patient_id","age","gender","blood_pressure","cholesterol","bmi","smoker","diagnosis","admission_date","notes"
+"P1000",55,"Female",120,220,35.4,"Yes","Heart Disease",2023-12-27,NA
+"P1001",65,"Male",150,180,27.8,NA,"None",2023-01-01,NA
+"P1002",45,"Male",120,220,22.5,"No","nan",2023-12-14,NA
+"P1003",65,"Male",140,180,35.4,"No","nan",2023-07-09,NA
+"P1004",65,"Male",120,300,40.1,NA,"None",2023-07-10,"Follow-up required"
+"P1005",35,"Female",130,200,35.4,"No","Heart Disease",2023-11-08,"Follow-up required"
+"P1006",45,"Male",150,220,22.5,"No","None",2023-04-27,"N/A"
+"P1007",45,"Male",150,200,35.4,"No","nan",2023-05-14,"Checkup due"
+"P1008",45,"Male",140,200,35.4,"No","Diabetes",2023-02-27,NA
+"P1009",65,"Male",130,220,35.4,"No","Diabetes",2023-02-13,"Checkup due"
+"P1010",55,"Male",140,220,30,"Yes","None",2023-06-22,"Checkup due"
+"P1011",45,"Male",120,300,35.4,"No","nan",2023-06-09,"N/A"
+"P1012",55,"Male",160,180,27.8,"Yes","Diabetes",2023-06-22,NA
+"P1013",65,"Female",120,250,27.8,NA,"nan",2023-11-13,NA
+"P1014",35,"Male",120,180,35.4,NA,"None",2023-10-30,"Pending"
+"P1015",55,"Male",140,250,30,"No","Diabetes",2023-05-29,"Checkup due"
+"P1016",55,"Male",120,180,22.5,"No","nan",2023-03-21,"Checkup due"
+"P1017",55,"Female",130,220,27.8,"Yes","Diabetes",2023-08-01,"Follow-up required"
+"P1018",35,"Male",130,300,35.4,"No","None",2023-07-22,"Pending"
+"P1019",55,"Female",150,250,40.1,"Yes","nan",2023-09-09,"Follow-up required"
+"P1020",65,"Male",140,220,35.4,"No","Diabetes",2023-08-17,"Follow-up required"
+"P1021",25,"Male",160,180,27.8,"No","None",2023-06-13,"Follow-up required"
+"P1022",55,NA,120,180,27.8,"No","Diabetes",2023-08-15,"N/A"
+"P1023",35,"Female",120,250,35.4,"Yes","Diabetes",2023-05-27,"N/A"
+"P1024",55,"Male",140,220,22.5,"No","Heart Disease",2023-01-20,"Follow-up required"
+"P1025",65,"Female",140,220,35.4,"Yes","Heart Disease",2023-02-16,"Pending"
+"P1026",55,NA,130,220,27.8,"Yes","None",2023-08-21,"Checkup due"
+"P1027",25,"Male",160,220,35.4,NA,"Heart Disease",2023-11-01,"Pending"
+"P1028",25,"Male",150,220,35.4,"Yes","None",2023-01-14,NA
+"P1029",45,"Male",130,220,30,"Yes","Heart Disease",2023-05-23,"N/A"
+"P1030",45,"Male",140,220,35.4,NA,"Diabetes",2023-01-01,"Checkup due"
+"P1031",35,"Female",150,220,40.1,"No","None",2023-02-23,"Checkup due"
+"P1032",55,NA,140,300,22.5,"Yes","None",2023-09-16,NA
+"P1033",55,"Male",140,220,40.1,"Yes","Diabetes",2023-05-24,NA
+"P1034",55,"Male",120,220,35.4,"Yes","None",2023-01-12,"Follow-up required"
+"P1035",55,"Female",140,220,35.4,"No","None",2023-11-26,"N/A"
+"P1036",55,"Male",160,220,35.4,"Yes","Heart Disease",2023-08-12,"N/A"
+"P1037",45,NA,150,200,40.1,"No","None",2023-09-29,"Pending"
+"P1038",55,"Male",130,300,35.4,NA,"nan",2023-12-24,"Follow-up required"
+"P1039",55,"Male",140,220,35.4,NA,"Diabetes",2023-06-05,"Follow-up required"
+"P1040",25,"Male",140,180,40.1,"No","Heart Disease",2023-01-08,"Follow-up required"
+"P1041",45,"Male",140,250,35.4,"No","Heart Disease",2023-05-02,"Follow-up required"
+"P1042",65,"Female",120,180,35.4,NA,"nan",2023-12-14,"N/A"
+"P1043",45,"Female",120,300,30,"Yes","Diabetes",2023-06-13,"N/A"
+"P1044",65,"Male",150,250,35.4,"No","Diabetes",2023-03-31,"Follow-up required"
+"P1045",25,"Male",140,300,40.1,"Yes","Heart Disease",2023-05-16,"Pending"
+"P1046",35,"Female",140,220,27.8,"Yes","None",2023-07-05,"Checkup due"
+"P1047",55,"Female",160,250,35.4,"No","Heart Disease",2023-11-12,"Checkup due"
+"P1048",25,"Female",140,220,27.8,NA,"Diabetes",2023-06-27,"Pending"
+"P1049",55,NA,150,180,35.4,"No","nan",2023-01-28,"Follow-up required"
+"P1050",55,"Female",150,180,30,"No","Heart Disease",2023-08-08,"N/A"
+"P1051",35,"Female",140,250,22.5,"No","Diabetes",2023-12-23,"Checkup due"
+"P1052",35,"Male",150,250,30,"No","Heart Disease",2023-02-10,NA
+"P1053",25,"Female",140,220,35.4,"Yes","None",2023-08-16,NA
+"P1054",35,"Female",130,300,27.8,"Yes","Heart Disease",2023-07-11,"Pending"
+"P1055",65,"Female",140,220,27.8,"No","Heart Disease",2023-05-25,"Follow-up required"
+"P1056",35,"Male",140,300,40.1,"No","Diabetes",2023-07-20,"Checkup due"
+"P1057",55,"Male",150,220,27.8,NA,"Diabetes",2023-07-31,"Follow-up required"
+"P1058",55,NA,150,220,40.1,"No","Diabetes",2023-08-08,"Checkup due"
+"P1059",55,"Female",120,250,35.4,NA,"Heart Disease",2023-08-28,"Pending"
+"P1060",55,"Male",120,180,22.5,"Yes","None",2023-02-15,"Pending"
+"P1061",65,"Male",130,300,35.4,NA,"nan",2023-02-04,NA
+"P1062",45,"Female",120,300,40.1,"No","nan",2023-09-10,"Follow-up required"
+"P1063",55,NA,140,180,22.5,"Yes","Diabetes",2023-03-23,NA
+"P1064",25,"Male",150,220,27.8,NA,"Diabetes",2023-09-13,"Follow-up required"
+"P1065",55,"Female",120,300,27.8,NA,"Heart Disease",2023-07-16,NA
+"P1066",35,NA,120,220,22.5,"Yes","nan",2023-10-30,"N/A"
+"P1067",55,"Female",130,250,27.8,"No","Diabetes",2023-01-10,"N/A"
+"P1068",35,"Female",140,180,35.4,"No","None",2023-11-08,"N/A"
+"P1069",55,"Female",130,250,35.4,NA,"None",2023-10-13,"N/A"
+"P1070",55,"Female",140,300,22.5,"Yes","Diabetes",2023-08-30,"Checkup due"
+"P1071",55,"Female",150,300,40.1,"Yes","Diabetes",2023-09-08,"N/A"
+"P1072",35,NA,130,180,40.1,"Yes","nan",2023-12-31,"Pending"
+"P1073",55,NA,120,220,22.5,"Yes","nan",2023-01-05,"Pending"
+"P1074",55,"Male",150,200,40.1,"No","Heart Disease",2023-04-29,"Checkup due"
+"P1075",65,"Male",150,180,40.1,"No","nan",2023-10-16,"N/A"
+"P1076",35,"Female",120,200,35.4,"Yes","None",2023-03-06,"N/A"
+"P1077",35,"Male",130,220,40.1,NA,"None",2023-05-26,"N/A"
+"P1078",55,NA,120,200,30,"No","Diabetes",2023-08-12,NA
+"P1079",35,"Male",140,220,35.4,"Yes","nan",2023-08-27,"Follow-up required"
+"P1080",35,"Male",150,220,27.8,NA,"Heart Disease",2023-06-26,NA
+"P1081",55,"Male",160,200,30,"Yes","None",2023-09-24,"Follow-up required"
+"P1082",55,"Male",160,220,40.1,"Yes","None",2023-12-07,"N/A"
+"P1083",55,NA,140,200,35.4,"Yes","Heart Disease",2023-10-09,"N/A"
+"P1084",55,"Male",120,220,22.5,"Yes","Heart Disease",2023-03-04,NA
+"P1085",55,"Female",120,200,40.1,"Yes","None",2023-08-05,NA
+"P1086",25,"Female",140,200,35.4,"No","None",2023-12-08,"Follow-up required"
+"P1087",55,"Male",140,200,35.4,"Yes","Heart Disease",2023-11-11,"Pending"
+"P1088",65,"Male",140,180,40.1,NA,"None",2023-10-10,"Follow-up required"
+"P1089",65,NA,150,180,22.5,"Yes","Diabetes",2023-06-26,NA
+"P1090",35,"Male",140,180,35.4,"Yes","Diabetes",2023-04-08,NA
+"P1091",65,"Male",120,220,35.4,"Yes","Heart Disease",2023-04-15,"Checkup due"
+"P1092",35,NA,150,220,35.4,"No","nan",2023-04-09,NA
+"P1093",25,"Female",140,300,35.4,"No","Heart Disease",2023-11-07,"Checkup due"
+"P1094",55,"Male",120,200,40.1,NA,"Heart Disease",2023-01-06,"Pending"
+"P1095",55,"Male",150,200,35.4,"Yes","nan",2023-07-16,"Follow-up required"
+"P1096",55,"Male",140,220,27.8,"Yes","nan",2023-12-17,"Follow-up required"
+"P1097",65,"Female",150,200,27.8,"No","nan",2023-05-13,"Checkup due"
+"P1098",25,"Male",140,180,40.1,"Yes","Diabetes",2023-12-24,"Follow-up required"
+"P1099",65,NA,140,300,35.4,"No","None",2023-09-16,NA
