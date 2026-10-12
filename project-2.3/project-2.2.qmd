@@ -5,3 +5,144 @@ format: html
 editor: visual
 ---
 
+## 1.Objective
+
+This project develops practical competency in transforming wide-format datasets into tidy formats suitable for downstream analysis. All transformations are performed using the tidyr and dplyr packages in R.
+
+## 2.Dataset Selection
+
+Labor market dataset: <https://www.bls.gov/news.release/archives/laus_04082026.htm> Obtained from 5A discussion post contributed by Zaina Hassan.
+
+## Data structure before tidying
+
+Dates and measurements are spread across multiple columns and levels of column headings rather than each variable having its own individual column. For example, unemployment information for different months and years appears across several columns.
+
+## 3.Data Preparation
+
+### 3.1 Raw Data Construction
+
+```{r}
+library(readr)
+library(dplyr)
+library(tidyr)
+library(naniar)
+library(ggplot2)
+library(stringr)
+
+
+row_df<-read_csv("https://raw.githubusercontent.com/lhamo07/Data-607-Assignment/refs/heads/main/project-2.3/labour_row_dataset.csv")
+
+
+# Rename columns
+row_df <- row_df %>%
+  rename(
+    state = 1,
+    labor_force_jan_2025 = 2,
+    labor_force_nov_2025 = 3,
+    labor_force_dec_2025 = 4,
+    labor_force_jan_2026 = 5,
+    unemployed_jan_2025 = 6,
+    unemployed_nov_2025 = 7,
+    unemployed_dec_2025 = 8,
+    unemployed_jan_2026 = 9,
+    unemployment_rate_jan_2025 = 10,
+    unemployment_rate_nov_2025 = 11,
+    unemployment_rate_dec_2025 = 12,
+    unemployment_rate_jan_2026 = 13
+  )%>%
+# Remove the first two unnecessary rows and the last row 
+  slice(-c(1, 2, n()))
+row_df
+```
+
+```{r}
+miss_var_summary(row_df)
+
+```
+
+There is no any missing data.
+
+```{r}
+glimpse(row_df)
+
+```
+
+## 3.2 Data Import and Tidying
+
+```{r}
+# Strip the commas first to convert char datatype to numeric
+row_df <- row_df %>%
+  mutate(across(-state, ~ as.numeric(gsub(",", "", .x))))
+```
+
+```{r}
+glimpse(row_df)
+
+```
+
+```{r}
+# Reshape to long format
+labour_df_long<-row_df%>%
+  pivot_longer(
+    cols=-state,
+    names_to = c(".value", "month", "year"),
+    names_pattern = "(labor_force|unemployed|unemployment_rate)_([a-z]{3})_(\\d{4})"    
+  )%>%
+    mutate(month = str_to_title(month))
+labour_df_long
+
+```
+
+```{r}
+labour_df_long %>%
+  filter(month == "Jan", year == 2026) %>%
+  # selects the 10 rows with the highest unemployment rates.
+  slice_max(unemployment_rate, n = 10) %>%
+  ggplot(aes(
+    # reorder the states based on their unemployment rates
+    x = reorder(state, unemployment_rate),
+    y = unemployment_rate
+  )) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "10 States with the Highest Unemployment Rates",
+    x = "State",
+    y = "Unemployment Rate (%)"
+  ) +
+  theme_minimal()
+```
+
+This bar chart shows the 11 states with the highest unemployment rates for January 2026, where District of Columbia lead with the highest unemployment rate.
+
+```{r}
+labour_df_long %>%
+  filter(month == "Jan", year == 2026) %>%
+  # selects the 10 rows with the lowest unemployment rates.
+  slice_min(unemployment_rate, n = 10) %>%
+  ggplot(aes(
+    # reorder the states based on their unemployment rates
+    x = reorder(state, unemployment_rate),
+    y = unemployment_rate
+  )) +
+  geom_col() +
+  coord_flip() +
+  labs(
+    title = "10 States with the Lowest Unemployment Rates",
+    x = "State",
+    y = "Unemployment Rate (%)"
+  ) +
+  theme_minimal()
+```
+
+This bar chart shows the 11 states with the lowest unemployment rates for January 2026, where South Dakota and Hawaii lead with the lowest unemployment rate.
+
+## Conclusion
+
+In this project, I transformed the labor market dataset from wide to long format using tidyr and dplyr. The analysis showed that the District of Columbia had the highest unemployment rate in January 2026, while South Dakota and Hawaii had the lowest. This project helped me practice data tidying and visualization in R.
+
+## Citation
+
+Anthropic. (2026). Claude Sonnet 5.5 \[Large language model\]. https://claude.ai. Accessed October 11,
+
+<https://claude.ai/share/6ecc061e-08c3-4fed-995c-8637f933968d>
