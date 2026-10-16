@@ -1,23 +1,23 @@
 [
   {
-    "Title": "Never Never",
-    "Author": "Colleen Hoover, Tarryn Fisher",
-    "Genre": "Romantic Suspense, Mystery Fiction",
-    "Publication Year": 2015,
-    "Publisher": "Canary Press,HQ"
+    "title": "Never Never",
+    "author": "Colleen Hoover, Tarryn Fisher",
+    "genre": "Romantic Suspense, Mystery Fiction",
+    "publication_year": 2015,
+    "publisher": "Canary Press,HQ"
   },
   {
-    "Title": "The Correspondent",
-    "Author": "Virginia Evans",
-    "Genre": "Epistolary Fiction",
-    "Publication Year": 2025,
-    "Publisher": "Crown Publishing Group"
+    "title": "The Correspondent",
+    "author": "Virginia Evans",
+    "genre": "Epistolary Fiction",
+    "publication_year": 2025,
+    "publisher": "Crown Publishing Group"
   },
   {
-    "Title": "Our Perfect Storm",
-    "Author": "Carley Fortune",
-    "Genre": "Contemporary Romance, Drama",
-    "Publication Year": 2026,
-    "Publisher": "Berkley"
+    "title": "Our Perfect Storm",
+    "author": "Carley Fortune",
+    "genre": "Contemporary Romance, Drama",
+    "publication_year": 2026,
+    "publisher": "Berkley"
   }
 ]
