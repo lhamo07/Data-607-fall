@@ -1,5 +1,6 @@
 ---
 title: "NY Times API"
+author: "Tenzin Lhamo Thakuri"
 format: html
 editor: visual
 ---
