@@ -1,0 +1,47 @@
+---
+title: "NY Times API"
+author: "Tenzin Lhamo Thakuri"
+format: html
+editor: visual
+---
+# Task
+Assignment: Using a New York Times API in R
+
+The New York Times provides multiple public APIs via its developer portal (NYT Developer Network). To use any NYT API, you must first create an account and obtain an API key.
+
+Your task:
+
+Choose one New York Times API endpoint (e.g., Article Search, Most Popular, Books, etc.).  You should use your data analysis to ask and attempt to answer an interesting question of your choosing.  Examples:  “What are the top five best selling hard cover books?”, “Which newspaper sections have produced the most popular articles, and how has this changed compared to X years ago?”, etc.
+In R, write code to:
+Authenticate using your API key.  Never hard code an API key.  There are a number of good ways to do this.  For example: Store it in an environment variable (e.g., Sys.getenv("NYT_API_KEY")).
+Make a request to the endpoint
+Parse the JSON response
+Transform the result into a clean R data frame (tibble is fine)
+Deliverable
+
+A single Quarto (.qmd) document that includes:
+The API you selected (endpoint + brief description)
+The request you made (parameters used)
+Code that returns a tidy data frame
+A short note describing any data-cleaning decisions (e.g., nested fields, missing values)
+
+# Approach
+
+I'm going to use the following api endpoint to get the most popular email articles on NYTimes.com for the period of 30 days.
+
+**https://api.nytimes.com/svc/mostpopular/v2/emailed/{period}.json**
+
+Step1: Store api_key in .Renviron file and use Sys.getenv to get api_key for security reason.
+step2: API request to the endpoint by sending api-key in the query parameter.
+step 3:Parse the JSON response 
+step4:Transform response JSON data into tibble 
+Step5:Clean dataset
+step6: I'll try to answer `What topics appear most often among emailed articles?` from the dataset.
+
+# Anticipated challenges
+ Converting json data to data frame in R
+ Aalyzing article topic to answer `What topics appear most often among emailed articles?`
+
+
+
+
