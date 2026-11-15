@@ -1,5 +1,6 @@
 ---
 title: "HTML-JSON"
+author: "Tenzin Lhamo Thakuri"
 format: html
 editor: visual
 ---
@@ -46,8 +47,51 @@ In the books.html file, I will create a table and insert all the data.
 
 In the books.json file, I will create an array objects containing the same information.
 
-I'm going to use xml2 package to load an HTML file into R. To load json file into R, I'm going to use jsonlite package.
+I'm going to use rvest package to load an HTML file into R. To load json file into R, I'm going to use jsonlite package.
 
 ## Anticipated challenge
 
-This is my first time loading html file and json file into R. So may face challenges in data formats.
+This is my first time loading html file and json file into R. So I may face challenges in data formats.
+
+## Code
+
+```{r}
+# rvest package to load the HTML data
+library(tidyverse)
+library(rvest)
+# jsonlite package to load the JSON data
+library(jsonlite)
+
+
+book_html_url <- "https://lhamo07.github.io/Data-607-Assignment/"
+
+html_book_df <- read_html(book_html_url) %>% 
+  # find the first <table> HTML tag
+  html_element("table") %>% 
+  # convert to R dataframe
+  html_table()
+
+html_book_df
+
+```
+
+I published my HTML file on GitHub Pages by uploading it to the main branch. I named it index.html instead of books.html because GitHub Pages automatically uses that specific file as the website's homepage.
+
+```{r}
+# fromJSON() function reads the file and convert it into data frame
+json_book_df<-fromJSON("https://raw.githubusercontent.com/lhamo07/Data-607-Assignment/refs/heads/main/Week7-html-json/books.json")
+json_book_df
+```
+
+```{r}
+glimpse(html_book_df)
+glimpse(json_book_df)
+```
+
+## Conclusion
+
+I used R packages to load my book data from an HTML and a JSON file into two separate data frames. Taking a quick look at them, both data frames turned out to be completely identical.
+
+## Citation
+
+\[Large language model\]. google.com. Accessed October 16, 2026. https://share.google/aimode/i1PC4Lg0G5g3Uz4Bg

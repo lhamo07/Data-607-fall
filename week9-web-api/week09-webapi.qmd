@@ -4,26 +4,18 @@ author: "Tenzin Lhamo Thakuri"
 format: html
 editor: visual
 ---
+
 # Task
+
 Assignment: Using a New York Times API in R
 
 The New York Times provides multiple public APIs via its developer portal (NYT Developer Network). To use any NYT API, you must first create an account and obtain an API key.
 
 Your task:
 
-Choose one New York Times API endpoint (e.g., Article Search, Most Popular, Books, etc.).  You should use your data analysis to ask and attempt to answer an interesting question of your choosing.  Examples:  “What are the top five best selling hard cover books?”, “Which newspaper sections have produced the most popular articles, and how has this changed compared to X years ago?”, etc.
-In R, write code to:
-Authenticate using your API key.  Never hard code an API key.  There are a number of good ways to do this.  For example: Store it in an environment variable (e.g., Sys.getenv("NYT_API_KEY")).
-Make a request to the endpoint
-Parse the JSON response
-Transform the result into a clean R data frame (tibble is fine)
-Deliverable
+Choose one New York Times API endpoint (e.g., Article Search, Most Popular, Books, etc.). You should use your data analysis to ask and attempt to answer an interesting question of your choosing. Examples: “What are the top five best selling hard cover books?”, “Which newspaper sections have produced the most popular articles, and how has this changed compared to X years ago?”, etc. In R, write code to: Authenticate using your API key. Never hard code an API key. There are a number of good ways to do this. For example: Store it in an environment variable (e.g., Sys.getenv("NYT_API_KEY")). Make a request to the endpoint Parse the JSON response Transform the result into a clean R data frame (tibble is fine) Deliverable
 
-A single Quarto (.qmd) document that includes:
-The API you selected (endpoint + brief description)
-The request you made (parameters used)
-Code that returns a tidy data frame
-A short note describing any data-cleaning decisions (e.g., nested fields, missing values)
+A single Quarto (.qmd) document that includes: The API you selected (endpoint + brief description) The request you made (parameters used) Code that returns a tidy data frame A short note describing any data-cleaning decisions (e.g., nested fields, missing values)
 
 # Approach
 
@@ -31,16 +23,11 @@ I'm going to use the following api endpoint to get the most popular email articl
 
 **https://api.nytimes.com/svc/mostpopular/v2/emailed/{period}.json**
 
-Step1: Store api_key in .Renviron file and use Sys.getenv to get api_key for security reason.
-step2: API request to the endpoint by sending api-key in the query parameter.
-step 3:Parse the JSON response 
-step4:Transform response JSON data into tibble 
-Step5:Clean dataset
-step6: I'll try to answer `What topics appear most often among articles?` from the dataset.
+Step1: Store api_key in .Renviron file and use Sys.getenv to get api_key for security reason. step2: API request to the endpoint by sending api-key in the query parameter. step 3:Parse the JSON response step4:Transform response JSON data into tibble Step5:Clean dataset step6: I'll try to answer `What topics appear most often among articles?` from the dataset.
 
 # Anticipated challenges
- Converting json data to data frame in R
- Aalyzing article topic to answer `What topics appear most often among emailed articles?`
+
+Converting json data to data frame in R Aalyzing article topic to answer `What topics appear most often among emailed articles?`
 
 # Codebase
 
@@ -54,8 +41,8 @@ library(ggplot2)
 library(lubridate)
 
 ```
-The API that I have chosen will return the most popular articles on NYTimes.com for the period of 30 days.
-The data set has 20 rows and 22 columns.
+
+The API that I have chosen will return the most popular articles on NYTimes.com for the period of 30 days. The data set has 20 rows and 22 columns.
 
 ```{r}
 url<-"https://api.nytimes.com/svc/mostpopular/v2/emailed/30.json"
@@ -89,6 +76,7 @@ clean_df<-articles%>%
   count(des_facet,sort=TRUE)
   
 ```
+
 For further data analysis, I retained only url,id,published_date,section,byline,title,des_facet columns by stripping out unnecessary columns. Next, the des_facet field contains nested list arrays of multiple topic tags per article, the unnest_longer() function was applied. This expanded the dataset vertically by extracting each individual string descriptor into its own distinct row
 
 **What topics appear most often among articles?**
@@ -114,9 +102,11 @@ ggplot(top_10_topics, aes(x = reorder(des_facet, n), y = n)) +
 
 
 ```
+
 The chart illustrates the top 10 most frequent article topics appearing over a 30-day period.United States Politics and Government is the most frequent topic with 5 appearances in 30 days, followed by Midterm Elections(2026), Personal Profile, and AI are tied with 3 appearances each, while the rest of the articles topics are tied with 2 appearances each.
 
 **Which section of the article publish most**
+
 ```{r}
 ggplot(articles, aes(x = fct_infreq(section))) +
   geom_bar(fill = "lightblue", width = 0.7) +
@@ -139,6 +129,7 @@ ggplot(articles, aes(x = fct_infreq(section))) +
     plot.subtitle = element_text(color = "gray30")
   )
 ```
+
 During a 30-day period, the Opinion section published the maximum number of articles with 4, closely followed by the Science section with 3. Business, Magazine, U.S., and Well are tied with 2 articles each, while Books, Style, Technology, Travel, and World published the least with 1 article each.
 
 ```{r}
@@ -176,9 +167,10 @@ size = 4) +
   theme_minimal()
 glimpse(clean_df)
 ```
+
 The maximum number of articles was published on Tuesday and Wednesday with 4 each, followed by Thursday, Sunday, and Friday with 3 each, while the least number of articles was published on Monday with 1.
 
-# Conclusion 
+# Conclusion
 
 Based on the most popular articles published over a one-month period, the most common topic was United States Politics and Government, with the Opinion section publishing the highest volume of content. Additionally, the maximum number of articles was published on Tuesdays and Wednesdays.
 
@@ -187,4 +179,3 @@ Based on the most popular articles published over a one-month period, the most c
 https://chatgpt.com/c/6ae2b2ec-5140-83e9-baf1-cfb3d3bf0f5c
 
 https://developer.nytimes.com/docs/most-popular-product/1/routes/emailed/%7Bperiod%7D.json/get
-

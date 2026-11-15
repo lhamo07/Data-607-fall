@@ -1,0 +1,333 @@
+---
+title: 'Inference for numerical data'
+author: "Tenzin Thakuri"
+output:
+  pdf_document: default
+  html_document:
+    includes:
+      in_header: header.html
+    css: ./lab.css
+    highlight: pygments
+    theme: cerulean
+    toc: true
+    toc_float: true
+editor_options: 
+  chunk_output_type: console
+---
+
+```{r global_options, include=FALSE}
+knitr::opts_chunk$set(eval = TRUE, message = FALSE, warning = FALSE)
+```
+
+## Getting Started
+
+### Load packages
+
+In this lab, we will explore and visualize the data using the **tidyverse** suite of packages, and perform statistical inference using **infer**. The data can be found in the companion package for OpenIntro resources, **openintro**.
+
+Let's load the packages.
+
+```{r load-packages, message=FALSE}
+library(tidyverse)
+library(openintro)
+library(infer)
+```
+
+
+### The data
+
+Every two years, the Centers for Disease Control and Prevention conduct the Youth Risk Behavior Surveillance System (YRBSS) survey, where it takes data from high schoolers (9th through 12th grade), to analyze health patterns. You will work with a selected group of variables from a random sample of observations during one of the years the YRBSS was conducted.
+
+Load the `yrbss` data set into your workspace.
+
+```{r load-data}
+data('yrbss', package='openintro')
+```
+
+There are observations on 13 different variables, some categorical and some numerical. The meaning of each variable can be found by bringing up the help file:
+
+```{r help-nc, eval=FALSE}
+?yrbss
+```
+
+
+1.  What are the cases in this data set? How many cases are there in our sample?
+
+**Insert your answer here**
+
+The cases are the individual students who participated in the survey.There are 13,583 cases in our sample.
+
+Remember that you can answer this question by viewing the data in the data viewer or by using the following command:
+
+```{r str}
+glimpse(yrbss)
+```
+
+## Exploratory data analysis
+
+You will first start with analyzing the weight of the participants in kilograms: `weight`.
+
+Using visualization and summary statistics, describe the distribution of weights. The `summary` function can be useful.
+
+```{r summary}
+summary(yrbss$weight)
+```
+
+2.  How many observations are we missing weights from?
+The distribution shape is right-skewed. The mean weight is 67.91 which is higher than Median 64.41
+The weight range from 29.94 to 180.99. The middle 50% of weights fall between 56.25 (Q1) and 76.20 (Q3).
+We are missing 1004 observations for weights in the dataset.
+
+**Insert your answer here**
+```{r}
+ggplot(yrbss, aes(x = weight)) +
+  geom_histogram(
+    bins = 30,
+    fill = "steelblue",
+    color = "white"
+  ) +
+  labs(
+    title = "Distribution of Student Weight",
+    x = "Weight",
+    y = "Number of Students"
+  ) +
+  theme_minimal()
+```
+
+Next, consider the possible relationship between a high schooler's weight and their physical activity. Plotting the data is a useful first step because it helps us quickly visualize trends, identify strong associations, and develop research questions.
+
+First, let's create a new variable `physical_3plus`, which will be coded as either "yes" if they are physically active for at least 3 days a week, and "no" if not.
+
+```{r create new var}
+yrbss <- yrbss %>% 
+  mutate(physical_3plus = ifelse(yrbss$physically_active_7d > 2, "yes", "no"))
+```
+
+
+3.  Make a side-by-side boxplot of `physical_3plus` and `weight`. Is there a relationship between these two variables? What did you expect and why?
+
+**Insert your answer here**
+```{r}
+ggplot(yrbss, aes(x = physical_3plus, y = weight)) +
+  geom_boxplot(fill = "lightblue") +
+  labs(
+    title = "Weight by Physical Activity Level",
+    x = "Physically Active 3 or More Days",
+    y = "Weight"
+  ) +
+  theme_minimal()
+```
+There appears to be a very weak relationship between physical_3plus and weight.
+Median weight of student physically active at least 3 days a week is slightly higher than student who are not.
+I expected the weight of student who is physically active at least 3 days a week is less than the student who are not, because being physically active burns calories and weight loss.
+
+The box plots show how the medians of the two distributions compare, but we can also compare the means of the distributions using the following to first group the data by the `physical_3plus` variable, and then calculate the mean `weight` in these groups using the `mean` function while ignoring missing values by setting the `na.rm` argument to `TRUE`.
+
+```{r by-means}
+yrbss %>%
+  group_by(physical_3plus) %>%
+  summarise(mean_weight = mean(weight, na.rm = TRUE))
+```
+
+There is an observed difference, but is this difference statistically significant? In order to answer this question we will conduct a hypothesis test.
+
+## Inference
+
+4.  Are all conditions necessary for inference satisfied? Comment on each. You can compute the group sizes with the `summarize` command above by defining a new variable with the definition `n()`.
+
+**Insert your answer here**
+```{r}
+yrbss %>%
+  group_by(physical_3plus) %>%
+  summarise(mean_weight = mean(weight, na.rm = TRUE),n=n())
+```
+
+Yes, all conditions are necessary for inference satisfied.
+Independence: In this dataset one student weight does not influence another's.
+Students who are physically active for at least 3 days is (yes 8906) and who are not is (no 4404). So they are independent of each other.
+
+Sample size and skew: The boxplot shows weight is right-skewed with many high outliers in both groups.
+Since both condition are met, it is appropriate to do inference (a confidence interval or hypothesis test).
+
+
+5.  Write the hypotheses for testing if the average weights are different for those who exercise at least times a week and those who don't.
+
+**Insert your answer here**
+Let μ₁ be the true mean weight of students who are physically active at least 3 days a week, and
+ μ₂ the true mean weight of students who are not.
+
+Null hypothesis (H₀): The average weights are the same for the two groups.
+
+H₀: μ₁ = μ₂ (or μ₁ − μ₂ = 0)
+
+Alternative hypothesis (Hₐ): The average weights are different for the two groups.
+
+Hₐ: μ₁ ≠ μ₂ (or μ₁ − μ₂ ≠ 0)
+
+Next, we will introduce a new function, `hypothesize`, that falls into the `infer` workflow. You will use this method for conducting hypothesis tests. 
+
+But first, we need to initialize the test, which we will save as `obs_diff`.
+
+```{r inf-weight-habit-ht-initial, tidy=FALSE, warning = FALSE}
+obs_diff <- yrbss %>%
+  drop_na(physical_3plus) %>%
+  specify(weight ~ physical_3plus) %>%
+  calculate(stat = "diff in means", order = c("yes", "no"))
+```
+
+Notice how you can use the functions `specify` and `calculate` again like you did for calculating confidence intervals. Here, though, the statistic you are searching for is the difference in means, with the order being `yes - no != 0`.
+
+After you have initialized the test, you need to simulate the test on the null distribution, which we will save as `null`.
+
+```{r inf-weight-habit-ht-null, tidy=FALSE, warning = FALSE}
+null_dist <- yrbss %>%
+  drop_na(physical_3plus) %>%
+  specify(weight ~ physical_3plus) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("yes", "no"))
+```
+
+Here, `hypothesize` is used to set the null hypothesis as a test for independence. In one sample cases, the `null` argument can be set to "point" to test a hypothesis relative to a point estimate.
+
+Also, note that the `type` argument within `generate` is set to `permute`, whichis the argument when generating a null distribution for a hypothesis test.
+
+We can visualize this null distribution with the following code:
+
+```{r}
+ggplot(data = null_dist, aes(x = stat)) +
+  geom_histogram()
+```
+
+
+6. How many of these `null` permutations have a difference of at least `obs_stat`?
+
+**Insert your answer here**
+```{r}
+obs_stat <- obs_diff %>%
+  pull(stat)
+
+obs_stat
+```
+
+Now that the test is initialized and the null distribution formed, you can calculate the p-value for your hypothesis test using the function `get_p_value`.
+
+```{r inf-weight-habit-ht-pvalue}
+null_dist %>%
+  get_p_value(obs_stat = obs_diff, direction = "two_sided")
+```
+
+```{r}
+sum(abs(null_dist$stat) >= abs(obs_stat))
+```
+
+```{r}
+sum(abs(null_dist$stat) >= abs(obs_stat)) / 1000
+```
+The number of null permutations with a difference at least as extreme as the observed statistic is 0 which means none of the 1,000 simulated null differences were as extreme as the observed difference
+This the standard workflow for performing hypothesis tests.
+
+7.  Construct and record a confidence interval for the difference between the weights of those who exercise at least three times a week and those who don't, and interpret this interval in context of the data.
+
+* * *
+```{r}
+set.seed(123)
+
+weight_ci <- yrbss %>%
+  drop_na(weight, physical_3plus) %>%
+  specify(weight ~ physical_3plus) %>%
+  generate(reps = 1000, type = "bootstrap") %>%
+  calculate(stat = "diff in means", order = c("yes", "no")) %>%
+  get_confidence_interval(level = 0.95)
+
+weight_ci
+```  
+The 95% confidence interval for the difference in mean weights between students who are physically active at least three days per week and those who are not is (1.11, 2.41) kg. We are 95% confident that students who are physically active at least three days per week have an average weight between 1.11 kg and 2.41 kg higher than students who are not physically active at least three days per week.
+
+## More Practice
+
+8.  Calculate a 95% confidence interval for the average height in meters (`height`) and interpret it in context.
+
+**Insert your answer here**
+```{r}
+
+height_ci <- yrbss %>%
+  drop_na(height) %>%
+  specify(response = height) %>%
+  generate(reps = 1000, type = "bootstrap") %>%
+  calculate(stat = "mean") %>%
+  get_confidence_interval(level = 0.95)
+
+height_ci
+```
+The 95% confidence interval for the average height of high school students is 1.69 to 1.69 meters. We are 95% confident that the true average height of high school students represented by this sample falls within this interval
+
+9.  Calculate a new confidence interval for the same parameter at the 90% confidence level. Comment on the width of this interval versus the one obtained in the previous exercise.
+
+**Insert your answer here**
+```{r}
+
+height_ci_90 <- yrbss %>%
+  drop_na(height) %>%
+  specify(response = height) %>%
+  generate(reps = 1000, type = "bootstrap") %>%
+  calculate(stat = "mean") %>%
+  get_confidence_interval(level = 0.90)
+
+height_ci_90
+
+```
+
+```{r}
+width_95 <- height_ci$upper_ci - height_ci$lower_ci
+width_90 <- height_ci_90$upper_ci - height_ci_90$lower_ci
+
+width_95
+width_90
+```
+The 90% confidence interval is narrower (0.00299 meters) than the 95% confidence interval (0.00361 meters)
+10.  Conduct a hypothesis test evaluating whether the average height is different for those who exercise at least three times a week and those who don't.
+
+**Insert your answer here**
+```{r}
+obs_height_diff <- yrbss %>%
+  drop_na(height, physical_3plus) %>%
+  specify(height ~ physical_3plus) %>%
+  calculate(stat = "diff in means", order = c("yes", "no"))
+
+obs_height_diff
+```
+
+```{r}
+null_height <- yrbss %>%
+  drop_na(height, physical_3plus) %>%
+  specify(height ~ physical_3plus) %>%
+  hypothesize(null = "independence") %>%
+  generate(reps = 1000, type = "permute") %>%
+  calculate(stat = "diff in means", order = c("yes", "no"))
+```
+
+```{r}
+null_height %>%
+  get_p_value(
+    obs_stat = obs_height_diff,
+    direction = "two_sided"
+  )
+```
+
+The observed difference in average height between students who exercise at least three days per week and those who exercise fewer than three days per week is 0.0376. The simulated p-value is 0, meaning none of the 1,000 simulated permutations produced a difference as extreme as the observed difference. This provides strong evidence against the null hypothesis. Therefore, we reject the null hypothesis and conclude that there is a statistically significant difference in average height between the two physical activity groups
+
+11.  Now, a non-inference task: Determine the number of different options there are in the dataset for the `hours_tv_per_school_day` there are.
+
+**Insert your answer here**
+```{r}
+yrbss %>%
+  summarise(number_of_options = n_distinct(hours_tv_per_school_day, na.rm = TRUE))
+```
+There are 7 different options in the dataset for the `hours_tv_per_school_day`.
+
+12. Come up with a research question evaluating the relationship between height or weight and sleep. Formulate the question in a way that it can be answered using a hypothesis test and/or a confidence interval. Report the statistical results, and also provide an explanation in plain language. Be sure to check all assumptions, state your $\alpha$ level, and conclude in context.
+
+**Insert your answer here**
+
+* * *

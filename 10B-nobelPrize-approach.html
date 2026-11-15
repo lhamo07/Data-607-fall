@@ -1,0 +1,1492 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.9.36">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Tenzin Thakuri">
+
+<title>10B NobelPrize.org</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="10B-nobelPrize-approach_files/libs/clipboard/clipboard.min.js"></script>
+<script src="10B-nobelPrize-approach_files/libs/quarto-html/quarto.js" type="module"></script>
+<script src="10B-nobelPrize-approach_files/libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="10B-nobelPrize-approach_files/libs/quarto-html/popper.min.js"></script>
+<script src="10B-nobelPrize-approach_files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="10B-nobelPrize-approach_files/libs/quarto-html/anchor.min.js"></script>
+<link href="10B-nobelPrize-approach_files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="10B-nobelPrize-approach_files/libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="10B-nobelPrize-approach_files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="10B-nobelPrize-approach_files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="10B-nobelPrize-approach_files/libs/bootstrap/bootstrap-efbb37e9afcc02144ebbc7afd12a776f.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+
+
+</head>
+
+<body class="fullcontent quarto-light">
+
+<div id="quarto-content" class="page-columns page-rows-contents page-layout-article">
+
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">10B NobelPrize.org</h1>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    <div>
+    <div class="quarto-title-meta-heading">Author</div>
+    <div class="quarto-title-meta-contents">
+             <p>Tenzin Thakuri </p>
+          </div>
+  </div>
+    
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="task" class="level1">
+<h1>Task</h1>
+<p>The Nobel Prize organization provides public APIs for accessing structured Nobel Prize data. Using one or both of the APIs available at the Nobel Prize Developer Zone, your task is to use JSON data to investigate and answer four interesting, data-driven questions.</p>
+<p>At least one of your questions should go beyond simple counts and require joining, filtering, or comparing fields across the data (e.g., “Which country lost the most Nobel laureates—born there but awarded as a citizen of another country?”).</p>
+<p>Requirements Use one or both Nobel Prize APIs to retrieve data in JSON format.</p>
+<p>In R, load and transform the JSON data into tidy data frames.</p>
+<p>Formulate four questions that can be answered from the data.</p>
+<p>For each question:</p>
+<p>Describe the question</p>
+<p>Show the code used</p>
+<p>Present the answer (table, summary, or plot)</p>
+</section>
+<section id="codebase" class="level1">
+<h1>Codebase</h1>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(httr2)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(jsonlite)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.2.0     ✔ readr     2.2.0
+✔ forcats   1.0.1     ✔ stringr   1.6.0
+✔ ggplot2   4.0.3     ✔ tibble    3.3.1
+✔ lubridate 1.9.5     ✔ tidyr     1.3.2
+✔ purrr     1.2.1     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter()  masks stats::filter()
+✖ purrr::flatten() masks jsonlite::flatten()
+✖ dplyr::lag()     masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(naniar)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(knitr)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>url<span class="ot">=</span><span class="st">"https://api.nobelprize.org/2.1/laureates?limit=1000"</span></span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># make API request</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>response<span class="ot">&lt;-</span><span class="fu">request</span>(url) <span class="sc">%&gt;%</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">req_perform</span>()</span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Extract JSON response as text</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>json_data <span class="ot">&lt;-</span> <span class="fu">resp_body_string</span>(response)</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Parse JSON </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>data<span class="ot">&lt;-</span><span class="fu">fromJSON</span>(json_data)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># check object type</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(data)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "list"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Convert the list of elements into a clean tibble</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>laureates_df <span class="ot">&lt;-</span> <span class="fu">bind_rows</span>(data<span class="sc">$</span>laureates)</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(laureates_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "data.frame"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="fu">names</span>(laureates_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code> [1] "id"                "knownName"         "givenName"        
+ [4] "familyName"        "fullName"          "fileName"         
+ [7] "gender"            "birth"             "wikipedia"        
+[10] "wikidata"          "sameAs"            "links"            
+[13] "nobelPrizes"       "death"             "orgName"          
+[16] "acronym"           "founded"           "nativeName"       
+[19] "penName"           "penNameOf"         "foundedCountry"   
+[22] "foundedCountryNow" "foundedContinent" </code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="co">#clean data frame</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>clean_df<span class="ot">&lt;-</span>laureates_df <span class="sc">%&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">birth_country     =</span> birth<span class="sc">$</span>place<span class="sc">$</span>country<span class="sc">$</span>en,</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">birth_country_now =</span> birth<span class="sc">$</span>place<span class="sc">$</span>countryNow<span class="sc">$</span>en) <span class="sc">%&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_longer</span>(nobelPrizes)<span class="sc">%&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_wider</span>(nobelPrizes, <span class="at">names_sep =</span> <span class="st">"_"</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>    <span class="fu">unnest_longer</span>(nobelPrizes_affiliations, <span class="at">keep_empty =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest_wider</span>(nobelPrizes_affiliations, <span class="at">names_sep =</span> <span class="st">"_"</span>)<span class="sc">%&gt;%</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">where</span>(is.data.frame), <span class="sc">~</span> .x<span class="sc">$</span>en))<span class="sc">%&gt;%</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">nobelPrizes_affiliations_country =</span> <span class="fu">map_chr</span>(nobelPrizes_affiliations_country,</span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>                           <span class="sc">~</span> <span class="fu">as.character</span>(<span class="fu">unlist</span>(.x))[<span class="dv">1</span>])) <span class="sc">%&gt;%</span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-15"><a href="#cb10-15" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb10-16"><a href="#cb10-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id,fullName</span>
+<span id="cb10-17"><a href="#cb10-17" aria-hidden="true" tabindex="-1"></a>,gender, birth_country, birth_country_now,nobelPrizes_awardYear,nobelPrizes_category,nobelPrizes_dateAwarded,nobelPrizes_prizeAmount,nobelPrizes_affiliations_country)</span>
+<span id="cb10-18"><a href="#cb10-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb10-19"><a href="#cb10-19" aria-hidden="true" tabindex="-1"></a><span class="fu">class</span>(clean_df<span class="sc">$</span>fullName)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>[1] "character"</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>clean_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,008 × 10
+   id    fullName   gender birth_country birth_country_now nobelPrizes_awardYear
+   &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;         &lt;chr&gt;             &lt;chr&gt;                
+ 1 745   A. Michae… male   USA           USA               2001                 
+ 2 102   Aage Niel… male   Denmark       Denmark           1975                 
+ 3 779   Aaron Cie… male   British Prot… Israel            2004                 
+ 4 259   Aaron Klug male   Lithuania     Lithuania         1982                 
+ 5 1004  Abdulraza… male   &lt;NA&gt;          &lt;NA&gt;              2021                 
+ 6 114   Abdus Sal… male   India         Pakistan          1979                 
+ 7 982   Abhijit B… male   India         India             2019                 
+ 8 981   Abiy Ahme… male   Ethiopia      Ethiopia          2019                 
+ 9 843   Ada E. Yo… female British Mand… Israel            2009                 
+10 866   Adam G. R… male   USA           USA               2011                 
+# ℹ 998 more rows
+# ℹ 4 more variables: nobelPrizes_category &lt;chr&gt;,
+#   nobelPrizes_dateAwarded &lt;chr&gt;, nobelPrizes_prizeAmount &lt;int&gt;,
+#   nobelPrizes_affiliations_country &lt;chr&gt;</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb14"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="fu">colSums</span>(<span class="fu">is.na</span>(clean_df))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                              id                         fullName 
+                               0                               30 
+                          gender                    birth_country 
+                              30                               33 
+               birth_country_now            nobelPrizes_awardYear 
+                              33                                0 
+            nobelPrizes_category          nobelPrizes_dateAwarded 
+                               0                                0 
+         nobelPrizes_prizeAmount nobelPrizes_affiliations_country 
+                               0                              260 </code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb16"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>clean_df</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 1,008 × 10
+   id    fullName   gender birth_country birth_country_now nobelPrizes_awardYear
+   &lt;chr&gt; &lt;chr&gt;      &lt;chr&gt;  &lt;chr&gt;         &lt;chr&gt;             &lt;chr&gt;                
+ 1 745   A. Michae… male   USA           USA               2001                 
+ 2 102   Aage Niel… male   Denmark       Denmark           1975                 
+ 3 779   Aaron Cie… male   British Prot… Israel            2004                 
+ 4 259   Aaron Klug male   Lithuania     Lithuania         1982                 
+ 5 1004  Abdulraza… male   &lt;NA&gt;          &lt;NA&gt;              2021                 
+ 6 114   Abdus Sal… male   India         Pakistan          1979                 
+ 7 982   Abhijit B… male   India         India             2019                 
+ 8 981   Abiy Ahme… male   Ethiopia      Ethiopia          2019                 
+ 9 843   Ada E. Yo… female British Mand… Israel            2009                 
+10 866   Adam G. R… male   USA           USA               2011                 
+# ℹ 998 more rows
+# ℹ 4 more variables: nobelPrizes_category &lt;chr&gt;,
+#   nobelPrizes_dateAwarded &lt;chr&gt;, nobelPrizes_prizeAmount &lt;int&gt;,
+#   nobelPrizes_affiliations_country &lt;chr&gt;</code></pre>
+</div>
+</div>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb18"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(clean_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 1,008
+Columns: 10
+$ id                               &lt;chr&gt; "745", "102", "779", "259", "1004", "…
+$ fullName                         &lt;chr&gt; "A. Michael Spence", "Aage Niels Bohr…
+$ gender                           &lt;chr&gt; "male", "male", "male", "male", "male…
+$ birth_country                    &lt;chr&gt; "USA", "Denmark", "British Protectora…
+$ birth_country_now                &lt;chr&gt; "USA", "Denmark", "Israel", "Lithuani…
+$ nobelPrizes_awardYear            &lt;chr&gt; "2001", "1975", "2004", "1982", "2021…
+$ nobelPrizes_category             &lt;chr&gt; "Economic Sciences", "Physics", "Chem…
+$ nobelPrizes_dateAwarded          &lt;chr&gt; "2001-10-10", "1975-10-17", "2004-10-…
+$ nobelPrizes_prizeAmount          &lt;int&gt; 10000000, 630000, 10000000, 1150000, …
+$ nobelPrizes_affiliations_country &lt;chr&gt; "USA", "Denmark", "Israel", "United K…</code></pre>
+</div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb20"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Since nobelPrizes_awardYear and nobelPrizes_dateAwarded are in chr data types needs to convert it into date </span></span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a>clean_df <span class="ot">&lt;-</span> clean_df <span class="sc">%&gt;%</span></span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">nobelPrizes_awardYear =</span> <span class="fu">as.integer</span>(nobelPrizes_awardYear))</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<p><strong><em>Q1:Which laureates have won the Nobel Peace Prize?</em></strong></p>
+<p>This question explores the individuals who have received the Nobel Peace Prize from 1901 to 2026.</p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb21"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb21-1"><a href="#cb21-1" aria-hidden="true" tabindex="-1"></a>clean_df <span class="sc">%&gt;%</span></span>
+<span id="cb21-2"><a href="#cb21-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(nobelPrizes_category <span class="sc">==</span> <span class="st">"Peace"</span>, <span class="sc">!</span><span class="fu">is.na</span>(fullName)) <span class="sc">%&gt;%</span></span>
+<span id="cb21-3"><a href="#cb21-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(fullName, nobelPrizes_awardYear) <span class="sc">%&gt;%</span></span>
+<span id="cb21-4"><a href="#cb21-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(nobelPrizes_awardYear <span class="sc">&gt;=</span> <span class="dv">1901</span>) <span class="sc">%&gt;%</span></span>
+<span id="cb21-5"><a href="#cb21-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(nobelPrizes_awardYear)) <span class="sc">%&gt;%</span>   </span>
+<span id="cb21-6"><a href="#cb21-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">distinct</span>(fullName, nobelPrizes_awardYear) <span class="sc">%&gt;%</span></span>
+<span id="cb21-7"><a href="#cb21-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>()</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<colgroup>
+<col style="width: 79%">
+<col style="width: 20%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">fullName</th>
+<th style="text-align: right;">nobelPrizes_awardYear</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Navanethem Navi Pillay</td>
+<td style="text-align: right;">2026</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maria Corina Machado</td>
+<td style="text-align: right;">2025</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Narges Mohammadi</td>
+<td style="text-align: right;">2023</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ales Bialiatski</td>
+<td style="text-align: right;">2022</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dmitry Andreyevich Muratov</td>
+<td style="text-align: right;">2021</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Maria Ressa</td>
+<td style="text-align: right;">2021</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Abiy Ahmed Ali</td>
+<td style="text-align: right;">2019</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Denis Mukwege</td>
+<td style="text-align: right;">2018</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nadia Murad Basee Taha</td>
+<td style="text-align: right;">2018</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Juan Manuel Santos</td>
+<td style="text-align: right;">2016</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kailash Satyarthi</td>
+<td style="text-align: right;">2014</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Malala Yousafzai</td>
+<td style="text-align: right;">2014</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ellen Johnson Sirleaf</td>
+<td style="text-align: right;">2011</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Leymah Gbowee</td>
+<td style="text-align: right;">2011</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Tawakkol Karman</td>
+<td style="text-align: right;">2011</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Liu Xiaobo</td>
+<td style="text-align: right;">2010</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Barack Hussein Obama</td>
+<td style="text-align: right;">2009</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Martti Ahtisaari</td>
+<td style="text-align: right;">2008</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Albert Arnold (Al) Gore Jr.</td>
+<td style="text-align: right;">2007</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Muhammad Yunus</td>
+<td style="text-align: right;">2006</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mohamed ElBaradei</td>
+<td style="text-align: right;">2005</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Wangari Muta Maathai</td>
+<td style="text-align: right;">2004</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Shirin Ebadi</td>
+<td style="text-align: right;">2003</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">James Earl Carter</td>
+<td style="text-align: right;">2002</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Kofi Atta Annan</td>
+<td style="text-align: right;">2001</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Kim Dae-jung</td>
+<td style="text-align: right;">2000</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">David Trimble</td>
+<td style="text-align: right;">1998</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">John Hume</td>
+<td style="text-align: right;">1998</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Jody Williams</td>
+<td style="text-align: right;">1997</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carlos Filipe Ximenes Belo</td>
+<td style="text-align: right;">1996</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">José Ramos-Horta</td>
+<td style="text-align: right;">1996</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Joseph Rotblat</td>
+<td style="text-align: right;">1995</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Shimon Peres</td>
+<td style="text-align: right;">1994</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frederik Willem de Klerk</td>
+<td style="text-align: right;">1993</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Nelson Rolihlahla Mandela</td>
+<td style="text-align: right;">1993</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Rigoberta Menchú Tum</td>
+<td style="text-align: right;">1992</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Aung San Suu Kyi</td>
+<td style="text-align: right;">1991</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mikhail Sergeyevich Gorbachev</td>
+<td style="text-align: right;">1990</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">The 14th Dalai Lama (Tenzin Gyatso)</td>
+<td style="text-align: right;">1989</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Oscar Arias Sánchez</td>
+<td style="text-align: right;">1987</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Elie Wiesel</td>
+<td style="text-align: right;">1986</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Desmond Mpilo Tutu</td>
+<td style="text-align: right;">1984</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lech Wałęsa</td>
+<td style="text-align: right;">1983</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Alfonso García Robles</td>
+<td style="text-align: right;">1982</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Alva Myrdal</td>
+<td style="text-align: right;">1982</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Adolfo Pérez Esquivel</td>
+<td style="text-align: right;">1980</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mother Teresa</td>
+<td style="text-align: right;">1979</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mohamed Anwar al-Sadat</td>
+<td style="text-align: right;">1978</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Menachem Begin</td>
+<td style="text-align: right;">1978</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Elizabeth Williams</td>
+<td style="text-align: right;">1976</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mairead Corrigan</td>
+<td style="text-align: right;">1976</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Andrei Dmitrievich Sakharov</td>
+<td style="text-align: right;">1975</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Eisaku Satō</td>
+<td style="text-align: right;">1974</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Seán MacBride</td>
+<td style="text-align: right;">1974</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Henry Alfred Kissinger</td>
+<td style="text-align: right;">1973</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Le Duc Tho</td>
+<td style="text-align: right;">1973</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Norman Ernest Borlaug</td>
+<td style="text-align: right;">1970</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">René Cassin</td>
+<td style="text-align: right;">1968</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Martin Luther King Jr.</td>
+<td style="text-align: right;">1964</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Linus Carl Pauling</td>
+<td style="text-align: right;">1962</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Dag Hjalmar Agne Carl Hammarskjöld</td>
+<td style="text-align: right;">1961</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Albert John Lutuli</td>
+<td style="text-align: right;">1960</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Philip J. Noel-Baker</td>
+<td style="text-align: right;">1959</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Georges Pire</td>
+<td style="text-align: right;">1958</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lester Bowles Pearson</td>
+<td style="text-align: right;">1957</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">George Catlett Marshall</td>
+<td style="text-align: right;">1953</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Albert Schweitzer</td>
+<td style="text-align: right;">1952</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Léon Jouhaux</td>
+<td style="text-align: right;">1951</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ralph Bunche</td>
+<td style="text-align: right;">1950</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">John Boyd Orr, Baron Boyd-Orr of Brechin Mearn</td>
+<td style="text-align: right;">1949</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Emily Greene Balch</td>
+<td style="text-align: right;">1946</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">John Raleigh Mott</td>
+<td style="text-align: right;">1946</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cordell Hull</td>
+<td style="text-align: right;">1945</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Edgar Algernon Robert Gascoyne-Cecil, 1st Viscount Cecil of Chelwood</td>
+<td style="text-align: right;">1937</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Carlos Saavedra Lamas</td>
+<td style="text-align: right;">1936</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Carl von Ossietzky</td>
+<td style="text-align: right;">1935</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Arthur Henderson</td>
+<td style="text-align: right;">1934</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sir Norman Angell (Ralph Lane)</td>
+<td style="text-align: right;">1933</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Jane Addams</td>
+<td style="text-align: right;">1931</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Nicholas Murray Butler</td>
+<td style="text-align: right;">1931</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lars Olof Jonathan (Nathan) Söderblom</td>
+<td style="text-align: right;">1930</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frank Billings Kellogg</td>
+<td style="text-align: right;">1929</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ferdinand Buisson</td>
+<td style="text-align: right;">1927</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Ludwig Quidde</td>
+<td style="text-align: right;">1927</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Aristide Briand</td>
+<td style="text-align: right;">1926</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Gustav Stresemann</td>
+<td style="text-align: right;">1926</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Charles Gates Dawes</td>
+<td style="text-align: right;">1925</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sir Austen Chamberlain</td>
+<td style="text-align: right;">1925</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fridtjof Nansen</td>
+<td style="text-align: right;">1922</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Christian Lous Lange</td>
+<td style="text-align: right;">1921</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Karl Hjalmar Branting</td>
+<td style="text-align: right;">1921</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Léon Victor Auguste Bourgeois</td>
+<td style="text-align: right;">1920</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Henri La Fontaine</td>
+<td style="text-align: right;">1913</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Elihu Root</td>
+<td style="text-align: right;">1912</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Alfred Hermann Fried</td>
+<td style="text-align: right;">1911</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tobias Michael Carel Asser</td>
+<td style="text-align: right;">1911</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Auguste Marie François Beernaert</td>
+<td style="text-align: right;">1909</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Paul Henri Benjamin Balluet d’Estournelles de Constant, Baron de Constant de Rebecque</td>
+<td style="text-align: right;">1909</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Fredrik Bajer</td>
+<td style="text-align: right;">1908</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Klas Pontus Arnoldson</td>
+<td style="text-align: right;">1908</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ernesto Teodoro Moneta</td>
+<td style="text-align: right;">1907</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Louis Renault</td>
+<td style="text-align: right;">1907</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Theodore Roosevelt Jr.</td>
+<td style="text-align: right;">1906</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Baroness Bertha Sophie Felicita von Suttner, née Countess Kinsky von Chinic und Tettau</td>
+<td style="text-align: right;">1905</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">William Randal Cremer</td>
+<td style="text-align: right;">1903</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Charles Albert Gobat</td>
+<td style="text-align: right;">1902</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Élie Ducommun</td>
+<td style="text-align: right;">1902</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Frédéric Passy</td>
+<td style="text-align: right;">1901</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Jean Henry Dunant</td>
+<td style="text-align: right;">1901</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Above table shows the list of laurates who won the nobel peace prize from year 1901 to 2026. Jean Henry Dunant and Frédéric Passy received the first Nobel Peace Prize in 1901.</p>
+<p><strong><em>Q2 Which country has produced the highest number of Nobel Prize laureates?</em></strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb22"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>nobel_laureates_country<span class="ot">&lt;-</span>clean_df<span class="sc">%&gt;%</span></span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a>  <span class="co"># prevents counting the same laureate more than once for the same country.</span></span>
+<span id="cb22-3"><a href="#cb22-3" aria-hidden="true" tabindex="-1"></a>    <span class="fu">distinct</span>(id, nobelPrizes_affiliations_country) <span class="sc">%&gt;%</span></span>
+<span id="cb22-4"><a href="#cb22-4" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(nobelPrizes_affiliations_country)) <span class="sc">%&gt;%</span></span>
+<span id="cb22-5"><a href="#cb22-5" aria-hidden="true" tabindex="-1"></a>    <span class="fu">count</span>(nobelPrizes_affiliations_country, <span class="sc">!</span><span class="fu">is.na</span>(nobelPrizes_affiliations_country) )<span class="sc">%&gt;%</span></span>
+<span id="cb22-6"><a href="#cb22-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb22-7"><a href="#cb22-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-8"><a href="#cb22-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb22-9"><a href="#cb22-9" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(nobel_laureates_country, <span class="fu">aes</span>(<span class="at">x =</span><span class="fu">reorder</span>(nobelPrizes_affiliations_country,n) , <span class="at">y =</span>n)) <span class="sc">+</span></span>
+<span id="cb22-10"><a href="#cb22-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_col</span>(<span class="at">fill =</span> <span class="st">"#2b5c8f"</span>, <span class="at">width =</span> <span class="fl">0.7</span>) <span class="sc">+</span></span>
+<span id="cb22-11"><a href="#cb22-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_flip</span>()<span class="sc">+</span></span>
+<span id="cb22-12"><a href="#cb22-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_text</span>(<span class="fu">aes</span>(<span class="at">label =</span> n), </span>
+<span id="cb22-13"><a href="#cb22-13" aria-hidden="true" tabindex="-1"></a>          <span class="at">hjust =</span> <span class="sc">-</span><span class="fl">0.2</span>,</span>
+<span id="cb22-14"><a href="#cb22-14" aria-hidden="true" tabindex="-1"></a>          <span class="at">size =</span> <span class="fl">3.5</span>)<span class="sc">+</span></span>
+<span id="cb22-15"><a href="#cb22-15" aria-hidden="true" tabindex="-1"></a><span class="fu">labs</span>(</span>
+<span id="cb22-16"><a href="#cb22-16" aria-hidden="true" tabindex="-1"></a>  <span class="at">title =</span> <span class="st">"Top Countries by Number of Nobel Prize Laureates"</span>,</span>
+<span id="cb22-17"><a href="#cb22-17" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="st">"Affiliation Country"</span>,</span>
+<span id="cb22-18"><a href="#cb22-18" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="st">"Number of Nobel Prize Laureates"</span></span>
+<span id="cb22-19"><a href="#cb22-19" aria-hidden="true" tabindex="-1"></a>) <span class="sc">+</span></span>
+<span id="cb22-20"><a href="#cb22-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb22-21"><a href="#cb22-21" aria-hidden="true" tabindex="-1"></a> <span class="fu">theme</span>(</span>
+<span id="cb22-22"><a href="#cb22-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.major.y =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb22-23"><a href="#cb22-23" aria-hidden="true" tabindex="-1"></a>    <span class="at">panel.grid.minor =</span> <span class="fu">element_blank</span>(),</span>
+<span id="cb22-24"><a href="#cb22-24" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.title =</span> <span class="fu">element_text</span>(<span class="at">face =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">14</span>),</span>
+<span id="cb22-25"><a href="#cb22-25" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.subtitle =</span> <span class="fu">element_text</span>(<span class="at">color =</span> <span class="st">"gray30"</span>)</span>
+<span id="cb22-26"><a href="#cb22-26" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="10B-nobelPrize-approach_files/figure-html/unnamed-chunk-6-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>USA is the only country that has produced the highest number of Nobel Prize laureates (390) followed by United Kingdom (94), Germany (74). There is a substantial difference between the United States and the other countries. These results may be influenced by the laureates’ Nobel Prize institutional affiliations, as the data reflects the countries where their affiliated institutions are located rather than necessarily their birth countries or nationalities.</p>
+<p><strong><em>Q3 How has the prize amount changed over time?</em></strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb23"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>prize_amount_year<span class="ot">&lt;-</span>clean_df<span class="sc">%&gt;%</span></span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">nobelPrizes_awardYear =</span> <span class="fu">as.numeric</span>(nobelPrizes_awardYear)) <span class="sc">%&gt;%</span></span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(nobelPrizes_awardYear)<span class="sc">%&gt;%</span></span>
+<span id="cb23-4"><a href="#cb23-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">avg_prize_amount =</span> <span class="fu">mean</span>(nobelPrizes_prizeAmount, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)</span>
+<span id="cb23-5"><a href="#cb23-5" aria-hidden="true" tabindex="-1"></a>)<span class="sc">%&gt;%</span></span>
+<span id="cb23-6"><a href="#cb23-6" aria-hidden="true" tabindex="-1"></a>    <span class="fu">arrange</span>(nobelPrizes_awardYear)</span>
+<span id="cb23-7"><a href="#cb23-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-8"><a href="#cb23-8" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(prize_amount_year,</span>
+<span id="cb23-9"><a href="#cb23-9" aria-hidden="true" tabindex="-1"></a>       <span class="fu">aes</span>(<span class="at">x =</span> nobelPrizes_awardYear, <span class="at">y =</span> avg_prize_amount)) <span class="sc">+</span></span>
+<span id="cb23-10"><a href="#cb23-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>(<span class="at">color =</span> <span class="st">"#2b5c8f"</span>, <span class="at">linewidth =</span> <span class="dv">1</span>) <span class="sc">+</span></span>
+<span id="cb23-11"><a href="#cb23-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(<span class="at">color =</span> <span class="st">"#2b5c8f"</span>, <span class="at">size =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
+<span id="cb23-12"><a href="#cb23-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">scale_x_continuous</span>(<span class="at">breaks =</span> <span class="fu">seq</span>(<span class="dv">1901</span>, <span class="dv">2026</span>, <span class="at">by =</span> <span class="dv">10</span>)) <span class="sc">+</span></span>
+<span id="cb23-13"><a href="#cb23-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb23-14"><a href="#cb23-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb23-15"><a href="#cb23-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Trends in Nobel Prize Award Amounts Over Time"</span>,</span>
+<span id="cb23-16"><a href="#cb23-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Award Year"</span>,</span>
+<span id="cb23-17"><a href="#cb23-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Average Prize Amount"</span></span>
+<span id="cb23-18"><a href="#cb23-18" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb23-19"><a href="#cb23-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>()<span class="sc">+</span></span>
+<span id="cb23-20"><a href="#cb23-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
+<span id="cb23-21"><a href="#cb23-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">axis.text.x =</span> <span class="fu">element_text</span>(</span>
+<span id="cb23-22"><a href="#cb23-22" aria-hidden="true" tabindex="-1"></a>      <span class="at">angle =</span> <span class="dv">45</span>,</span>
+<span id="cb23-23"><a href="#cb23-23" aria-hidden="true" tabindex="-1"></a>      <span class="at">hjust =</span> <span class="dv">1</span>,</span>
+<span id="cb23-24"><a href="#cb23-24" aria-hidden="true" tabindex="-1"></a>      <span class="at">size =</span> <span class="dv">8</span></span>
+<span id="cb23-25"><a href="#cb23-25" aria-hidden="true" tabindex="-1"></a>    )</span>
+<span id="cb23-26"><a href="#cb23-26" aria-hidden="true" tabindex="-1"></a>  )</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="10B-nobelPrize-approach_files/figure-html/unnamed-chunk-7-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
+<p>The average Nobel Prize amount remained relatively stable from 1901 to 1951, followed by a slight increase between 1955 and 1981. From 1981 to 2001, the prize amount increased exponentially. It then remained relatively stable for approximately 10 years before decreasing. After that, it gradually increased again, reaching an average of approximately 12,500,000 in recent years.</p>
+<p><strong><em>Q4 Which country lost the most Nobel laureates—born there but awarded as a citizen of another country?.</em></strong></p>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb24"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a>country_lost <span class="ot">&lt;-</span> clean_df <span class="sc">%&gt;%</span></span>
+<span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
+<span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(birth_country),</span>
+<span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>    <span class="sc">!</span><span class="fu">is.na</span>(nobelPrizes_affiliations_country),</span>
+<span id="cb24-5"><a href="#cb24-5" aria-hidden="true" tabindex="-1"></a>    birth_country <span class="sc">!=</span> nobelPrizes_affiliations_country</span>
+<span id="cb24-6"><a href="#cb24-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">%&gt;%</span></span>
+<span id="cb24-7"><a href="#cb24-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(birth_country) <span class="sc">%&gt;%</span></span>
+<span id="cb24-8"><a href="#cb24-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">n =</span> <span class="fu">n_distinct</span>(id)) <span class="sc">%&gt;%</span></span>
+<span id="cb24-9"><a href="#cb24-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">arrange</span>(<span class="fu">desc</span>(n))</span>
+<span id="cb24-10"><a href="#cb24-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(country_lost)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output-display">
+<table class="caption-top table table-sm table-striped small">
+<thead>
+<tr class="header">
+<th style="text-align: left;">birth_country</th>
+<th style="text-align: right;">n</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Germany</td>
+<td style="text-align: right;">26</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">United Kingdom</td>
+<td style="text-align: right;">24</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Canada</td>
+<td style="text-align: right;">14</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">France</td>
+<td style="text-align: right;">12</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Austria-Hungary</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Prussia</td>
+<td style="text-align: right;">11</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Russia</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Russian Empire</td>
+<td style="text-align: right;">10</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Scotland</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">the Netherlands</td>
+<td style="text-align: right;">9</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Italy</td>
+<td style="text-align: right;">8</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">China</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Hungary</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">India</td>
+<td style="text-align: right;">7</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Australia</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Austria</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Japan</td>
+<td style="text-align: right;">6</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">British Mandate of Palestine</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Poland</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">South Africa</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">USA</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">West Germany</td>
+<td style="text-align: right;">4</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">New Zealand</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Norway</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Sweden</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Switzerland</td>
+<td style="text-align: right;">3</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Austrian Empire</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Egypt</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Luxembourg</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Romania</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Turkey</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">USSR</td>
+<td style="text-align: right;">2</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Argentina</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bavaria</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Belgium</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Brazil</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">British Protectorate of Palestine</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">British West Indies</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Cyprus</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Czechoslovakia</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Faroe Islands (Denmark)</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Finland</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">French Algeria</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">French protectorate of Tunisia</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">German-occupied Poland</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Hesse-Kassel</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Ireland</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Java, Dutch East Indies</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Jordan</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Korea</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Lebanon</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Lithuania</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Mecklenburg</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Mexico</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Morocco</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Schleswig</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Spain</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Venezuela</td>
+<td style="text-align: right;">1</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Württemberg</td>
+<td style="text-align: right;">1</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<p>Germany lost the most Nobel laureates, born there but awarded as a citizen of another country (26)</p>
+</section>
+<section id="conclusion" class="level1">
+<h1>Conclusion</h1>
+<p>Overall USA won the highest number of laureates since from 1901 with number of 390 which is very high in comparison to rest of the countries</p>
+</section>
+<section id="citaion" class="level1">
+<h1>Citaion</h1>
+<p>Anthropic. (2026). Claude [Large language model]. https://claude.ai/share/754d7628-df31-4840-bab5-0fe0b63787b1</p>
+</section>
+
+</main>
+<!-- /main column -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>

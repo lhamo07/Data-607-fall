@@ -1,0 +1,403 @@
+---
+title: "10A Sentiment Analysis"
+format: html
+author: "Tenzin Thakuri"
+editor: visual
+---
+
+# Task
+
+Assignment: Sentiment Analysis with Text Mining with R In Chapter 2 of Text Mining with R, the authors introduce sentiment analysis. Your task is to reproduce and extend that example.
+
+Step 1 — Reproduce the Base Example Obtain the primary example code from Chapter 2.
+
+Create a Quarto (.qmd) file that successfully runs this code.
+
+Include a proper citation to the book and the original example code.
+
+Step 2 — Extend the Analysis Extend the original example in two ways:
+
+Use a different text corpus of your choosing (e.g., news articles, book reviews, speeches, social media, etc.).
+
+Add at least one additional sentiment lexicon, which may come from:
+
+Another R package, or
+
+A lexicon you locate through external research.
+
+You should clearly explain how the results differ from the original example.
+
+# Codebase
+
+The code in Step 1 is from Silge and Robinson (2017), Chapter 2, ‘Sentiment analysis with tidy data’, <https://www.tidytextmining.com/sentiment.html>
+
+## Step 1: Reproduce the base example
+
+**The sentiments datasets**
+
+```{r}
+library(tidytext)
+library(janeaustenr)
+library(dplyr)
+library(stringr)
+library(ggplot2)
+library(syuzhet)
+
+get_sentiments("nrc")
+get_sentiments("afinn")
+get_sentiments("bing")
+
+
+
+```
+
+**Sentiment analysis with inner join**
+
+```{r}
+tidy_books <- austen_books() %>%
+  group_by(book) %>%
+  mutate(
+    linenumber = row_number(),
+    chapter = cumsum(str_detect(text, 
+                                regex("^chapter [\\divxlc]", 
+                                      ignore_case = TRUE)))) %>%
+  ungroup() %>%
+  unnest_tokens(word, text)
+
+
+```
+
+```{r}
+nrc_joy <- get_sentiments("nrc") %>% 
+  filter(sentiment == "joy")
+
+tidy_books %>%
+  filter(book == "Emma") %>%
+  inner_join(nrc_joy) %>%
+  count(word, sort = TRUE)
+
+```
+
+```{r}
+library(tidyr)
+
+jane_austen_sentiment <- tidy_books %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(book, index = linenumber %/% 80, sentiment) %>%
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>% 
+  mutate(sentiment = positive - negative)
+```
+
+```{r}
+library(ggplot2)
+ggplot(jane_austen_sentiment, aes(index, sentiment, fill = book)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~book, ncol = 2, scales = "free_x")
+```
+
+**Comparing the three sentiment dictionaries**
+
+```{r}
+pride_prejudice <- tidy_books %>% 
+  filter(book == "Pride & Prejudice")
+
+pride_prejudice
+```
+
+```{r}
+afinn <- pride_prejudice %>% 
+  inner_join(get_sentiments("afinn")) %>% 
+  group_by(index = linenumber %/% 80) %>% 
+  summarise(sentiment = sum(value)) %>% 
+  mutate(method = "AFINN")
+
+bing_and_nrc <- bind_rows(
+  pride_prejudice %>% 
+    inner_join(get_sentiments("bing")) %>%
+    mutate(method = "Bing et al."),
+  pride_prejudice %>% 
+    inner_join(get_sentiments("nrc") %>% 
+                 filter(sentiment %in% c("positive", 
+                                         "negative"))
+    ) %>%
+    mutate(method = "NRC")) %>%
+  count(method, index = linenumber %/% 80, sentiment) %>%
+  pivot_wider(names_from = sentiment,
+              values_from = n,
+              values_fill = 0) %>% 
+  mutate(sentiment = positive - negative)
+```
+
+```{r}
+bind_rows(afinn, 
+          bing_and_nrc) %>%
+  ggplot(aes(index, sentiment, fill = method)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~method, ncol = 1, scales = "free_y")
+```
+
+```{r}
+get_sentiments("nrc") %>% 
+  filter(sentiment %in% c("positive", "negative")) %>% 
+  count(sentiment)
+```
+
+```{r}
+get_sentiments("bing") %>% 
+  count(sentiment)
+
+```
+
+## Most common positive and negative words
+
+```{r}
+bing_word_counts <- tidy_books %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+
+bing_word_counts
+```
+
+```{r}
+bing_word_counts %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+```
+
+```{r}
+custom_stop_words <- bind_rows(tibble(word = c("miss"),  
+                                      lexicon = c("custom")), 
+                               stop_words)
+
+custom_stop_words
+```
+
+```{r}
+library(wordcloud)
+
+tidy_books %>%
+  anti_join(stop_words) %>%
+  count(word) %>%
+  with(wordcloud(word, n, max.words = 100))
+```
+
+```{r}
+library(reshape2)
+
+tidy_books %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  acast(word ~ sentiment, value.var = "n", fill = 0) %>%
+  comparison.cloud(colors = c("gray20", "gray80"),
+                   max.words = 100)
+```
+
+## Step 2: Extend the Analysis
+
+2.1 Social Media Dataset
+
+For the extended analysis, I will use the Social Media Sentiments Analysis Dataset from Kaggle,<https://www.kaggle.com/datasets/kashishparmar02/social-media-sentiments-analysis-dataset>. Unlike the original example, which analyzes Jane Austen's novels, this dataset contains user-generated social media posts from different platforms, including Instagram, Facebook, and Twitter.
+
+```{r}
+posts<-read.csv("https://raw.githubusercontent.com/lhamo07/Data-607-Assignment/refs/heads/main/sentimentdataset.csv")%>%
+  rename_with(tolower) %>%
+    mutate(post_id = row_number())
+tidy_words<-posts%>%
+  # there is white space after each platform name so trim them before applying filter
+      mutate(platform = str_trim(platform))%>%
+  select(post_id,platform,text)%>%
+  # format sentence into one word per row.
+    unnest_tokens(word, text) 
+
+
+
+
+```
+
+```{r}
+tidy_words %>%
+  filter(platform == "Instagram") %>%
+  inner_join(nrc_joy, by = "word") %>%
+  count(word, sort = TRUE)
+
+```
+
+Using nrc_joy to count the number of joy word available in the instagram post. joy word appeared to be 11, feeling(10), laughter (9) and so on.
+
+```{r}
+social_media_sentiment <- tidy_words %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(platform,post_id, sentiment) %>%
+  pivot_wider(names_from = sentiment, values_from = n, values_fill = 0) %>% 
+  mutate(sentiment = positive - negative)
+```
+
+inner_join() keeps only words that exist in the Bing lexicon. A post with no Bing-listed words has no rows after the join, so it never reaches count() and never appears in the result.
+
+```{r}
+ggplot(social_media_sentiment, aes(post_id, sentiment, fill = platform)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~platform, ncol = 2, scales = "free_x")
+```
+
+Step 2: Analyze your social media dataset
+
+2.2 Additional Sentiment Method: syuzhet
+
+In addition to the three original sentiment lexicons, I used syuzhet lexicon, it gives sentiment to sentence rather than word.
+
+```{r}
+
+get_sentiment_dictionary("syuzhet") %>%
+  head(10)
+```
+
+```{r}
+syuzhet_sentiment <- posts %>%
+  mutate(
+    platform = str_trim(platform),
+    sentiment = get_sentiment(text, method = "syuzhet")
+  ) %>%
+  select(post_id, platform, text, sentiment)
+
+```
+
+```{r}
+ggplot(syuzhet_sentiment, aes(post_id, sentiment, fill = platform)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~platform, ncol = 2, scales = "free_x")
+```
+
+## Comparing the four sentiment dictionaries
+
+```{r}
+instagram_data <- tidy_words %>% 
+  filter(platform == "Instagram")
+```
+
+```{r}
+instagram_posts <- syuzhet_sentiment %>%
+  filter(platform == "Instagram")
+```
+
+```{r}
+afinn <- instagram_data %>%
+  inner_join(get_sentiments("afinn"), by = "word") %>%
+  group_by(post_id) %>%
+  summarise(sentiment = sum(value), .groups = "drop") %>%
+  mutate(method = "AFINN")
+```
+
+```{r}
+bing <- instagram_data %>%
+  inner_join(get_sentiments("bing"), by = "word") %>%
+  count(post_id, sentiment) %>%
+  pivot_wider(
+    names_from = sentiment,
+    values_from = n,
+    values_fill = 0
+  ) %>%
+  mutate(sentiment = positive - negative) %>%
+  select(post_id, sentiment) %>%
+  mutate(method = "Bing")
+```
+
+```{r}
+nrc <- instagram_data %>%
+  inner_join(
+    get_sentiments("nrc") %>%
+      filter(sentiment %in% c("positive", "negative")),
+    by = "word"
+  ) %>%
+  count(post_id, sentiment) %>%
+  pivot_wider(
+    names_from = sentiment,
+    values_from = n,
+    values_fill = 0
+  ) %>%
+  mutate(sentiment = positive - negative) %>%
+  select(post_id, sentiment) %>%
+  mutate(method = "NRC")
+```
+
+```{r}
+syuzhet <- instagram_posts %>%
+  mutate(
+    sentiment = get_sentiment(text, method = "syuzhet"),
+    method = "Syuzhet"
+  ) %>%
+  select(post_id, sentiment, method)
+```
+
+```{r}
+all_sentiments <- bind_rows(
+  afinn,
+  bing,
+  nrc,
+  syuzhet
+)
+```
+
+```{r}
+ggplot(all_sentiments,
+       aes(x = post_id, y = sentiment, color = method)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~method, ncol = 2, scales = "free_y") +
+  labs(
+    title = "Comparison of Sentiment Lexicons for Instagram Posts",
+    x = "Post ID",
+    y = "Sentiment Score"
+  ) +
+  theme_minimal()
+
+```
+
+The four sentiment methods generate very different absolute scores, but they follow almost the same relative pattern across the Instagram timeline, similar to what was observed in Pride and Prejudice novel. However, the Instagram sentiment chart shows much greater fluctuations, with frequent changes in sentiment compared to the more gradual peaks and dips in the novel.
+
+In Pride and Prejudice, AFINN scores peaked as high as +80. In contrast, on Instagram, AFINN's highest peak barely exceeds +10, while Bing and NRC peak around +6.
+
+In the previous chart, the NRC lexicon remained almost entirely above the zero line, indicating a strong positive baseline shift. However, in the Instagram dataset, NRC scores drop significantly below zero, following the negative dips observed in the other lexicons, particularly around Post 300.
+
+The Syuzhet lexicon uses a much narrower scoring range, approximately -2.5 to +2.5, because it assigns decimal weights to words rather than whole-number scores. Despite this smaller scale, it closely follows the same overall patterns and movements as AFINN and Bing.
+
+```{r}
+bing_word_counts_social_media <- tidy_words %>%
+  inner_join(get_sentiments("bing")) %>%
+  count(word, sentiment, sort = TRUE) %>%
+  ungroup()
+
+bing_word_counts
+```
+
+```{r}
+bing_word_counts_social_media %>%
+  group_by(sentiment) %>%
+  slice_max(n, n = 10) %>% 
+  ungroup() %>%
+  mutate(word = reorder(word, n)) %>%
+  ggplot(aes(n, word, fill = sentiment)) +
+  geom_col(show.legend = FALSE) +
+  facet_wrap(~sentiment, scales = "free_y") +
+  labs(x = "Contribution to sentiment",
+       y = NULL)
+```
+
+In the austen_books the most common positive word is well and negative is miss whereas in social media dataset the most common positive word is like and negative is lost.
+
+# Conclusion
+
+In conclusion, all four lexicons produce relatively similar sentiment patterns, despite differences in their scoring scales. In Pride and Prejudice, sentiment scores are mostly positive, which may reflect the nature of the novel's storyline. In contrast, social media posts express a wider range of emotions, including both positive and negative sentiments. As a result, Instagram sentiment scores fluctuate more frequently, reflecting the varied emotions expressed in social media content.
+
+# Citation and Reference
+
+-   Silge, J., & Robinson, D. (2017). *Text mining with R: A tidy approach*. O’Reilly Media. <https://www.tidytextmining.com/>
+
+-   Anthropic. (2026). Claude (Claude Sonnet 5.5) \[Large language model\]. https://claude.ai/chat/911d9fd6-ccd1-4343-b8e7-dad5c7a96854

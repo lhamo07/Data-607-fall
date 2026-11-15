@@ -9,8 +9,8 @@ editor: visual
 
 This project develops practical competency in transforming wide-format datasets into tidy formats suitable for downstream analysis. All transformations are performed using the tidyr and dplyr packages in R.
 
-
 ## Dataset Selection
+
 Medical dataset: https://www.kaggle.com/datasets/aamir5659/raw-medical-dataset-for-cleaning-practice?resource=download I obtained this dataset from kaggle while searching for practical examples dataset to learn data tidying using dplyr and tidy.
 
 ### 2.1 Data structure before tidyng
@@ -41,6 +41,7 @@ medical_df<-read_csv("https://raw.githubusercontent.com/lhamo07/Data-607-Assignm
 medical_df
 
 ```
+
 ### 3.2 Data Import and Tidying
 
 ```{r}
@@ -79,6 +80,7 @@ glimpse(medical_clean_df)
 # Summarize missing data for all columns 
 miss_var_summary(medical_clean_df)
 ```
+
 Before imputing any variable, I checked the percentage of miss by summarizing missing data, then I found cholesterol, bmi, blood_pressure and age variables are skewed from follwing visualization. So I choose median imputaion on than mean, since median is resistance to outliers.
 
 ```{r}
@@ -88,6 +90,7 @@ ggplot(medical_clean_df, aes(blood_pressure)) + geom_histogram(bins = 20)
 ggplot(medical_clean_df, aes(age)) + geom_histogram(bins = 20) 
 
 ```
+
 ```{r}
 vars <- c("age", "bmi", "cholesterol", "blood_pressure")
 
@@ -107,6 +110,7 @@ medical_imputed_df <- medical_clean_df %>%
   
 medical_imputed_df
 ```
+
 I chose to impute missing values specifically for Cholesterol, BMI, blood pressure, and age because they are numeric clinical variables that correlate with each other and with diagnosis, so the other columns carry real information about the missing ones. Since gender is a demographic identity, guessing it adds noise. smoker is self-reported and sensitive data, keeping Unkown is safer. notes is free text, Imputing has no meaning.
 
 Using overall median imputation created a major statistical issue: every single diagnosis group ended up with the exact same median value. Switching to conditional median imputation calculates a separate median for each category. This ensures missing patient measurements are replaced using data from patients with the same medical condition, preserving real clinical differences.
@@ -123,6 +127,7 @@ medical_df_long <- medical_imputed_df %>%
 ```
 
 ### 3.3 Analysis
+
 ```{r}
 medical_df_long %>%
   filter(measurement == "age") %>%
@@ -135,13 +140,13 @@ medical_df_long %>%
   ) +
   theme_minimal()
 ```
+
 This box-plot shows the ages of patients in different diagnosis groups. Patients in the Diabetes group have a median age of around 55 years, while patients in the Heart Disease group have a median age of around 45 years.Patients with no diagnosis also have a median age of around 45 years. This suggests that patients in the Diabetes group tend to be older than those in the Heart Disease group in this dataset.
 
 ## 4. Conclusion and future enhancement
 
 In this project, I learned to clean and transform data using tidyr and dplyr. I also learned the importance of understanding missing data before choosing an imputation method. I used conditional median imputation, but in future projects, I would consider MICE to account for relationships between variables.
 
-##  Citation
+## Citation
 
-Anthropic. (2026). Claude Sonnet 5.5 [Large language model]. https://claude.ai. Accessed October 11, 2026. https://claude.ai/share/19de782d-5da9-486c-ad03-17ed79f38705
-
+Anthropic. (2026). Claude Sonnet 5.5 \[Large language model\]. https://claude.ai. Accessed October 11, 2026. https://claude.ai/share/19de782d-5da9-486c-ad03-17ed79f38705

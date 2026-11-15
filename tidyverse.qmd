@@ -1,0 +1,95 @@
+---
+title: "Tidyverse Create"
+author: "Tenzin Thakuri"
+format: html
+editor: visual
+---
+
+# Introduction
+
+
+# Data Source
+
+
+# Load packages and import data
+
+
+```{r}
+library(tidyverse)
+library(httr2)
+url<-"C:/Users/tenlh/Downloads/MTA_Subway_Hourly_Ridership__2020-2024_20261112 (1).csv"
+mta_raw<-read_csv(url)
+
+```
+
+```{r}
+# Data Cleaning
+mta_clean<-mta_raw%>%
+  # remove "OMNY - " from fare_class_category 
+  mutate(fare_class_category=str_remove(fare_class_category,
+                                        "OMNY - "))%>%
+  # split transit timestap
+  mutate(datetime_obj = mdy_hms(transit_timestamp),
+         transit_date=as.Date(datetime_obj),
+    transit_time = format(datetime_obj, "%I:%M:%S %p")
+          )
+
+  mta_selected<-mta_clean%>%select(transit_date,transit_time,transit_mode,borough,payment_method,fare_class_category,ridership)
+
+
+
+
+```
+
+```{r}
+
+glimpse(mta_selected)
+
+```
+# which borough have the highest ridership?
+
+```{r}
+riderShip_count_borough<-mta_selected%>%
+  group_by(borough)%>%
+  summarize(total_ridership=sum(ridership,na.rm = TRUE))
+
+```
+
+```{r}
+ggplot(riderShip_count_borough,
+       aes(x = borough, y = total_ridership, fill=borough)) +
+  geom_col() +
+    scale_y_continuous(labels = scales::comma) +
+
+  labs(
+    title = "Total Subway Ridership by Borough",
+    x = "Borough",
+    y = "Total Ridership",
+    fill = "Borough"
+
+  ) +
+  theme_minimal()+
+  theme(legend.position = "none")
+```
+
+Which fare categories are most commonly used?
+
+```{r}
+mta_selected %>%
+  group_by(fare_class_category) %>%
+  summarize(total_ridership = sum(ridership, na.rm = TRUE)) %>%
+  mutate(fare_class_category =
+           fct_reorder(fare_class_category, total_ridership, .desc = TRUE)) %>%
+  ggplot(aes(x = fare_class_category, y = total_ridership)) +
+  geom_col(fill = "steelblue") +
+  geom_text(aes(label = scales::comma(total_ridership)), 
+            vjust = -0.5, size = 3) +
+  scale_y_continuous(labels = scales::comma) +
+  labs(
+    title = "Total Ridership by Fare Category",
+    x = "Fare Category",
+    y = "Total Ridership"
+  ) +
+  theme_minimal()
+
+```

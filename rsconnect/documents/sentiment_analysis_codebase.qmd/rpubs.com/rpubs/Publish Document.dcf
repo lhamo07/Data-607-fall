@@ -1,0 +1,10 @@
+name: Publish Document
+title:
+username:
+account: rpubs
+server: rpubs.com
+hostUrl: rpubs.com
+appId: https://api.rpubs.com/api/v1/document/1474488/acb85721a28241fea89c9bf964b53e07
+bundleId: https://api.rpubs.com/api/v1/document/1474488/acb85721a28241fea89c9bf964b53e07
+url: http://rpubs.com/tenzin01/1474488
+version: 1

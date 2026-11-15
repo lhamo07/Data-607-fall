@@ -1,0 +1,25 @@
+---
+title: "credit card fraud"
+format: html
+editor: visual
+---
+
+```{r}
+library(readr)
+library(data.table)
+library(tidyverse)
+
+```
+
+```{r}
+df <- fread("C:/Users/tenlh/Downloads/archive (1)/Fraud.csv",
+            drop = c("step","nameOrig", "nameDest")) 
+```
+
+```{r}
+df<-df%>%select(-)
+glimpse(df)
+
+```
+
+https://www.kaggle.com/datasets/dylanmoraes/credit-card-fraud-dataset

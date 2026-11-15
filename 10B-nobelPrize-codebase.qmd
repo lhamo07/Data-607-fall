@@ -1,0 +1,221 @@
+---
+title: "10B NobelPrize.org"
+author: "Tenzin Thakuri"
+format: html
+editor: visual
+---
+
+# Task
+
+The Nobel Prize organization provides public APIs for accessing structured Nobel Prize data. Using one or both of the APIs available at the Nobel Prize Developer Zone, your task is to use JSON data to investigate and answer four interesting, data-driven questions.
+
+At least one of your questions should go beyond simple counts and require joining, filtering, or comparing fields across the data (e.g., “Which country lost the most Nobel laureates—born there but awarded as a citizen of another country?”).
+
+Requirements Use one or both Nobel Prize APIs to retrieve data in JSON format.
+
+In R, load and transform the JSON data into tidy data frames.
+
+Formulate four questions that can be answered from the data.
+
+For each question:
+
+Describe the question
+
+Show the code used
+
+Present the answer (table, summary, or plot)
+
+# Codebase
+
+```{r}
+library(httr2)
+library(jsonlite)
+library(tidyverse)
+library(naniar)
+library(lubridate)
+library(knitr)
+
+```
+
+```{r}
+url="https://api.nobelprize.org/2.1/laureates?limit=1000"
+# make API request
+response<-request(url) %>%
+  req_perform()
+# Extract JSON response as text
+json_data <- resp_body_string(response)
+# Parse JSON 
+data<-fromJSON(json_data)
+# check object type
+class(data)
+# Convert the list of elements into a clean tibble
+laureates_df <- bind_rows(data$laureates)
+class(laureates_df)
+names(laureates_df)
+
+```
+
+```{r}
+
+#clean data frame
+clean_df<-laureates_df %>%
+
+  mutate(birth_country     = birth$place$country$en,
+         birth_country_now = birth$place$countryNow$en) %>%
+  unnest_longer(nobelPrizes)%>%
+    unnest_wider(nobelPrizes, names_sep = "_") %>%
+    unnest_longer(nobelPrizes_affiliations, keep_empty = TRUE) %>%
+  unnest_wider(nobelPrizes_affiliations, names_sep = "_")%>%
+  mutate(across(where(is.data.frame), ~ .x$en))%>%
+   mutate(nobelPrizes_affiliations_country = map_chr(nobelPrizes_affiliations_country,
+                           ~ as.character(unlist(.x))[1])) %>%
+  
+  
+  
+  select(id,fullName
+,gender, birth_country, birth_country_now,nobelPrizes_awardYear,nobelPrizes_category,nobelPrizes_dateAwarded,nobelPrizes_prizeAmount,nobelPrizes_affiliations_country)
+
+class(clean_df$fullName)
+clean_df
+
+colSums(is.na(clean_df))
+clean_df
+```
+
+```{r}
+glimpse(clean_df)
+# Since nobelPrizes_awardYear and nobelPrizes_dateAwarded are in chr data types needs to convert it into date 
+clean_df <- clean_df %>%
+  mutate(nobelPrizes_awardYear = as.integer(nobelPrizes_awardYear))
+
+
+```
+
+***Q1:Which laureates have won the Nobel Peace Prize?***
+
+This question explores the individuals who have received the Nobel Peace Prize from 1901 to 2026.
+
+```{r}
+clean_df %>%
+  filter(nobelPrizes_category == "Peace", !is.na(fullName)) %>%
+  distinct(fullName, nobelPrizes_awardYear) %>%
+  filter(nobelPrizes_awardYear >= 1901) %>%
+  arrange(desc(nobelPrizes_awardYear)) %>%   
+  kable()
+
+  
+```
+
+Above table shows the list of laurates who won the nobel peace prize from year 1901 to 2026. Jean Henry Dunant and Frédéric Passy received the first Nobel Peace Prize in 1901.
+
+***Q2 Which country has produced the highest number of Nobel Prize laureates?***
+
+```{r}
+
+
+nobel_laureates_country<-clean_df%>%
+  # prevents counting the same laureate more than once for the same country.
+    distinct(id, nobelPrizes_affiliations_country) %>%
+    filter(!is.na(nobelPrizes_affiliations_country)) %>%
+    count(nobelPrizes_affiliations_country )%>%
+    arrange(desc(n))%>%
+    slice_head(n = 15)
+
+
+
+ggplot(nobel_laureates_country, aes(x =reorder(nobelPrizes_affiliations_country,n) , y =n)) +
+  geom_col(fill = "#2b5c8f", width = 0.7) +
+  coord_flip()+
+  geom_text(aes(label = n), 
+          hjust = -0.2,
+          size = 3.5)+
+labs(
+  title = "Top Countries by Number of Nobel Prize Laureates",
+  x = "Affiliation Country",
+  y = "Number of Nobel Prize Laureates"
+) +
+  theme_minimal()+
+ theme(
+    panel.grid.major.y = element_blank(),
+    panel.grid.minor = element_blank(),
+    plot.title = element_text(face = "bold", size = 14),
+    plot.subtitle = element_text(color = "gray30")
+  )
+
+
+```
+
+USA is the only country that has produced the highest number of Nobel Prize laureates (390) followed by United Kingdom (94), Germany (74). There is a substantial difference between the United States and the other countries. These results may be influenced by the laureates' Nobel Prize institutional affiliations, as the data reflects the countries where their affiliated institutions are located rather than necessarily their birth countries or nationalities.
+
+***Q3 How has the prize amount changed over time?***
+
+```{r}
+prize_amount_year<-clean_df%>%
+    mutate(nobelPrizes_awardYear = as.numeric(nobelPrizes_awardYear)) %>%
+  group_by(nobelPrizes_awardYear)%>%
+  summarize(avg_prize_amount = mean(nobelPrizes_prizeAmount, na.rm = TRUE)
+)%>%
+    arrange(nobelPrizes_awardYear)
+
+ggplot(prize_amount_year,
+       aes(x = nobelPrizes_awardYear, y = avg_prize_amount)) +
+  geom_line(color = "#2b5c8f", linewidth = 1) +
+  geom_point(color = "#2b5c8f", size = 2) +
+    scale_x_continuous(breaks = seq(1901, 2026, by = 10)) +
+
+  labs(
+    title = "Trends in Nobel Prize Award Amounts Over Time",
+    x = "Award Year",
+    y = "Average Prize Amount"
+  ) +
+  theme_minimal()+
+  theme(
+    axis.text.x = element_text(
+      angle = 45,
+      hjust = 1,
+      size = 8
+    )
+  )
+
+```
+
+The average Nobel Prize amount remained relatively stable from 1901 to 1951, followed by a slight increase between 1955 and 1981. From 1981 to 2001, the prize amount increased exponentially. It then remained relatively stable for approximately 10 years before decreasing. After that, it gradually increased again, reaching an average of approximately 12,500,000 in recent years.
+
+***Q4 Which country lost the most Nobel laureates—born there but awarded as a citizen of another country?.***
+
+```{r}
+country_lost <- clean_df %>%
+  filter(
+    !is.na(birth_country),
+    !is.na(nobelPrizes_affiliations_country),
+    birth_country != nobelPrizes_affiliations_country
+  ) %>%
+  group_by(birth_country) %>%
+  summarise(
+    n = n_distinct(id),
+    affiliation_countries = paste(sort(unique(nobelPrizes_affiliations_country)),
+                                  collapse = ", "),
+    .groups = "drop"
+  ) %>%
+  arrange(desc(n))
+
+kable(head(country_lost, 10))
+
+```
+
+Germany lost the most Nobel laureates, born there but awarded as a citizen of another country
+
+# Conclusion
+
+The USA has the most laureates (390), far ahead of the United Kingdom (94) and Germany (74). The average prize amount stayed low until the mid-1900s, rose sharply from the 1980s, and reached about 12.5 million in recent years. Germany lost the most laureates (26),closely followed by united kingdom (24), most of the countries lost Nobel laureates to USA.
+
+# Citaion
+
+Anthropic. (2026). Claude \[Large language model\]. https://claude.ai/share/754d7628-df31-4840-bab5-0fe0b63787b1
+
+
+
+
+
+
+

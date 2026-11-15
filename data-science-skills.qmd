@@ -1,0 +1,101 @@
+---
+title: "project3"
+format: html
+editor: visual
+---
+
+```{r}
+# Load required libraries
+library(readr)
+library(tidyverse)
+library(naniar)
+# Path to the survey data file
+url<-"C:/Users/tenlh/Downloads/data_final.csv"
+# Read the file as a CSV
+survey_data <- read_csv(url, show_col_types = FALSE)
+# Preview the first 6 rows
+head(survey_data)
+
+```
+
+```{r}
+#Get a overview of the dataset:
+glimpse(survey_data)
+anyNA(survey_data)
+miss_var_summary(survey_data)
+nrow(survey_data)
+ncol(survey_data)
+
+```
+
+```{r}
+# Reshape the data from wide to long format
+skills_long <- survey_data %>%
+  # Keep respondent info plus all "...HaveWorkedWith" skill columns
+  # (e.g., LanguageHaveWorkedWith, DatabaseHaveWorkedWith)
+  select(ResponseId, DevType,YearsCodePro,
+         ends_with("HaveWorkedWith"))%>%
+    # Stack all the skill columns into two columns:
+  # skill_category (the original column name) and skill (the value)
+
+  pivot_longer(
+    cols = ends_with("HaveWorkedWith"),
+    names_to = "skill_category",
+    values_to = "skill"
+  ) %>%
+    # Drop rows where the respondent left the skill answer blank
+
+  filter(!is.na(skill)) %>%
+  # Each skill cell holds multiple skills separated by ";"
+  # (e.g., "Python;SQL;R"), so split them into one skill per row
+
+  # separate_rows(skill, sep = ";") %>%
+  mutate(
+    # Clean category names by removing the "HaveWorkedWith" suffix
+    # (e.g., "LanguageHaveWorkedWith" becomes "Language")
+    skill_category = str_remove(skill_category, "HaveWorkedWith"),
+        # Remove any leading/trailing whitespace from skill names
+
+    skill = str_trim(skill)
+  )
+# Display the reshaped data
+
+print(skills_long)
+# Check the structure of the new long-format dataset
+  
+glimpse(skills_long)
+
+
+```
+
+```{r}
+# Returns TRUE if any NA exists anywhere in the dataset
+
+anyNA(skills_long)
+# Total count of NA values across all columns
+
+sum(is.na(skills_long))
+# List the names of columns that contain at least one NA
+
+skills_long %>%
+  select(where(~ any(is.na(.x)))) %>%
+  names()
+# Summary table of missing values per variable (count and percentage)
+
+miss_var_summary(skills_long)
+
+```
+
+```{r}
+skills_long <- skills_long %>%
+  filter(!is.na(DevType))
+
+```
+
+```{r}
+# Re-check for missing values after filtering on DevType
+
+anyNA(skills_long)
+sum(is.na(skills_long))
+
+```

@@ -1,0 +1,56 @@
+---
+title: "10B NobelPrize.org"
+author: "Tenzin Thakuri"
+format: html
+editor: visual
+---
+
+# Task
+
+The Nobel Prize organization provides public APIs for accessing structured Nobel Prize data. Using one or both of the APIs available at the Nobel Prize Developer Zone, your task is to use JSON data to investigate and answer four interesting, data-driven questions.
+
+At least one of your questions should go beyond simple counts and require joining, filtering, or comparing fields across the data (e.g., “Which country lost the most Nobel laureates—born there but awarded as a citizen of another country?”).
+
+Requirements Use one or both Nobel Prize APIs to retrieve data in JSON format.
+
+In R, load and transform the JSON data into tidy data frames.
+
+Formulate four questions that can be answered from the data.
+
+For each question:
+
+Describe the question
+
+Show the code used
+
+Present the answer (table, summary, or plot)
+
+# Approach
+
+I'm going to use this API endpoint <https://api.nobelprize.org/2.1/laureates?limit=1000> from Nobel Prize Developer Zone.This endpoint sorts the output based on Nobel Laureates (persons and/or organizations). It returns all information about Laureates and Nobel Prizes.I set the limit query parameter to 1000, otherwise it will give me only 25 observations. Using above API, I'm going to answer following 4 interesting questions:
+
+***Q1:Which laureates have won the Nobel Peace Prize?*** ***Q2 Which country has produced the highest number of Nobel Prize laureates?***
+
+***Q3 How has the prize amount changed over time?***
+
+***Q4 Which country lost the most Nobel laureates—born there but awarded as a citizen of another country?.***
+
+1.  Data Collection: Use the Nobel Prize API endpoint <https://api.nobelprize.org/2.1/laureates?limit=1000> to retrieve information about Nobel Laureates and their prizes. Set the limit parameter to 1000 to retrieve more observations instead of the default 25.
+
+2.  JSON Parsing: Parse the JSON response into a structured format using R packages such as httr2 and jsonlite.
+
+3.  Data Cleaning: Examine the dataset, handle missing values, and select relevant variables such as laureate full Name, gender, award years, Nobel Prize categories, and date awarded, prize amount and affiliations country.
+
+4.  Data Transformation: Unnest nested JSON data and organize the information into tables suitable for analysis.
+
+5.  Data Analysis: Use filtering, grouping, summarizing, and joining techniques to investigate the research questions.
+
+6.  Visualization: Create appropriate charts and graphs to present the findings.
+
+7.  Interpretation: Interpret the results and summarize the main findings in relation to the research questions.
+
+# Anticipated Challenges
+
+1.  Nested JSON Data: The API returns nested JSON data, so extracting and unnesting the relevant information into a structured format may be challenging.
+
+2.  Data Joining and Comparison: Question 4 may be more challenging because it requires joining, filtering, and comparing different fields across the data set.
